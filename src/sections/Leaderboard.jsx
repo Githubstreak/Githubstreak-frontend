@@ -29,7 +29,7 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["Developer", "Streak count", "contributions", "country"];
 
 export default function App() {
   const [filterValue, setFilterValue] = React.useState("");
