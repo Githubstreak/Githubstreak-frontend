@@ -1,6 +1,8 @@
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <footer>
+      copyright @Githubstreak 2024
+    </footer>
   )
 }
 
