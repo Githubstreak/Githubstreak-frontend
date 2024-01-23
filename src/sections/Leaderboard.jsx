@@ -20,27 +20,27 @@ import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
-import {columns, users, statusOptions} from "./data";
+import {columns, users} from "./data";
 import {capitalize} from "./utils";
 
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-  vacation: "warning",
-};
+// const statusColorMap = {
+//   active: "success",
+//   paused: "danger",
+//   vacation: "warning",
+// };
 
-const INITIAL_VISIBLE_COLUMNS = ["Developer", "Streak count", "contributions", "country"];
+// const INITIAL_VISIBLE_COLUMNS = ["Rank", "", "contributions", "country"];
 
-export default function App() {
+const App = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  // const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
-    direction: "ascending",
-  });
+  // const [sortDescriptor, setSortDescriptor] = React.useState({
+  //   column: "age",
+  //   direction: "ascending",
+  // });
   const [page, setPage] = React.useState(1);
 
   const pages = Math.ceil(users.length / rowsPerPage);
@@ -91,7 +91,7 @@ export default function App() {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case "name":
+      case "Developer":
         return (
           <User
             avatarProps={{radius: "full", size: "sm", src: user.avatar}}
@@ -104,14 +104,14 @@ export default function App() {
             {user.email}
           </User>
         );
-      case "role":
+      case "":
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
             <p className="text-bold text-tiny capitalize text-default-500">{user.team}</p>
           </div>
         );
-      case "status":
+      case "":
         return (
           <Chip
             className="capitalize border-none gap-1 text-default-600"
@@ -122,25 +122,25 @@ export default function App() {
             {cellValue}
           </Chip>
         );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown className="bg-background border-1 border-default-200">
-              <DropdownTrigger>
-                <Button isIconOnly radius="full" size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-400" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
-      default:
-        return cellValue;
+      // case "actions":
+      //   return (
+      //     <div className="relative flex justify-end items-center gap-2">
+      //       <Dropdown className="bg-background border-1 border-default-200">
+      //         <DropdownTrigger>
+      //           <Button isIconOnly radius="full" size="sm" variant="light">
+      //             <VerticalDotsIcon className="text-default-400" />
+      //           </Button>
+      //         </DropdownTrigger>
+      //         <DropdownMenu>
+      //           <DropdownItem>View</DropdownItem>
+      //           <DropdownItem>Edit</DropdownItem>
+      //           <DropdownItem>Delete</DropdownItem>
+      //         </DropdownMenu>
+      //       </Dropdown>
+      //     </div>
+      //   );
+      // default:
+      //   return cellValue;
     }
   }, []);
 
@@ -177,65 +177,6 @@ export default function App() {
             onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
           />
-          <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  size="sm"
-                  variant="flat"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  size="sm"
-                  variant="flat"
-                >
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Button
-              className="bg-foreground text-background"
-              endContent={<PlusIcon />}
-              size="sm"
-            >
-              Add New
-            </Button>
-          </div>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">Total {users.length} users</span>
@@ -255,7 +196,6 @@ export default function App() {
     );
   }, [
     filterValue,
-    statusFilter,
     visibleColumns,
     onSearchChange,
     onRowsPerPageChange,
@@ -278,11 +218,11 @@ export default function App() {
           variant="light"
           onChange={setPage}
         />
-        <span className="text-small text-default-400">
+        {/* <span className="text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
             : `${selectedKeys.size} of ${items.length} selected`}
-        </span>
+        </span> */}
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
@@ -313,11 +253,11 @@ export default function App() {
       aria-label="Example table with custom cells, pagination and sorting"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      checkboxesProps={{
-        classNames: {
-          wrapper: "after:bg-foreground after:text-background text-background",
-        },
-      }}
+      // checkboxesProps={{
+      //   classNames: {
+      //     wrapper: "after:bg-foreground after:text-background text-background",
+      //   },
+      // }}
       classNames={classNames}
       selectedKeys={selectedKeys}
       selectionMode="multiple"
@@ -348,3 +288,5 @@ export default function App() {
     </Table>
   );
 }
+
+export default App
