@@ -17,7 +17,7 @@ import {
   Pagination,
 } from "@nextui-org/react";
 import {PlusIcon} from "./PlusIcon";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
+import {VerticalDotsIcon} from "./VerticalDotsIcon";  
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {columns, users} from "./data";
@@ -29,19 +29,19 @@ import {capitalize} from "./utils";
 //   vacation: "warning",
 // };
 
-// const INITIAL_VISIBLE_COLUMNS = ["Rank", "", "contributions", "country"];
+const INITIAL_VISIBLE_COLUMNS = ["Rank", "Developer", "Streakcount", "Totalcontributions"];
 
 const App = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  // const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  // const [sortDescriptor, setSortDescriptor] = React.useState({
-  //   column: "age",
-  //   direction: "ascending",
-  // });
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(1);const [sortDescriptor, setSortDescriptor] = React.useState({
+    column: "rank",
+    direction: "ascending", 
+  });
+
 
   const pages = Math.ceil(users.length / rowsPerPage);
 
@@ -56,9 +56,12 @@ const App = () => {
   const filteredItems = React.useMemo(() => {
     let filteredUsers = [...users];
 
+    
+
+
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.developer.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
@@ -91,7 +94,7 @@ const App = () => {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case "Developer":
+      case "developer":
         return (
           <User
             avatarProps={{radius: "full", size: "sm", src: user.avatar}}
@@ -104,24 +107,24 @@ const App = () => {
             {user.email}
           </User>
         );
-      case "":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-500">{user.team}</p>
-          </div>
-        );
-      case "":
-        return (
-          <Chip
-            className="capitalize border-none gap-1 text-default-600"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="dot"
-          >
-            {cellValue}
-          </Chip>
-        );
+      // case "":
+      //   return (
+      //     <div className="flex flex-col">
+      //       <p className="text-bold text-small capitalize">{cellValue}</p>
+      //       <p className="text-bold text-tiny capitalize text-default-500">{user.team}</p>
+      //     </div>
+      //   );
+      // case "":
+      //   return (
+      //     <Chip
+      //       className="capitalize border-none gap-1 text-default-600"
+      //       color={statusColorMap[user.status]}
+      //       size="sm"
+      //       variant="dot"
+      //     >
+      //       {cellValue}
+      //     </Chip>
+      //   );
       // case "actions":
       //   return (
       //     <div className="relative flex justify-end items-center gap-2">
@@ -274,7 +277,7 @@ const App = () => {
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
           >
-            {column.name}
+            {column.uid}
           </TableColumn>
         )}
       </TableHeader>
