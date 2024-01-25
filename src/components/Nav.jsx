@@ -2,9 +2,7 @@ import React from 'react'
 
 export default function App() {
   return (
-    
-         text-inherit">Githubstreak</p>
-      </NavbarBrand>
+      
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {/* <NavbarItem>
