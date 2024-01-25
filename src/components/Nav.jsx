@@ -2,12 +2,6 @@ import React from 'react'
 
 export default function App() {
   return (
-    
-           href="#">
-            Integrations
-          </Link>
-        </NavbarItem> */}
-      </NavbarContent>
 
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
