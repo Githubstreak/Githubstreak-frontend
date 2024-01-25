@@ -2,9 +2,6 @@ import React from 'react'
 
  const Nav = () => {
   return (
-              isBordered
-              as="button"
-              className="transition-transform"
               color="secondary"
               name="Jason Hughes"
               size="sm"
