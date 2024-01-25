@@ -6,10 +6,7 @@ export default function App() {
 
        
        
-           
-           
-         
-        </NavbarItem> */}
+          
         <NavbarItem isActive>
           <Link href="#" aria-current="page">
            Blog
