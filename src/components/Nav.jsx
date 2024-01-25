@@ -2,18 +2,8 @@ import React from 'react'
 
 export default function App() {
   return (
-      
-
-       
-       
-          
-        
-           
-          
-          
-       
-        
-          <Link color="foreground" href="#">
+    
+           href="#">
             Integrations
           </Link>
         </NavbarItem> */}
