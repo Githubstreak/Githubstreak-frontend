@@ -9,9 +9,9 @@ export default function App() {
           
         
            
-           Blog
-          </Link>
-        </NavbarItem>
+          
+          
+       
         {/* <NavbarItem>
           <Link color="foreground" href="#">
             Integrations
