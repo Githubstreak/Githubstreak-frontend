@@ -2,9 +2,6 @@ import React from 'react'
 
  const Nav = () => {
   return (
-
-       
-        <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
               isBordered
