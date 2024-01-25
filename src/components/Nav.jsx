@@ -7,8 +7,8 @@ export default function App() {
        
        
           
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
+        
+           
            Blog
           </Link>
         </NavbarItem>
