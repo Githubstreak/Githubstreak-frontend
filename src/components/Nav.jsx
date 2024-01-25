@@ -4,7 +4,7 @@ export default function App() {
   return (
       
 
-       sm:flex gap-4" justify="center">
+       
         {/* <NavbarItem>
           <Link color="foreground" href="#">
             Features
