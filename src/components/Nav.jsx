@@ -3,7 +3,7 @@ import React from 'react'
 export default function App() {
   return (
     
-        <p className="font-bold text-inherit">Githubstreak</p>
+         text-inherit">Githubstreak</p>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
