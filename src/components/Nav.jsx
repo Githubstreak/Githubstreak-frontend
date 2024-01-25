@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function App() {
+ const Nav = () => {
   return (
 
       <NavbarContent as="div" justify="end">
