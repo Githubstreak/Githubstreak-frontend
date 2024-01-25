@@ -6,7 +6,7 @@ export default function App() {
 
        
        
-          <Link color="foreground" href="#">
+           
             Features
           </Link>
         </NavbarItem> */}
