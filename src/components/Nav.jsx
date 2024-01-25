@@ -3,7 +3,7 @@ import React from 'react'
  const Nav = () => {
   return (
 
-      <NavbarContent as="div" justify="end">
+       
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
