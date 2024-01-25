@@ -12,7 +12,7 @@ export default function App() {
           
           
        
-        {/* <NavbarItem>
+        
           <Link color="foreground" href="#">
             Integrations
           </Link>
