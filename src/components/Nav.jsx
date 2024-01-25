@@ -2,7 +2,6 @@ import React from 'react'
 
  const Nav = () => {
   return (
-            <Avatar
               isBordered
               as="button"
               className="transition-transform"
