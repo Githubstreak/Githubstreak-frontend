@@ -7,7 +7,7 @@ export default function App() {
        
        
            
-            Features
+           
           </Link>
         </NavbarItem> */}
         <NavbarItem isActive>
