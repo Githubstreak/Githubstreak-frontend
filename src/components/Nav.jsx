@@ -1,18 +1,8 @@
-import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
-// import { headerLogo } from "./assets/images/Logo";
+import React from 'react'
 
 export default function App() {
   return (
-    <Navbar>
-      <NavbarBrand>
-      {/* <Image 
-            src={headerLogo}
-            alt="Logo"
-            width={120}
-            height={29}
-        
-        /> */}
+    
         <p className="font-bold text-inherit">Githubstreak</p>
       </NavbarBrand>
 
