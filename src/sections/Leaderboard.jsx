@@ -2,8 +2,10 @@ import React from 'react'
 
 const Leaderboard = () => {
   return (
-    <div>Leaderboard</div>
+    <div>
+      Leaderboard
+    b</div>
   )
 }
 
-export default Leaderboard
+export default Leaderboard;
