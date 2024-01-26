@@ -1,13 +1,9 @@
- const Nav = () => {
+import React from 'react'
+
+const Nav = () => {
   return (
-     <header>
-       <nav>
-        hello world 
-
-       </nav>
-
-    </header>
-  );
+    <div>Nav</div>
+  )
 }
 
-export default Nav
+export default Nav;

@@ -1,10 +1,6 @@
-import React from 'react'
-
 const Leaderboard = () => {
   return (
-    <div>
-      Leaderboard
-    b</div>
+    <div>Leaderboard</div>
   )
 }
 
