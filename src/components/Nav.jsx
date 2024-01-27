@@ -28,7 +28,7 @@ export default function App() {
         </NavbarItem>
         <NavbarItem isActive>
           <Link href="#" aria-current="page" color="secondary">
-            Customers
+           Blog
           </Link>
         </NavbarItem>
         <NavbarItem>
