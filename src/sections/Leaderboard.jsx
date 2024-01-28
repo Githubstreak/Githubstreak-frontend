@@ -16,7 +16,6 @@ import {
   User,
   Pagination,
 } from "@nextui-org/react";
-import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
@@ -223,9 +222,6 @@ export default function App() {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color="primary" endContent={<PlusIcon />}>
-              Add New
-            </Button>
           </div>
         </div>
         <div className="flex justify-between items-center">
