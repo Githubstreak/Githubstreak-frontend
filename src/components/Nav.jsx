@@ -23,7 +23,7 @@ export default function App() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
           <Link color="foreground" href="#">
-            Features
+            Team
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
@@ -33,7 +33,7 @@ export default function App() {
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            Integrations
+            Community
           </Link>
         </NavbarItem>
       </NavbarContent>
@@ -56,11 +56,11 @@ export default function App() {
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">zoey@example.com</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
+            <DropdownItem key="settings">Rank 2</DropdownItem>
+            {/* <DropdownItem key="team_settings"></DropdownItem>
+            <DropdownItem key="analytics"></DropdownItem>
+            <DropdownItem key="system"></DropdownItem>
+            <DropdownItem key="configurations"></DropdownItem> */}
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
               Log Out
