@@ -57,10 +57,10 @@ export default function App() {
               <p className="font-semibold">zoey@example.com</p>
             </DropdownItem>
             <DropdownItem key="settings">Rank 2</DropdownItem>
-            {/* <DropdownItem key="team_settings"></DropdownItem>
-            <DropdownItem key="analytics"></DropdownItem>
-            <DropdownItem key="system"></DropdownItem>
-            <DropdownItem key="configurations"></DropdownItem> */}
+            {/* <DropdownItem key="team_settings"></DropdownItem> */}
+            {/* <DropdownItem key="analytics"></DropdownItem> */}
+            {/* <DropdownItem key="system"></DropdownItem> */}
+            <DropdownItem key="configurations">Settings (coming soon)</DropdownItem>
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
               Log Out

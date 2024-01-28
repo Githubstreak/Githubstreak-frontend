@@ -28,7 +28,7 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "role", "status", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["developer", "role", "status"];
 
 export default function App() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -37,7 +37,7 @@ export default function App() {
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
+    column: "streak count",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -90,7 +90,7 @@ export default function App() {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case "name":
+      case "developer":
         return (
           <User
             avatarProps={{radius: "lg", src: user.avatar}}
@@ -113,23 +113,23 @@ export default function App() {
             {cellValue}
           </Chip>
         );
-      case "actions":
-        return (
-          <div className="relative flex justify-end items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>View</DropdownItem>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-        );
+      // case "actions":
+      //   return (
+      //     <div className="relative flex justify-end items-center gap-2">
+      //       <Dropdown>
+      //         <DropdownTrigger>
+      //           <Button isIconOnly size="sm" variant="light">
+      //             <VerticalDotsIcon className="text-default-300" />
+      //           </Button>
+      //         </DropdownTrigger>
+      //         <DropdownMenu>
+      //           <DropdownItem>View</DropdownItem>
+      //           <DropdownItem>Edit</DropdownItem>
+      //           <DropdownItem>Delete</DropdownItem>
+      //         </DropdownMenu>
+      //       </Dropdown>
+      //     </div>
+      //   );
       default:
         return cellValue;
     }
