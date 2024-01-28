@@ -25,10 +25,9 @@ import {capitalize} from "./utils";
 const statusColorMap = {
   active: "success",
   paused: "danger",
-  vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["developer", "role", "status"];
+const INITIAL_VISIBLE_COLUMNS = ["rank", "developer", "streak", "contributions", "status"];
 
 export default function App() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -37,7 +36,7 @@ export default function App() {
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "streak count",
+    column: "streak",
     direction: "ascending",
   });
   const [page, setPage] = React.useState(1);
@@ -113,23 +112,6 @@ export default function App() {
             {cellValue}
           </Chip>
         );
-      // case "actions":
-      //   return (
-      //     <div className="relative flex justify-end items-center gap-2">
-      //       <Dropdown>
-      //         <DropdownTrigger>
-      //           <Button isIconOnly size="sm" variant="light">
-      //             <VerticalDotsIcon className="text-default-300" />
-      //           </Button>
-      //         </DropdownTrigger>
-      //         <DropdownMenu>
-      //           <DropdownItem>View</DropdownItem>
-      //           <DropdownItem>Edit</DropdownItem>
-      //           <DropdownItem>Delete</DropdownItem>
-      //         </DropdownMenu>
-      //       </Dropdown>
-      //     </div>
-      //   );
       default:
         return cellValue;
     }
@@ -309,7 +291,7 @@ export default function App() {
       </TableHeader>
       <TableBody emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item.rank}>
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}
