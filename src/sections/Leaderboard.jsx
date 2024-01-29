@@ -262,7 +262,7 @@ const Leaderboard = () => {
 
   return (
     <Table
-      aria-label="Example table with custom cells, pagination and sorting"
+      className="p-10"
       isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
