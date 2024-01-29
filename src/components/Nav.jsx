@@ -11,11 +11,21 @@ import {
   Avatar
 } from "@nextui-org/react";
 
+// import headLogo from "./src/assets/images/Logo.png";
+
 
 export default function App() {
   return (
     <Navbar>
       <NavbarBrand>
+
+        {/* <Img
+          src={headLogo}
+          alt="Logo"
+          height={120}
+          width={20}
+        />
+         */}
        
         <p className="font-bold text-inherit">Githubstreak</p>
       </NavbarBrand>
