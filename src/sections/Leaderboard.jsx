@@ -243,7 +243,7 @@ const Leaderboard = () => {
           isCompact
           showControls
           showShadow
-          color="red"
+          color=""
           page={page}
           total={pages}
           onChange={setPage}
