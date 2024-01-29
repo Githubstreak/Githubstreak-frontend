@@ -16,7 +16,7 @@ import {
   User,
   Pagination,
 } from "@nextui-org/react";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
+// import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {columns, users, statusOptions} from "./data";
