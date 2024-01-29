@@ -29,7 +29,7 @@ const statusColorMap = {
 
 const INITIAL_VISIBLE_COLUMNS = ["rank", "developer", "streak", "contributions", "status"];
 
-export default function App() {
+const Leaderboard = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -299,3 +299,5 @@ export default function App() {
     </Table>
   );
 }
+
+export default Leaderboard;

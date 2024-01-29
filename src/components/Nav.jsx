@@ -27,7 +27,7 @@ export default function App() {
         />
          */}
        
-        <p className="font-bold text-inherit">Githubstreak</p>
+        <p className="font-bold text-inherit text-green-700">Githubstreak</p>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -36,8 +36,8 @@ export default function App() {
             Team
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page" color="secondary">
+        <NavbarItem>
+          <Link color="foreground" href="#" >
            Blog
           </Link>
         </NavbarItem>
