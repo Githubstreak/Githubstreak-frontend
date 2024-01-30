@@ -10,6 +10,8 @@ const App = () => (
   </section>
   <section>
     <Topthree />
+    <Topthree />
+    <Topthree />
   </section>
   <section>
     <Leaderboard />
