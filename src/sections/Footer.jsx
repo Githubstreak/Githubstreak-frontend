@@ -1,3 +1,5 @@
+import {Avatar} from "@nextui-org/react";
+
 const Footer = () => {
   return (
   <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
@@ -14,6 +16,7 @@ const Footer = () => {
   </nav>  */}
   <aside>
     <p class="mb-3">Copyright © 2024 - All right reserved #githubstreak '24</p>
+    <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
     <p>Created by <a href="https://github.com/Edmondakwasi" >Edmond Akwasi</a></p>
   </aside>
 </footer>
