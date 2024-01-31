@@ -14,7 +14,7 @@ const statusOptions = [
 
 const users = [
   {
-    rank: 1,
+    rank: "1",
     developer: "Tony Reichert",
     role: "CEO",
     team: "Management",
