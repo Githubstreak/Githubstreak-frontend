@@ -11,6 +11,8 @@ import {
   Avatar
 } from "@nextui-org/react";
 
+
+
 // import headLogo from "./src/assets/images/Logo.png";
 
 
@@ -52,7 +54,7 @@ export default function App() {
               className="transition-transform"
               name="Jason Hughes"
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              src={"https://i.pravatar.cc/150?u=a042581f4e29026704d"}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">

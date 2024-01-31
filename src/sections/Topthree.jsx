@@ -1,3 +1,5 @@
+import {Avatar} from "@nextui-org/react";
+
 const Topthree = (props) => {
   return (
   <div className="card w-96 bg-base-100 shadow-xl m-10 flex flex-1">
