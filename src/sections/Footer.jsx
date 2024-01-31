@@ -14,7 +14,7 @@ const Footer = () => {
   </nav> 
   <aside>
     <p>Copyright © 2024 - All right reserved #githubstreak '24</p>
-    <p>Created by <a href="/">Edmond Akwasi</a></p>
+    <p>Created by <a href="https://github.com/Edmondakwasi">Edmond Akwasi</a></p>
   </aside>
 </footer>
   )

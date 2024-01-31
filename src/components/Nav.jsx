@@ -32,13 +32,8 @@ export default function App() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
-            Team
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
           <Link color="foreground" href="#" >
-           Blog
+           Blog (coming soon)
           </Link>
         </NavbarItem>
         <NavbarItem>
