@@ -8,7 +8,7 @@ const Topthree = () => {
         <h2 className="card-title">Rank 1</h2>
         <h3>contributions 23417</h3>
       <div className="card-actions">
-        <button className="btn btn-primary">Github link</button>
+        <button className="btn" class="bg-green-700 rounded-lg p-3">Github link</button>
       </div>
   </div>
 </div>
