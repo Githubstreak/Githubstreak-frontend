@@ -163,7 +163,7 @@ const Leaderboard = () => {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat" color="success">
                   Status
                 </Button>
               </DropdownTrigger>
@@ -184,7 +184,7 @@ const Leaderboard = () => {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
+                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat" color="success">
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -249,10 +249,10 @@ const Leaderboard = () => {
           onChange={setPage}
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
+          <Button isDisabled={pages === 1} size="sm" variant="flat" color="success" onPress={onPreviousPage}>
             Previous
           </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
+          <Button isDisabled={pages === 1} size="sm" variant="flat" color="success" onPress={onNextPage}>
             Next
           </Button>
         </div>
@@ -263,6 +263,7 @@ const Leaderboard = () => {
   return (
     <Table
       className="p-10"
+      color="success"
       isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"

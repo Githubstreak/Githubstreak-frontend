@@ -29,7 +29,7 @@ export default function App() {
         />
          */}
        
-        <p className="font-bold text-inherit text-green-700">Githubstreak</p>
+        <p className="font-extrabold text-3xl text-inherit text-green-900 ">Githubstreak</p>
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
