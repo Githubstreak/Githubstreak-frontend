@@ -67,7 +67,7 @@ export default function App() {
             {/* <DropdownItem key="team_settings"></DropdownItem> */}
             {/* <DropdownItem key="analytics"></DropdownItem> */}
             {/* <DropdownItem key="system"></DropdownItem> */}
-            <DropdownItem key="configurations">Settings (coming soon)</DropdownItem>
+            {/* <DropdownItem key="configurations">Settings (coming soon)</DropdownItem> */}
             <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
             <DropdownItem key="logout" color="danger">
               Log Out

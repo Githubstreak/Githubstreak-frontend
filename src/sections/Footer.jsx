@@ -1,4 +1,6 @@
-import {Avatar} from "@nextui-org/react";
+import {User} from "@nextui-org/react";
+
+// import avatar from "./assets/images/Edmond Akwasi.png"
 
 const Footer = () => {
   return (
@@ -15,8 +17,15 @@ const Footer = () => {
     </div>
   </nav>  */}
   <div className="flex-auto">
-    <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-    <p>Created by <a href="https://github.com/Edmondakwasi" >Edmond Akwasi</a></p>
+  <p>Creator</p>
+  <User  
+    className="flex flex-initial" 
+      name="Edmond Akwasi"
+      description="Frontend Developer"
+      avatarProps={{
+        src: "images/Edmond Akwasi.png"
+      }}
+    />
   </div>
    
     <aside>
