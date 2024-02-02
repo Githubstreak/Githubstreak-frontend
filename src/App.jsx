@@ -1,4 +1,4 @@
-import { Hero, Leaderboard, Topthree, Footer  } from './sections';
+import { Hero, Leaderboard, UserInput, Topthree, Footer  } from './sections';
 
 import Nav from './components/Nav';
 
@@ -7,6 +7,9 @@ const App = () => (
     <Nav />
   <section>
     <Hero />
+  </section>
+  <section>
+    <UserInput />
   </section>
   <section>
     <Topthree />

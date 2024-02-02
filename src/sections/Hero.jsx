@@ -1,6 +1,6 @@
-
 const Hero = () => {
   return (
+    <>
     <hero className="hero min-h-screen bg-base-200">
       <div className="hero-content text-center">
         <div className="max-w-md">
@@ -11,6 +11,9 @@ const Hero = () => {
         </div>
       </div>
     </hero>
+   
+    </>
+   
   )
 }
 
