@@ -9,11 +9,7 @@ const App = () => (
     <Hero />
   </section>
   <section>
-    <Topthree 
-      Rank={1}
-      contributions={23417}
-    
-    />
+    <Topthree />
   </section>
   <section>
     <Leaderboard />
