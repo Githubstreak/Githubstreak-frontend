@@ -19,7 +19,7 @@ const Footer = () => {
   <div className="flex-auto">
   <p>Creator</p>
   <User  
-    className="flex flex-initial" 
+    className="flex " 
       name="Edmond Akwasi"
       description="Frontend Developer"
       avatarProps={{
