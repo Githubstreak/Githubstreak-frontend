@@ -53,15 +53,15 @@ export default function App() {
               as="button"
               className="transition-transform"
               color="success"
-              name="Jason Hughes"
+              name="EDMond Akwasi"
               size="sm"
-              src={"https://i.pravatar.cc/150?u=a042581f4e29026704d"}
+              src={""}
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">edmondakwasi111@gmail.com</p>
             </DropdownItem>
             <DropdownItem key="settings">Rank 2</DropdownItem>
             {/* <DropdownItem key="team_settings"></DropdownItem> */}

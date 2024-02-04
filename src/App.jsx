@@ -1,4 +1,4 @@
-import { Hero, Leaderboard, Topthree, Footer  } from './sections';
+import { Hero, Leaderboard, Topthree, CommunityLead, Footer  } from './sections';
 
 import Nav from './components/Nav';
 
@@ -13,6 +13,9 @@ const App = () => (
   </section>
   <section>
     <Leaderboard />
+  </section>
+  <section>
+    <CommunityLead />
   </section>
   <section>
     <Footer />
