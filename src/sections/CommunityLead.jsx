@@ -3,10 +3,13 @@ import {User} from "@nextui-org/react";
 const CommunityLead = () => {
   return (
     <>
-    <div>
+    <div  class="flex justify-center items-center">
+      <div> 
         <b>"Consistency Beats Talent"</b>
-        <p> A message here</p>
-    </div>
+      </div>
+        <div><p> a message here</p></div>
+        
+    
     <User   
       name="Edmond Akwasi"
       description="Githubstreak Community Lead"
@@ -14,6 +17,7 @@ const CommunityLead = () => {
         src: ""
       }}
     />
+    </div>
     </>
   );
 
