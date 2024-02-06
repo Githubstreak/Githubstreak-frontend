@@ -183,7 +183,7 @@ const Leaderboard = () => {
               </DropdownMenu>
             </Dropdown>
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+              <DropdownTrigger className="sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat" color="success">
                   Columns
                 </Button>
@@ -262,7 +262,7 @@ const Leaderboard = () => {
 
   return (
     <Table
-      className="p-10"
+      className="p-10 xl: p-24"
       color="success"
       isHeaderSticky
       bottomContent={bottomContent}
