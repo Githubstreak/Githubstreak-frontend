@@ -21,7 +21,7 @@ const Topthree = () => {
   ];
 
   return (
-    <div className="gap-5 grid grid-cols-2 sm:grid-cols-4 p-10">
+    <div className="gap-5 grid grid-cols-2 place-items-center sm:grid-cols-4 p-10">
       {list.map((item, index) => (
         <Card shadow="sm" className=" bg-green-800"key={index} isPressable onPress={() => console.log("item pressed")}>
           <CardBody className="overflow-visible p-5">

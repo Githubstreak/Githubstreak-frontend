@@ -4,8 +4,11 @@ const CommunityLead = () => {
   return (
     <>
     <div  class="grid place-items-center p-10">
-      <b>"Consistency Beats Talent"</b>
-      <p  class="mb-5">The quick brown fox jumps over the lazy dog</p>
+      <b class="mb-2 text-4xl">"Consistency Beats Talent"</b>
+      <p  class="mb-5 text-xl" >Consistency beats talent
+      because it is more sustainable, adaptable, 
+      and rewarding. <br /> It helps one improve skills, 
+      achieve goals, and overcome challenges.</p>
     <User 
       name="Edmond Akwasi"
       description="Githubstreak Community Lead"
