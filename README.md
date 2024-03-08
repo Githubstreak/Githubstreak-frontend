@@ -31,7 +31,7 @@ We welcome contributions from developers of all skill levels! Please follow our 
 
 ## Code of Conduct
 
-We aim to foster an open and welcoming community. Please review our [Code of Conduct](../contibuting.md) to understand the expectations for participation in this project.
+We aim to foster an open and welcoming community. Please review our [Code of Conduct](./contibuting.md) to understand the expectations for participation in this project.
 
 ## License
 
