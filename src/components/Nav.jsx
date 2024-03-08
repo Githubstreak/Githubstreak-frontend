@@ -32,7 +32,7 @@ export default function App() {
         <p className="font-extrabold text-3xl text-inherit text-green-900 sm: text-xl ">Githubstreak</p>
       </NavbarBrand>
 
-      <NavbarContent className="sm:flex gap-4" justify="center " items="center">
+      {/* <NavbarContent className="sm:flex gap-4" justify="center " items="center">
         <NavbarItem>
           <Link color="foreground" href="#" >
            Blog
@@ -43,7 +43,7 @@ export default function App() {
             Community
           </Link>
         </NavbarItem>
-      </NavbarContent>
+      </NavbarContent> */}
 
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
