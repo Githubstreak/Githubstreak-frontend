@@ -12,7 +12,7 @@ GitHubStreak is an open-source project that aims to rank developers based on the
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/edmondakwasi/githubstreak..git`
+1. Clone the repository: `git clone https://github.com/Edmondakwasi/githubstreak..git`
 2. Navigate to the project directory: `cd githubstreak.`
 3. Install dependencies: `npm install`
 4. Set up environment variables (see `.env.example` file)
