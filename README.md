@@ -27,7 +27,7 @@ GitHubStreak is an open-source project that aims to rank developers based on the
 
 ## Contributing
 
-We welcome contributions from developers of all skill levels! Please follow our [contibuting.md](CONTRIBUTING.md) to get started.
+We welcome contributions from developers of all skill levels! Please follow our [contributing.md](CONTRIBUTING.md) to get started.
 
 ## Code of Conduct
 
