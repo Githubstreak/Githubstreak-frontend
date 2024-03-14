@@ -3,6 +3,7 @@ const axios = require('axios');
 const app = express();
 const port = 3000; // or any other available port
 
+
 // Add CORS middleware
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
