@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import {
   Table,
   TableHeader,
@@ -20,6 +20,8 @@ import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {columns, users, statusOptions} from "./data";
 import {capitalize} from "./utils";
+import axios from 'axios';
+
 
 const statusColorMap = {
   active: "success",
@@ -29,6 +31,7 @@ const statusColorMap = {
 const INITIAL_VISIBLE_COLUMNS = ["rank", "developer", "streak", "contributions", "status"];
 
 const Leaderboard = () => {
+  const [rankedUsers, setRankedUsers] = React.useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -38,6 +41,20 @@ const Leaderboard = () => {
     column: "streak",
     direction: "ascending",
   });
+
+  useEffect(() => {
+    async function fetchRankedUsers() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/leaderboard');
+        setRankedUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching ranked user data:', error);
+      }
+    }
+
+    fetchRankedUsers();
+  }, []);
+
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -49,7 +66,7 @@ const Leaderboard = () => {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...users];
+    let filteredUsers = [...rankedUsers];
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
@@ -63,7 +80,7 @@ const Leaderboard = () => {
     }
 
     return filteredUsers;
-  }, [users, filterValue, statusFilter]);
+  }, [rankedUsers, filterValue, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -206,7 +223,7 @@ const Leaderboard = () => {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total users {users.length}</span>
+          <span className="text-default-400 text-small">Total users {rankedUsers.length}</span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
