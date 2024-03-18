@@ -1,4 +1,5 @@
 import React, { useEffect} from "react";
+// import axios from 'axios';
 import {
   Table,
   TableHeader,
@@ -20,7 +21,7 @@ import {SearchIcon} from "./SearchIcon";
 import {ChevronDownIcon} from "./ChevronDownIcon";
 import {columns, users, statusOptions} from "./data";
 import {capitalize} from "./utils";
-import axios from 'axios';
+
 
 
 const statusColorMap = {
