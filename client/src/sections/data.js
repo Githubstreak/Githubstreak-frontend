@@ -15,7 +15,7 @@ const statusOptions = [
 const users = [
   {
     rank: 1,
-    developer: "Edmon Akwasi",
+    developer: "Edmond Akwasi",
     role: "CEO",
     team: "Management",
     status: "active",
