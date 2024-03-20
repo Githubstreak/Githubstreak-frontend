@@ -44,7 +44,7 @@ async function fetchUsersFromGitHub() {
         const apiUrl = 'https://api.github.com/users';
         const headers = {
           'Accept': 'application/vnd.github+json',
-          'Authorization': 'Bearer YOUR_GITHUB_ACCESS_TOKEN'
+          'Authorization': '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'
         };
     
         // Fetch user data from the GitHub API
