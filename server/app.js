@@ -1,5 +1,3 @@
-import Express  from 'express';
-
 const express = require('express');
 const axios = require('axios');
 const app = express();
@@ -44,7 +42,7 @@ async function fetchUsersFromGitHub() {
         const apiUrl = 'https://api.github.com/users';
         const headers = {
           'Accept': 'application/vnd.github+json',
-          'Authorization': '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'
+          'Authorization': 'Bearer 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'
         };
     
         // Fetch user data from the GitHub API
