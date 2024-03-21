@@ -48,7 +48,7 @@ const users = [
   },
   {
     rank: 4,
-    developer: "William Howard",
+    developer: "Richard Ofori",
     role: "C.M.",
     team: "Marketing",
     status: "Active",
