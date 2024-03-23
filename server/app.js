@@ -1,8 +1,11 @@
 const express = require('express');
 const axios = require('axios');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
+const session = require('express-session');
+
 const app = express();
 const port = 3000; // or any other available port
-
 
 // Add CORS middleware
 app.use(function(req, res, next) {
@@ -11,9 +14,56 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Configure session middleware
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Initialize Passport and session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure GitHub OAuth strategy
+passport.use(new GitHubStrategy({
+  clientID: 'your-client-id',
+  clientSecret: 'your-client-secret',
+  callbackURL: 'http://localhost:3000//auth/github/callback'
+},
+(accessToken, refreshToken, profile, done) => {
+  // Save the user profile in session or database
+  return done(null, profile);
+}
+));
+
+// Serialize and deserialize user for session management
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
+
+// Authentication routes
+app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+
+app.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication, redirect to homepage or profile page
+    res.redirect('/');
+  });
+
 // API routes
-app.get('/api/leaderboard', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
+    // Ensure user is authenticated before accessing the API
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     // Fetch user data from GitHub API
     const users = await fetchUsersFromGitHub();
 
