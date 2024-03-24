@@ -16,7 +16,7 @@ app.use(function(req, res, next) {
 
 // Configure session middleware
 app.use(session({
-  secret: 'your-secret-key',
+  secret: '203d1dae0f975543389d',
   resave: false,
   saveUninitialized: true
 }));
@@ -27,8 +27,8 @@ app.use(passport.session());
 
 // Configure GitHub OAuth strategy
 passport.use(new GitHubStrategy({
-  clientID: 'your-client-id',
-  clientSecret: 'your-client-secret',
+  clientID: '203d1dae0f975543389d',
+  clientSecret: 'e65c79b6f85728e79e176b2ff22067feb9d2fb67',
   callbackURL: 'http://localhost:3000//auth/github/callback'
 },
 (accessToken, refreshToken, profile, done) => {
