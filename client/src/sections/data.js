@@ -37,7 +37,7 @@ const users = [
   },
   {
     rank: 3,
-    developer: "Jane Fisher",
+    developer: "Scott Mount",
     role: "Sr. Dev",
     team: "Development",
     status: "active",
