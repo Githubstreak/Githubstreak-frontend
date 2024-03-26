@@ -48,7 +48,7 @@ const users = [
   },
   {
     rank: 4,
-    developer: "Richard Ofori",
+    developer: "Ekow Gyepi",
     role: "C.M.",
     team: "Marketing",
     status: "Active",
