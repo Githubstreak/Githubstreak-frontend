@@ -59,7 +59,7 @@ const users = [
   },
   {
     rank: 5,
-    developer: "Kristen Copper",
+    developer: "Mathew Hitler",
     role: "S. Manager",
     team: "Sales",
     status: "active",
