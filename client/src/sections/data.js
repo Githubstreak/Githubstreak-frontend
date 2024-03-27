@@ -70,7 +70,7 @@ const users = [
   },
   {
     rank: 6,
-    developer: "Brian Kim",
+    developer: "Adolf hitler",
     role: "P. Manager",
     team: "Management",
     streak: "29",
