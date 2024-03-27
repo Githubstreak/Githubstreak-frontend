@@ -81,7 +81,7 @@ const users = [
   },
   {
     rank: 7,
-    developer: "Michael Hunt",
+    developer: "Iddrisu seidu",
     role: "Designer",
     team: "Design",
     status: "paused",
