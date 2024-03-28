@@ -124,7 +124,7 @@ const users = [
   },
   {
     rank: 11,
-    developer: "Brandon Stevens",
+    developer: "Abraham lincon",
     role: "Jr. Dev",
     team: "Development",
     status: "active",
