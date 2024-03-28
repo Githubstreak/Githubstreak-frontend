@@ -113,7 +113,7 @@ const users = [
   },
   {
     rank: 10,
-    developer: "Emma Adams",
+    developer: "Adams olabode",
     role: "Ops Manager",
     team: "Operations",
     status: "active",
