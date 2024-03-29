@@ -146,7 +146,7 @@ const users = [
   },
   {
     rank: 13,
-    developer: "Oliver Scott",
+    developer: "Good stuff",
     role: "S. Manager",
     team: "Security",
     status: "active",
