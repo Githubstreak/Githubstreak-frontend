@@ -157,7 +157,7 @@ const users = [
   },
   {
     rank: 14,
-    developer: "Grace Allen",
+    developer: "kudus",
     role: "M. Specialist",
     team: "Marketing",
     status: "active",
