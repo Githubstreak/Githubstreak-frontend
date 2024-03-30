@@ -179,7 +179,7 @@ const users = [
   },
   {
     rank: 16,
-    developer: "Ava Perez",
+    developer: "Elom kumah",
     role: "Manager",
     team: "Sales",
     status: "active",
