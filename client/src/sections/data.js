@@ -1,4 +1,4 @@
-const columns = [
+kconst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -223,7 +223,7 @@ const users = [
   },
   {
     rank: 20,
-    developer: "Mia Robinson",
+    developer: "Mariama Robinson",
     role: "Coordinator",
     team: "Operations",
     status: "active",
