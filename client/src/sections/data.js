@@ -26,7 +26,7 @@ const users = [
   },
   {
     rank: 2,
-    developer: "Zoey Lang",
+    developer: "Garby Rockson",
     role: "Tech Lead",
     team: "Development",
     status: "paused",
