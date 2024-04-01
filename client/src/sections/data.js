@@ -135,7 +135,7 @@ const users = [
   },
   {
     rank: 12,
-    developer: "Megan Richards",
+    developer: "Megan Richarjs",
     role: "P. Manager",
     team: "Product",
     status: "paused",
