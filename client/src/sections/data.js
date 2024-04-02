@@ -227,7 +227,7 @@ const users = [
     role: "Coordinator",
     team: "Operations",
     status: "active",
-    streak: "26",
+    streak: "70",
     contributions: "129",
     avatar: "https://i.pravatar.cc/150?img=45",
     email: "mia.robinson@example.com",
