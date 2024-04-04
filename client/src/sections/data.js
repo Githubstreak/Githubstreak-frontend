@@ -22,7 +22,7 @@ const users = [
     streak: "30",
     contributions: "23417",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    email: "tony.reichert@example.com",
+    email: "edmondakwasi.reichert@example.com",
   },
   {
     rank: 2,
