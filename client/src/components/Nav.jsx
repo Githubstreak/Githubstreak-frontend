@@ -16,19 +16,24 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false); // State to track login status
   const [user, setUser] = useState(null); // State to store user information
 
-  // Function to handle login
   const handleLogin = async () => {
     try {
-      // Make a request to the backend to initiate GitHub OAuth flow
-      const response = await axios.get('/auth/github');
-      // If the request is successful, update login status
-      if (response.status === 200) {
-        setLoggedIn(true);
-      }
+      // Redirect the user to the GitHub authentication page
+      window.location.href = "http://localhost:3000/auth/github";
     } catch (error) {
       console.error('Error logging in:', error);
     }
   };
+  
+  const LoginButton = () => {
+    return (
+      <Button color="success" onClick={handleLogin}>
+        Log In with GitHub
+      </Button>
+    );
+  };
+  
+
 
   // Function to handle logout
   const handleLogout = async () => {
