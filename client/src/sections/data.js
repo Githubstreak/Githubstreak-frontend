@@ -225,7 +225,7 @@ const users = [
     rank: 20,
     developer: "Mariama Robinson",
     role: "Coordinator",
-    team: "Operations",
+    team: "Coordination",
     status: "active",
     streak: "70",
     contributions: "129",
