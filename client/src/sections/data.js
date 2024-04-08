@@ -219,7 +219,7 @@ const users = [
     streak: "32",
     contributions: "290",
     avatar: "https://i.pravatar.cc/150?img=50",
-    email: "lucas.harris@example.com",
+    email: "rockson.harris@example.com",
   },
   {
     rank: 20,
