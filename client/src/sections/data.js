@@ -230,7 +230,7 @@ const users = [
     streak: "70",
     contributions: "129",
     avatar: "https://i.pravatar.cc/150?img=45",
-    email: "mia.robinson@example.com",
+    email: "mariama.robinson@example.com",
   },
 ];
 
