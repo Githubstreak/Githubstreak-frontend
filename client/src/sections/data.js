@@ -30,7 +30,7 @@ const users = [
     role: "Tech Lead",
     team: "Development",
     status: "paused",
-    streak: "56",
+    streak: "80",
     contributions: "11107",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
     email: "Garby.lang@example.com",
