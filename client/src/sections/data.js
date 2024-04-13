@@ -49,7 +49,7 @@ const users = [
   {
     rank: 4,
     developer: "Ekow Gyepi",
-    role: "C.M.",
+    role: "CFO",
     team: "Marketing",
     status: "Active",
     streak: "50",
