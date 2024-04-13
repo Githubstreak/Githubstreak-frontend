@@ -82,7 +82,7 @@ const users = [
   {
     rank: 7,
     developer: "Iddrisu seidu",
-    role: "Designer",
+    role: "frontend  Designer",
     team: "Design",
     status: "paused",
     streak: "87",
