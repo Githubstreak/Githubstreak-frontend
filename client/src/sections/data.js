@@ -125,7 +125,7 @@ const users = [
   {
     rank: 11,
     developer: "Abraham lincon",
-    role: "Jr. Dev",
+    role: "Sr. Dev",
     team: "Development",
     status: "active",
     streak: "22",
