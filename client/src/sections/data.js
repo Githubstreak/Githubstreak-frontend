@@ -148,7 +148,7 @@ const users = [
     rank: 13,
     developer: "Good stuff",
     role: "S. Manager",
-    team: "Security",
+    team: "co-worker",
     status: "active",
     streak: "37",
     contributions: "29",
