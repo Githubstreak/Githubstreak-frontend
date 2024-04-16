@@ -50,7 +50,7 @@ const users = [
     rank: 4,
     developer: "Ekow Gyepi",
     role: "CFO",
-    team: "Marketing",
+    team: "public speaking",
     status: "Active",
     streak: "50",
     contributions: "578",
