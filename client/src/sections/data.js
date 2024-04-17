@@ -136,7 +136,7 @@ const users = [
   {
     rank: 12,
     developer: "Megan Richarjs",
-    role: "P. Manager",
+    role: "manager",
     team: "Product",
     status: "paused",
     streak: "28",
