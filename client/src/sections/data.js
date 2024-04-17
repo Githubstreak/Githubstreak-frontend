@@ -27,7 +27,7 @@ const users = [
   {
     rank: 2,
     developer: "Garby Rockson",
-    role: "Tech Lead",
+    role: "member",
     team: "Development",
     status: "paused",
     streak: "80",
