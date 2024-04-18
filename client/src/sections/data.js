@@ -38,7 +38,7 @@ const users = [
   {
     rank: 3,
     developer: "Scott Mount",
-    role: "Jr. Dev",
+    role: "Devrel",
     team: "Development",
     status: "active",
     streak: "97",
