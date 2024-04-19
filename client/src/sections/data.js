@@ -105,7 +105,7 @@ const users = [
     rank: 9,
     developer: "Frank Harrison",
     role: "F. Manager",
-    team: "Finance",
+    team: "operation",
     status: "Active",
     streak: "33",
     avatar: "https://i.pravatar.cc/150?img=4",
