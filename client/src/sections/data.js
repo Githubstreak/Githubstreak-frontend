@@ -94,7 +94,7 @@ const users = [
     rank: 8,
     developer: "Samantha Brooks",
     role: "HR Manager",
-    team: "HR",
+    team: "HR team",
     status: "active",
     streak: "31",
     contributions: "29",
