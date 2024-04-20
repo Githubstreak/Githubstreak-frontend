@@ -19,7 +19,7 @@ const users = [
     role: "CEO",
     team: "Management",
     status: "active",
-    streak: "30",
+    streak: "40",
     contributions: "23419",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     email: "edmondakwasi.reichert@example.com",
