@@ -55,7 +55,7 @@ const users = [
     streak: "50",
     contributions: "578",
     avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
-    email: "Ekow.howard@example.com",
+    email: "Ekow.howard23@example.com",
   },
   {
     rank: 5,
