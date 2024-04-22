@@ -33,7 +33,7 @@ const users = [
     streak: "80",
     contributions: "11107",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    email: "Garby.lang@example.com",
+    email: "Garby.lang11@example.com",
   },
   {
     rank: 3,
