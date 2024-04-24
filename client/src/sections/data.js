@@ -170,7 +170,7 @@ const users = [
     rank: 15,
     developer: "Noah Carter",
     role: "IT Specialist",
-    team: "I. Technology",
+    team: "IT.Technology",
     status: "paused",
     streak: "31",
     contributions: "29",
