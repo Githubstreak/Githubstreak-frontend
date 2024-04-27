@@ -1,4 +1,4 @@
-const columns = [
+ticonst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -96,7 +96,7 @@ const users = [
     role: "HR Manager",
     team: "HR team",
     status: "active",
-    streak: "39",
+    streak: "49",
     contributions: "29",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e27027008d",
     email: "samantha.brooks@example.com",
