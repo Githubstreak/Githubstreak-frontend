@@ -96,7 +96,7 @@ const users = [
     role: "HR Manager",
     team: "HR team",
     status: "active",
-    streak: "49",
+    streak: "50",
     contributions: "29",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e27027008d",
     email: "samantha.brooks@example.com",
