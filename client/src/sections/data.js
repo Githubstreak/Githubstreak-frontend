@@ -117,7 +117,7 @@ const users = [
     role: "Ops Manager",
     team: "Operations",
     status: "active",
-    streak: "45",
+    streak: "456",
     contributions: "49",
     avatar: "https://i.pravatar.cc/150?img=5",
     email: "adam.adams@example.com",
