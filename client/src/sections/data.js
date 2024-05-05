@@ -73,7 +73,7 @@ const users = [
     developer: "Adolf hitler",
     role: "P. Manager",
     team: "Management",
-    streak: "99",
+    streak: "109",
     contributions: "123567",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     email: "Adolf.kim@example.com",
