@@ -161,7 +161,7 @@ const users = [
     role: "M. Specialist",
     team: "Marketing",
     status: "active",
-    streak: "414",
+    streak: "419",
     contributions: "29",
     avatar: "https://i.pravatar.cc/150?img=16",
     email: "kudus.allen@example.com",
