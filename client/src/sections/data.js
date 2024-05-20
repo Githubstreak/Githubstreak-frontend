@@ -172,7 +172,7 @@ const users = [
     role: "IT Specialist",
     team: "IT.Technology",
     status: "paused",
-    streak: "31",
+    streak: "317",
     contributions: "29",
     avatar: "https://i.pravatar.cc/150?img=15",
     email: "noah.carter@example.com",
