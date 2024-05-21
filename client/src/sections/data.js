@@ -216,7 +216,7 @@ const users = [
     role: "Administrator",
     team: "Information Technology",
     status: "paused",
-    streak: "344",
+    streak: "3644",
     contributions: "2290",
     avatar: "https://i.pravatar.cc/150?img=50",
     email: "rockson.harris@example.com",
