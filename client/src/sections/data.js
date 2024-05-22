@@ -205,7 +205,7 @@ const users = [
     role: "QA Analyst",
     team: "Testing",
     status: "active",
-    streak: "247",
+    streak: "3247",
     contributions: "19",
     avatar: "https://i.pravatar.cc/150?img=29",
     email: "sophia.taylor@example.com",
