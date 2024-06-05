@@ -1,4 +1,4 @@
-const columns = [
+iconst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -128,7 +128,7 @@ const users = [
     role: "Sr. Dev",
     team: "Development",
     status: "active",
-    streak: "9424",
+    streak: "94524",
     contributions: "29",
     avatar: "https://i.pravatar.cc/150?img=8",
     email: "abraham.stevens@example.com",
