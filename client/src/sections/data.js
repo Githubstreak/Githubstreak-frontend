@@ -1,4 +1,4 @@
-iconst columns = [
+hiiconst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -19,7 +19,7 @@ const users = [
     role: "CEO",
     team: "Management",
     status: "active",
-    streak: "59678",
+    streak: "79678",
     contributions: "23419",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     email: "edmondakwasi.reichert@example.com",
