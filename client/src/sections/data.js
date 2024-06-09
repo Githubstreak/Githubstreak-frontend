@@ -85,7 +85,7 @@ const users = [
     role: "frontend  Developer",
     team: "Design",
     status: "paused",
-    streak: "11616",
+    streak: "71616",
     contributions: "897",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29027007d",
     email: "Iddrisu.hunt@example.com",
