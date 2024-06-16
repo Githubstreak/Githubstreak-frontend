@@ -1,4 +1,4 @@
-const columns = [
+uuconst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -53,7 +53,7 @@ const users = [
     team: "public speaking",
     status: "Active",
     streak: "87788",
-    contributions: "5797",
+    contributions: "57897",
     avatar: "https://i.pravatar.cc/150?u=a048581f4e29026701d",
     email: "Ekow.howard23@example.com",
   },
