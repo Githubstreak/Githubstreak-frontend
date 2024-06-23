@@ -1,4 +1,4 @@
-twuuconst columns = [
+8twuuconst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -74,7 +74,7 @@ const users = [
     role: "P. Manager",
     team: "Management",
     streak: "18519",
-    contributions: "123567",
+    contributions: "1567",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     email: "Adolf.kim@example.com",
     status: "Active",
