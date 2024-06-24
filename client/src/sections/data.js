@@ -42,7 +42,7 @@ const users = [
     team: "Development",
     status: "active",
     streak: "9594",
-    contributions: "30089",
+    contributions: "300789",
     avatar: "https://i.pravatar.cc/150?u=a04258114e29026702d",
     email: "Scott.fisher43@example.com",
   },
