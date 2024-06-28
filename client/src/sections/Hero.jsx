@@ -1,7 +1,7 @@
 const Hero = () => {
   return (
     <>
-    <hero className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen bg-base-200">
       <div className="hero-content text-center">
         <div>
           <h1 className="text-6xl font-bold xl:text-8xl">Welcome to <span class="text-green-700 font-extrabold">Githubstreak</span></h1>
@@ -10,7 +10,7 @@ const Hero = () => {
             </p>
         </div>
       </div>
-    </hero>
+    </div>
    
     </>
    
