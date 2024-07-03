@@ -1,5 +1,5 @@
-import React, { useEffect} from "react";
-import axios from 'axios';
+import React, { useEffect } from "react";
+import axios from "axios";
 import {
   Table,
   TableHeader,
@@ -17,25 +17,31 @@ import {
   User,
   Pagination,
 } from "@nextui-org/react";
-import {SearchIcon} from "./SearchIcon";
-import {ChevronDownIcon} from "./ChevronDownIcon";
-import {columns, users, statusOptions} from "./data";
-import {capitalize} from "./utils";
-
-
+import { SearchIcon } from "./SearchIcon";
+import { ChevronDownIcon } from "./ChevronDownIcon";
+import { columns, users, statusOptions } from "./data";
+import { capitalize } from "./utils";
 
 const statusColorMap = {
   active: "success",
   paused: "danger",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["rank", "developer", "streak", "contributions", "status"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "rank",
+  "developer",
+  "streak",
+  "contributions",
+  "status",
+];
 
 const Leaderboard = () => {
   const [rankedUsers, setRankedUsers] = React.useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(new Set(INITIAL_VISIBLE_COLUMNS));
+  const [visibleColumns, setVisibleColumns] = React.useState(
+    new Set(INITIAL_VISIBLE_COLUMNS),
+  );
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [sortDescriptor, setSortDescriptor] = React.useState({
@@ -46,10 +52,10 @@ const Leaderboard = () => {
   useEffect(() => {
     async function fetchRankedUsers() {
       try {
-        const response = await axios.get('http://localhost:3000/api/leaderboard');
+        const response = await axios.get("http://localhost:3000/");
         setRankedUsers(response.data);
       } catch (error) {
-        console.error('Error fetching ranked user data:', error);
+        console.error("Error fetching ranked user data:", error);
       }
     }
 
@@ -59,11 +65,12 @@ const Leaderboard = () => {
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
-
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
 
-    return columns.filter((column) => Array.from(visibleColumns).includes(column.uid));
+    return columns.filter((column) =>
+      Array.from(visibleColumns).includes(column.uid),
+    );
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
@@ -74,7 +81,10 @@ const Leaderboard = () => {
         user.name.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
-    if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+    if (
+      statusFilter !== "all" &&
+      Array.from(statusFilter).length !== statusOptions.length
+    ) {
       filteredUsers = filteredUsers.filter((user) =>
         Array.from(statusFilter).includes(user.status),
       );
@@ -109,7 +119,7 @@ const Leaderboard = () => {
       case "developer":
         return (
           <User
-            avatarProps={{radius: "lg", src: user.avatar}}
+            avatarProps={{ radius: "lg", src: user.avatar }}
             description={user.email}
             name={cellValue}
           >
@@ -120,12 +130,19 @@ const Leaderboard = () => {
         return (
           <div className="flex flex-col">
             <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">{user.team}</p>
+            <p className="text-bold text-tiny capitalize text-default-400">
+              {user.team}
+            </p>
           </div>
         );
       case "status":
         return (
-          <Chip className="capitalize" color={statusColorMap[user.status]} size="sm" variant="flat">
+          <Chip
+            className="capitalize"
+            color={statusColorMap[user.status]}
+            size="sm"
+            variant="flat"
+          >
             {cellValue}
           </Chip>
         );
@@ -160,10 +177,10 @@ const Leaderboard = () => {
     }
   }, []);
 
-  const onClear = React.useCallback(()=>{
-    setFilterValue("")
-    setPage(1)
-  },[])
+  const onClear = React.useCallback(() => {
+    setFilterValue("");
+    setPage(1);
+  }, []);
 
   const topContent = React.useMemo(() => {
     return (
@@ -181,7 +198,11 @@ const Leaderboard = () => {
           <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat" color="success">
+                <Button
+                  endContent={<ChevronDownIcon className="text-small" />}
+                  variant="flat"
+                  color="success"
+                >
                   Status
                 </Button>
               </DropdownTrigger>
@@ -202,7 +223,11 @@ const Leaderboard = () => {
             </Dropdown>
             <Dropdown>
               <DropdownTrigger className="sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat" color="success">
+                <Button
+                  endContent={<ChevronDownIcon className="text-small" />}
+                  variant="flat"
+                  color="success"
+                >
                   Columns
                 </Button>
               </DropdownTrigger>
@@ -224,7 +249,9 @@ const Leaderboard = () => {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total users {rankedUsers.length}</span>
+          <span className="text-default-400 text-small">
+            Total users {rankedUsers.length}
+          </span>
           <label className="flex items-center text-default-400 text-small">
             Rows per page:
             <select
@@ -267,10 +294,22 @@ const Leaderboard = () => {
           onChange={setPage}
         />
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" color="success" onPress={onPreviousPage}>
+          <Button
+            isDisabled={pages === 1}
+            size="sm"
+            variant="flat"
+            color="success"
+            onPress={onPreviousPage}
+          >
             Previous
           </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" color="success" onPress={onNextPage}>
+          <Button
+            isDisabled={pages === 1}
+            size="sm"
+            variant="flat"
+            color="success"
+            onPress={onNextPage}
+          >
             Next
           </Button>
         </div>
@@ -278,9 +317,11 @@ const Leaderboard = () => {
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
+  console.log(rankedUsers);
+
   return (
     <Table
-      className="p-10 xl: p-24"
+      className="p-10 xl:p-24"
       color="success"
       isHeaderSticky
       bottomContent={bottomContent}
@@ -310,12 +351,15 @@ const Leaderboard = () => {
       <TableBody emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
           <TableRow key={item.rank}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            {(columnKey) => (
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
+            )}
           </TableRow>
         )}
       </TableBody>
     </Table>
   );
-}
+};
 
 export default Leaderboard;
+

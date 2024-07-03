@@ -1,4 +1,4 @@
-const columns = [
+hoconst columns = [
   {name: "RANK", uid: "rank", sortable: true},
   {name: "DEVELOPER", uid: "developer"},
   {name: "STREAK", uid: "streak", sortable: true},
@@ -19,7 +19,7 @@ const users = [
     role: "CEO",
     team: "Management",
     status: "active",
-    streak: "99678",
+    streak: "89678",
     contributions: "234719",
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     email: "edmondakwasi.reichert@example.com",
@@ -107,7 +107,7 @@ const users = [
     role: "F. Manager",
     team: "operation",
     status: "Active",
-    streak: "757778",
+    streak: "857778",
     avatar: "https://i.pravatar.cc/150?img=4",
     email: "frank.harrison@example.com",
   },
