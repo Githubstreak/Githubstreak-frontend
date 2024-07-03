@@ -28,7 +28,7 @@ const Topthree = () => {
           <User   
       name="Edmond Akwasi"
       description={(
-        <Link href="https://twitter.com/Techenvy6" className="text-default-500" size="sm" isExternal>
+        <Link href="https://twitter.com/edmond_akwasi" className="text-default-500" size="sm" isExternal>
           @Edmondakwasi
         </Link>
       )}
