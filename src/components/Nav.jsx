@@ -6,10 +6,24 @@ import {
   UserButton,
   useUser,
 } from "@clerk/clerk-react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function App() {
   const { user } = useUser();
+  const [userStats, setUserStats] = useState();
 
+  useEffect(() => {
+    const getUserStats = async (user) => {
+      if (!user) return;
+
+      const res = await axios.get(`http://localhost:3001?id=${user.id}`);
+
+      setUserStats(res.data);
+    };
+
+    getUserStats(user);
+  }, [user]);
   return (
     <Navbar>
       <NavbarBrand>
@@ -25,6 +39,8 @@ export default function App() {
         <SignedIn>
           <UserButton />
         </SignedIn>
+
+        {userStats && <p>{userStats.currentStreak.count}</p>}
       </NavbarContent>
     </Navbar>
   );
