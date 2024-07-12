@@ -65,8 +65,12 @@ const Leaderboard = () => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return rankedUsers.slice(start, end);
-  }, [page, rankedUsers, rowsPerPage]);
+    return rankedUsers
+      .filter((user) =>
+        user.username.toLowerCase().includes(filterValue.toLowerCase()),
+      )
+      .slice(start, end);
+  }, [page, rankedUsers, rowsPerPage, filterValue]);
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
