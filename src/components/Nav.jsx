@@ -1,4 +1,4 @@
-import { Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, Link } from "@nextui-org/react";
 import {
   SignedIn,
   SignedOut,
@@ -7,6 +7,7 @@ import {
   useUser,
 } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
+import { FaFire } from "react-icons/fa";
 import axios from "axios";
 
 export default function App() {
@@ -29,7 +30,9 @@ export default function App() {
   return (
     <Navbar className="bg-gray-800">
       <NavbarBrand>
-        <img height={150} width={150} src="/logo.png" />
+        <Link href="/">
+          <img height={150} width={150} src="/logo.png" />
+        </Link>
       </NavbarBrand>
 
       <NavbarContent as="div" justify="end">
@@ -41,7 +44,12 @@ export default function App() {
         </SignedIn>
 
         {userStats && (
-          <p className="text-white">{userStats.currentStreak.count}</p>
+          <p className="flex items-center text-white">
+            <span>
+              <FaFire size={20} color="green" />
+            </span>
+            {userStats.currentStreak.count}
+          </p>
         )}
       </NavbarContent>
     </Navbar>
