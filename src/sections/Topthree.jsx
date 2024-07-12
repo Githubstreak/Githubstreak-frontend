@@ -1,5 +1,5 @@
-import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
-import {User, Link} from "@nextui-org/react";
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import { User, Link } from "@nextui-org/react";
 
 const Topthree = () => {
   const list = [
@@ -21,21 +21,26 @@ const Topthree = () => {
   ];
 
   return (
-    <div className="gap-5 m-auto  grid grid-cols-1 place-items-center sm:grid-cols-4 p-10">
+    <div className="gap-5 m-auto grid lg:grid-cols-3 grid-cols-1 w-full p-10">
       {list.map((item, index) => (
-        <Card shadow="sm" className=" bg-green-900"key={index} isPressable onPress={() => console.log("item pressed")}>
+        <Card shadow="sm" className="bg-green-900" key={index}>
           <CardBody className="overflow-visible p-5">
-          <User   
-      name="Edmond Akwasi"
-      description={(
-        <Link href="https://twitter.com/edmond_akwasi" className="text-default-500" size="sm" isExternal>
-          @Edmondakwasi
-        </Link>
-      )}
-      avatarProps={{
-        src: "/"
-      }}
-    />
+            <User
+              name="Edmond Akwasi"
+              description={
+                <Link
+                  href="https://twitter.com/edmond_akwasi"
+                  className="text-default-500"
+                  size="sm"
+                  isExternal
+                >
+                  @Edmondakwasi
+                </Link>
+              }
+              avatarProps={{
+                src: "/",
+              }}
+            />
           </CardBody>
           <CardFooter className="text-small text-default-500">
             <b className="mr-8 ml-14">rank {item.rank}</b>
@@ -45,6 +50,6 @@ const Topthree = () => {
       ))}
     </div>
   );
-}
+};
 
 export default Topthree;
