@@ -16,6 +16,7 @@ import {
   Chip,
   User,
   Pagination,
+  Link,
 } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
@@ -47,7 +48,7 @@ const Leaderboard = () => {
 
   const { leaderboard, isLoading } = useGetLeaderboard();
 
-  const rankedUsers = leaderboard ?? []
+  const rankedUsers = leaderboard ?? [];
 
   const hasSearchFilter = Boolean(filterValue);
   const headerColumns = React.useMemo(() => {
@@ -73,11 +74,17 @@ const Leaderboard = () => {
     switch (columnKey) {
       case "developer":
         return (
-          <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
-            description={user.username}
-            name={user.username}
-          />
+          <Link
+            isExternal
+            href={`https://awesome-gh-insights.vercel.app/devs/${user.username}`}
+          >
+            <User
+              avatarProps={{ radius: "lg", src: user.avatar }}
+              description={user.username}
+              className="text-green-400"
+              name={user.username}
+            />
+          </Link>
         );
       case "streak":
         return (
@@ -261,8 +268,7 @@ const Leaderboard = () => {
 
   console.log(rankedUsers);
 
-
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Table
@@ -275,7 +281,6 @@ const Leaderboard = () => {
         wrapper: "max-h-[382px]",
       }}
       selectedKeys={selectedKeys}
-      selectionMode="multiple"
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"

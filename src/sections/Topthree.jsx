@@ -17,7 +17,7 @@ const Topthree = () => {
               name={user.username}
               description={
                 <Link
-                  href={`https://github.com/${user.username}`}
+                  href={`https://awesome-gh-insights.vercel.app/devs/${user.username}`}
                   className="text-white"
                   size="sm"
                   isExternal
