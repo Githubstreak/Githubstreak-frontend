@@ -21,6 +21,7 @@ import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { columns, users, statusOptions } from "./data";
 import { capitalize } from "./utils";
+import useGetLeaderboard from "../hooks/useGetLeaderboard";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
@@ -30,7 +31,6 @@ const INITIAL_VISIBLE_COLUMNS = [
 ];
 
 const Leaderboard = () => {
-  const [rankedUsers, setRankedUsers] = React.useState([]);
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -43,22 +43,11 @@ const Leaderboard = () => {
     direction: "ascending",
   });
 
-  useEffect(() => {
-    async function fetchRankedUsers() {
-      try {
-        const response = await axios.get(
-          "http://localhost:3001/v1/users/leaderboard",
-        );
-        setRankedUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching ranked user data:", error);
-      }
-    }
-
-    fetchRankedUsers();
-  }, []);
-
   const [page, setPage] = React.useState(1);
+
+  const { leaderboard, isLoading } = useGetLeaderboard();
+
+  const rankedUsers = leaderboard ?? []
 
   const hasSearchFilter = Boolean(filterValue);
   const headerColumns = React.useMemo(() => {
@@ -271,6 +260,9 @@ const Leaderboard = () => {
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
   console.log(rankedUsers);
+
+
+  if (isLoading) return <p>Loading...</p>
 
   return (
     <Table

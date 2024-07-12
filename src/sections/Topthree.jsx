@@ -1,50 +1,38 @@
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { User, Link } from "@nextui-org/react";
+import useGetLeaderboard from "../hooks/useGetLeaderboard";
 
 const Topthree = () => {
-  const list = [
-    {
-      rank: "1",
-      img: "",
-      contributions: "69k",
-    },
-    {
-      rank: "2",
-      img: "",
-      contributions: "30k",
-    },
-    {
-      rank: "3",
-      img: "",
-      contributions: "13k",
-    },
-  ];
+  const { topThree, isLoading } = useGetLeaderboard();
+
+  if (isLoading) return <p>Loading...</p>;
 
   return (
     <div className="gap-5 m-auto grid lg:grid-cols-3 grid-cols-1 w-full p-10">
-      {list.map((item, index) => (
-        <Card shadow="sm" className="bg-green-900" key={index}>
+      {topThree.map((user) => (
+        <Card shadow="sm" className="bg-green-900" key={user.username}>
           <CardBody className="overflow-visible p-5">
             <User
-              name="Edmond Akwasi"
+              className="text-white"
+              name={user.username}
               description={
                 <Link
-                  href="https://twitter.com/edmond_akwasi"
-                  className="text-default-500"
+                  href={`https://github.com/${user.username}`}
+                  className="text-white"
                   size="sm"
                   isExternal
                 >
-                  @Edmondakwasi
+                  {`@${user.username}`}
                 </Link>
               }
               avatarProps={{
-                src: "/",
+                src: user.avatar,
               }}
             />
           </CardBody>
-          <CardFooter className="text-small text-default-500">
-            <b className="mr-8 ml-14">rank {item.rank}</b>
-            <p>contributions {item.contributions}</p>
+          <CardFooter className="text-small text-white">
+            <b className="mr-8 ml-14">rank {user.rank}</b>
+            <p>contributions {user.contributions}</p>
           </CardFooter>
         </Card>
       ))}
