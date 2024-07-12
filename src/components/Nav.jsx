@@ -27,11 +27,9 @@ export default function App() {
     getUserStats(user);
   }, [user]);
   return (
-    <Navbar>
+    <Navbar className="bg-gray-800">
       <NavbarBrand>
-        <p className="font-extrabold text-3xl text-inherit text-green-900">
-          Githubstreak
-        </p>
+        <img height={150} width={150} src="/logo.png" />
       </NavbarBrand>
 
       <NavbarContent as="div" justify="end">
@@ -42,7 +40,9 @@ export default function App() {
           <UserButton />
         </SignedIn>
 
-        {userStats && <p>{userStats.currentStreak.count}</p>}
+        {userStats && (
+          <p className="text-white">{userStats.currentStreak.count}</p>
+        )}
       </NavbarContent>
     </Navbar>
   );
