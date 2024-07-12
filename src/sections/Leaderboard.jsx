@@ -22,17 +22,11 @@ import { ChevronDownIcon } from "./ChevronDownIcon";
 import { columns, users, statusOptions } from "./data";
 import { capitalize } from "./utils";
 
-const statusColorMap = {
-  active: "success",
-  paused: "danger",
-};
-
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
   "developer",
   "streak",
   "contributions",
-  "status",
 ];
 
 const Leaderboard = () => {
@@ -52,7 +46,9 @@ const Leaderboard = () => {
   useEffect(() => {
     async function fetchRankedUsers() {
       try {
-        const response = await axios.get("http://localhost:3000/");
+        const response = await axios.get(
+          "http://localhost:3001/v1/users/leaderboard",
+        );
         setRankedUsers(response.data);
       } catch (error) {
         console.error("Error fetching ranked user data:", error);
@@ -73,44 +69,14 @@ const Leaderboard = () => {
     );
   }, [visibleColumns]);
 
-  const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...rankedUsers];
-
-    if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
-      );
-    }
-    if (
-      statusFilter !== "all" &&
-      Array.from(statusFilter).length !== statusOptions.length
-    ) {
-      filteredUsers = filteredUsers.filter((user) =>
-        Array.from(statusFilter).includes(user.status),
-      );
-    }
-
-    return filteredUsers;
-  }, [rankedUsers, filterValue, statusFilter]);
-
-  const pages = Math.ceil(filteredItems.length / rowsPerPage);
+  const pages = Math.ceil(rankedUsers.length / rowsPerPage);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return filteredItems.slice(start, end);
-  }, [page, filteredItems, rowsPerPage]);
-
-  const sortedItems = React.useMemo(() => {
-    return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
-      const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-      return sortDescriptor.direction === "descending" ? -cmp : cmp;
-    });
-  }, [sortDescriptor, items]);
+    return rankedUsers.slice(start, end);
+  }, [page, rankedUsers, rowsPerPage]);
 
   const renderCell = React.useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
@@ -120,31 +86,17 @@ const Leaderboard = () => {
         return (
           <User
             avatarProps={{ radius: "lg", src: user.avatar }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
+            description={user.username}
+            name={user.username}
+          />
         );
-      case "role":
+      case "streak":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">{cellValue}</p>
-            <p className="text-bold text-tiny capitalize text-default-400">
-              {user.team}
+            <p className="text-bold text-small capitalize">
+              {user.currentStreak.count}
             </p>
           </div>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
         );
       default:
         return cellValue;
@@ -269,6 +221,7 @@ const Leaderboard = () => {
   }, [
     filterValue,
     statusFilter,
+    rankedUsers,
     visibleColumns,
     onRowsPerPageChange,
     users.length,
@@ -282,7 +235,7 @@ const Leaderboard = () => {
         <span className="w-[30%] text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
+            : `${selectedKeys.size} of ${rankedUsers.length} selected`}
         </span>
         <Pagination
           isCompact
@@ -348,7 +301,7 @@ const Leaderboard = () => {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No users found"} items={items}>
         {(item) => (
           <TableRow key={item.rank}>
             {(columnKey) => (
@@ -362,4 +315,3 @@ const Leaderboard = () => {
 };
 
 export default Leaderboard;
-

@@ -1,15 +1,15 @@
 const columns = [
-  {name: "RANK", uid: "rank", sortable: true},
-  {name: "DEVELOPER", uid: "developer"},
-  {name: "STREAK", uid: "streak", sortable: true},
-  {name: "CONTRIBUTIONS", uid: "contributions", sortable: true},
-  {name: "ROLE", uid: "role", sortable: true},
-  {name: "STATUS", uid: "status"},
+  { name: "RANK", uid: "rank", sortable: true },
+  { name: "DEVELOPER", uid: "developer" },
+  { name: "STREAK", uid: "streak", sortable: true },
+  { name: "CONTRIBUTIONS", uid: "contributions", sortable: true },
+  { name: "ROLE", uid: "role", sortable: true },
+  { name: "STATUS", uid: "status" },
 ];
 
 const statusOptions = [
-  {name: "Active", uid: "active"},
-  {name: "Paused", uid: "paused"},
+  { name: "Active", uid: "active" },
+  { name: "Paused", uid: "paused" },
 ];
 
 const users = [
@@ -234,4 +234,4 @@ const users = [
   },
 ];
 
-export {columns, users, statusOptions};
+export { columns, users, statusOptions };
