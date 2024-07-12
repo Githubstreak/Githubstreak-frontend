@@ -17,7 +17,9 @@ export default function App() {
     const getUserStats = async (user) => {
       if (!user) return;
 
-      const res = await axios.get(`http://localhost:3001?id=${user.id}`);
+      const res = await axios.get(
+        `http://localhost:3001/v1/users/stat?id=${user.id}`,
+      );
 
       setUserStats(res.data);
     };
