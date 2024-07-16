@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../utils/constants";
 
 const useGetLeaderboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,9 +13,7 @@ const useGetLeaderboard = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.get(
-        "http://localhost:3001/v1/users/leaderboard",
-      );
+      const response = await axios.get(`${API_URL}/v1/users/leaderboard`);
 
       setLeaderboard(response.data);
     } catch (e) {
