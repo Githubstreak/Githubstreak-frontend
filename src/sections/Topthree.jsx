@@ -8,12 +8,12 @@ const Topthree = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="gap-5 m-auto grid lg:grid-cols-3 grid-cols-1 w-full p-10">
+    <div className="gap-5 m-auto grid lg:grid-cols-3 grid-cols-1 w-full p-4  md:p-10">
       {topThree.map((user) => (
-        <Card shadow="sm" className="bg-green-900" key={user.username}>
+        <Card shadow="sm" className="bg-green-900 flex-row" key={user.username}>
           <CardBody className="overflow-visible p-5">
             <User
-              className="text-white"
+              className="text-white justify-start"
               name={user.username}
               description={
                 <Link
@@ -30,9 +30,9 @@ const Topthree = () => {
               }}
             />
           </CardBody>
-          <CardFooter className="text-small text-white">
-            <b className="mr-8 ml-14">rank {user.rank}</b>
-            <p>contributions {user.contributions}</p>
+          <CardFooter className="text-small text-white flex-col items-start justify-center w-[250px]">
+            <b className="">Rank {user.rank}</b>
+            <p>Contributions {user.contributions}</p>
           </CardFooter>
         </Card>
       ))}

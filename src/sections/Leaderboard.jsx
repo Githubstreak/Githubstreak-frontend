@@ -35,7 +35,7 @@ const Leaderboard = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
-    new Set(INITIAL_VISIBLE_COLUMNS),
+    new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -55,7 +55,7 @@ const Leaderboard = () => {
     if (visibleColumns === "all") return columns;
 
     return columns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid),
+      Array.from(visibleColumns).includes(column.uid)
     );
   }, [visibleColumns]);
 
@@ -67,7 +67,7 @@ const Leaderboard = () => {
 
     return rankedUsers
       .filter((user) =>
-        user.username.toLowerCase().includes(filterValue.toLowerCase()),
+        user.username.toLowerCase().includes(filterValue.toLowerCase())
       )
       .slice(start, end);
   }, [page, rankedUsers, rowsPerPage, filterValue]);
@@ -137,7 +137,7 @@ const Leaderboard = () => {
   const topContent = React.useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end">
+        <div className="flex justify-between gap-3 items-end ">
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
@@ -147,13 +147,14 @@ const Leaderboard = () => {
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className="flex gap-3">
+          <div className="flex gap-3 h-full">
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
+              <DropdownTrigger className="hidden sm:flex h-full">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                   color="success"
+                  className="h-full"
                 >
                   Status
                 </Button>
@@ -276,7 +277,7 @@ const Leaderboard = () => {
 
   return (
     <Table
-      className="p-10 xl:p-24"
+      className="p-4 md:p-10 xl:p-24"
       color="success"
       isHeaderSticky
       bottomContent={bottomContent}
