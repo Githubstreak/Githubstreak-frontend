@@ -1,4 +1,4 @@
-# GitHubStreak 
+# GitHubStreak
 
 GitHubStreak is an open-source project that aims to rank developers based on their contributions to GitHub repositories and the number of consecutive days they have committed code (known as a "streak"). This project serves as a valuable tool for developers to showcase their commitment and activity on GitHub, and for potential employers or collaborators to identify dedicated and productive contributors.
 
@@ -27,11 +27,11 @@ GitHubStreak is an open-source project that aims to rank developers based on the
 
 ## Contributing
 
-We welcome contributions from developers of all skill levels! Please follow our [contributing.md](CONTRIBUTING.md) to get started.
+We welcome contributions from developers of all skill levels! Please follow our [contributing.md](contributing.md) to get started.
 
 ## Code of Conduct
 
-We aim to foster an open and welcoming community. Please review our [Code of Conduct](contibuting.md) to understand the expectations for participation in this project.
+We aim to foster an open and welcoming community. Please review our [Code of Conduct](contributing.md) to understand the expectations for participation in this project.
 
 ## License
 
