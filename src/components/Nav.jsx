@@ -30,11 +30,16 @@ export default function App() {
     <Navbar className="bg-gray-800">
       <NavbarBrand>
         <Link href="/">
-          <img height={150} width={150} src="/logo.png" />
+          <img
+            height={150}
+            width={150}
+            src="/logo.png"
+            className="w-[100px] md:w-[150px]"
+          />
         </Link>
       </NavbarBrand>
 
-      <NavbarContent as="div" justify="end">
+      <NavbarContent as="div" justify="end" className="text-[#e0e0e0]">
         <SignedOut>
           <SignInButton />
         </SignedOut>
