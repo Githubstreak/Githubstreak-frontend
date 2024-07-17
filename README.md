@@ -12,15 +12,15 @@ GitHubStreak is an open-source project that aims to rank developers based on the
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/Edmondakwasi/githubstreak..git`
-2. Navigate to the project directory: `cd githubstreak.`
+1. Clone the repository: `git clone (https://github.com/Githubstreak/Githubstreak-frontend.git)`
+2. Navigate to the project directory `cd `
 3. Install dependencies: `npm install`
 4. Set up environment variables (see `.env.example` file)
 5. Start the development server: `npm start`
 
 ## Usage
 
-1. Visit the GitHubStreak website or application.
+1. Visit the GitHubStreak website or application. `https://githubstreak-frontend.vercel.app/`
 2. Connect your GitHub account to grant access to your contribution data.
 3. View the leaderboard to see the top-ranked developers based on contributions and streaks.
 4. Explore individual developer profiles for detailed information.
