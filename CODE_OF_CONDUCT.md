@@ -1,6 +1,6 @@
 ## GitHubStreak Code of Conduct
 
-GitHubStreak is committed to providing a friendly, safe, and welcoming environment for all contributors, regardless of experience level, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, nationality, or other defining characteristic. We expect all participants in our community to adhere to this Code of Conduct.
+GitHubStreak is committed to providing a friendly, safe, and welcoming environment for all contributors, regardless of experience level, gender identity and expression, sexual orientation, disability, personal appearance, body size, race, ethnicity, age, religion, nationality, or other defining characteristics. We expect all participants in our community to adhere to this Code of Conduct.
 
 ## Our Standards
 
@@ -26,7 +26,7 @@ Community leaders are responsible for clarifying and enforcing our standards of 
 
 Reporting Violations
 
-If you experience or witness behavior that violates this Code of Conduct, please report it here at edmondakwasi160@example.com. All reports will be kept confidential and will be reviewed and addressed promptly.
+If you experience or witness behavior that violates this Code of Conduct, please report it here at githubstreak@gmail.com. All reports will be kept confidential and will be reviewed and addressed promptly.
 
 Consequences of Violations
 Participants who engage in behavior that violates this Code of Conduct may face consequences, including but not limited to:
