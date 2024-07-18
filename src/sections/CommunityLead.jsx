@@ -12,6 +12,7 @@ const CommunityLead = () => {
         </p>
         <Link href={`https://x.com/edmond_akwasi`} size="sm" isExternal>
           <User
+            className="text-green-400"
             name="Edmond Akwasi"
             description="Githubstreak Community Lead"
             avatarProps={{
