@@ -80,8 +80,8 @@ const Leaderboard = () => {
         return (
           <div className="flex items-center">
             {user.rank === 1 && <FaMedal className="text-yellow-600 mr-1" />}
-            {user.rank === 2 && <FaMedal className="text-gray-600 mr-1" />}
-            {user.rank === 3 && <FaMedal className="text-brown-800 mr-1" />}
+            {user.rank === 2 && <FaMedal className="text-gray-700 mr-1" />}
+            {user.rank === 3 && <FaMedal className="text-brown-500 mr-1" />}
             {user.rank}
           </div>
         );
