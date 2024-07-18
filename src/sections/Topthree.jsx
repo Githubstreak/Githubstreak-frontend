@@ -8,10 +8,13 @@ const Topthree = () => {
   if (isLoading) return <p>Loading...</p>;
 
   return (
+  <>
+  <b className="p-10 ">Top Three Contributors: Last 7 days</b>
     <div className="gap-5 m-auto grid lg:grid-cols-3 grid-cols-1 w-full p-4  md:p-10">
-      <b>Top Three: Last 7 days</b>
+      
 
       {topThree.map((user) => (
+          
         <Card shadow="sm" className="bg-green-900 flex-row" key={user.username}>
           <CardBody className="overflow-visible p-5">
             <User
@@ -39,6 +42,7 @@ const Topthree = () => {
         </Card>
       ))}
     </div>
+    </>
   );
 };
 
