@@ -9,6 +9,8 @@ const Topthree = () => {
 
   return (
     <div className="gap-5 m-auto grid lg:grid-cols-3 grid-cols-1 w-full p-4  md:p-10">
+      <b>Top Three: Last 7 days</b>
+
       {topThree.map((user) => (
         <Card shadow="sm" className="bg-green-900 flex-row" key={user.username}>
           <CardBody className="overflow-visible p-5">
