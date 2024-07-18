@@ -5,9 +5,9 @@ const CommunityLead = () => {
     <>
       <div className="grid place-items-center p-10 ">
         <b className="mb-2 sm: text-2xl">"Consistency Beats Talent"</b>
-        <p className="mb-5 text-xl sm:text-medium">
+        <p className="mb-5 text-xl sm:text-medium text-justify">
           Consistency beats talent because it is more sustainable, adaptable,
-          and rewarding. <br /> It helps one improve skills, achieve goals, and
+          and rewarding. <br />It helps one improve skills, achieve goals, and
           overcome challenges.
         </p>
         <Link href={`https://x.com/edmond_akwasi`} size="sm" isExternal>

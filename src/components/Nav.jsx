@@ -1,4 +1,15 @@
-import { Navbar, NavbarBrand, NavbarContent, Link } from "@nextui-org/react";
+import { 
+  Navbar, 
+  Badge,
+  NavbarBrand, 
+  NavbarContent, 
+  Link, 
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu, 
+  DropdownItem,
+  NavbarItem,
+  Button } from "@nextui-org/react";
 import {
   SignedIn,
   SignedOut,
@@ -7,13 +18,14 @@ import {
   useUser,
 } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
-import { FaFire } from "react-icons/fa";
+import { FaChevronDown, FaBars, FaFire } from "react-icons/fa";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
 
 export default function App() {
   const { user } = useUser();
   const [userStats, setUserStats] = useState();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const getUserStats = async (user) => {
@@ -34,12 +46,83 @@ export default function App() {
             height={150}
             width={150}
             src="/logo.png"
-            className="w-[100px] md:w-[150px]"
+            className="w-[100px] md:w-[150px] p-8 sm:w-[120px] lg:w-[150px]"
           />
         </Link>
       </NavbarBrand>
+     
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <Dropdown>
 
-      <NavbarContent as="div" justify="end" className="text-[#e0e0e0]">
+          <NavbarItem>
+            <DropdownTrigger>
+              <Button
+                className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium"
+              >
+                Projects <FaChevronDown className="ml-1 pt-1" />
+              </Button>
+            </DropdownTrigger>
+          </NavbarItem>
+          
+          <DropdownMenu
+            className="w-[120px]"
+            itemClasses={{
+              base: "gap-4",
+            }}
+          >
+            <DropdownItem>
+              <Link href="/team-project" className="text-[#000000]">
+                Project Ideas
+              </Link>
+            </DropdownItem>
+
+            <DropdownItem>
+              <Link href="/solo-project" className="text-[#000000]">
+                Team Project 
+              </Link>
+            </DropdownItem>
+
+            <DropdownItem>
+              <Link href="/team-project" className="text-[#000000]">
+                Solo Project
+              </Link>
+            </DropdownItem>
+           
+          </DropdownMenu>
+        </Dropdown>
+
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-4">
+
+      <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
+
+        <Link 
+        href="/mentorship" 
+        className="relative text-[#e0e0e0] mt-2"
+        isIconOnly
+        variant="light"
+        
+        >
+          Mentorship
+        </Link>
+      
+    </Badge>
+
+        
+
+      </NavbarContent>
+      
+
+      <NavbarContent as="div" justify="end" className="hidden sm:flex gap-4 text-[#e0e0e0]">
+
+      <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
+         Blog
+        </Link>
+        <Link href="/faq" className="relative text-[#e0e0e0] mt-2">
+          FAQ
+        </Link>
+
         <SignedOut>
           <SignInButton />
         </SignedOut>
@@ -56,6 +139,78 @@ export default function App() {
           </p>
         )}
       </NavbarContent>
+
+      <Button
+        className="sm:hidden p-2 bg-success"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <FaBars />
+      </Button>
+
+      {menuOpen && (
+        <div className="sm:hidden absolute top-16 left-0 w-full bg-gray-800">
+          <NavbarContent className="flex flex-col gap-4 p-4">
+            <Dropdown>
+              <DropdownTrigger>
+                <Button className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium">
+                  Projects <FaChevronDown className="ml-1 pt-1" />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                className="w-[120px]"
+                itemClasses={{
+                  base: "gap-4",
+                }}
+              >
+                <DropdownItem>
+                  <Link href="/team-project" className="text-[#000000]">
+                    Project Ideas
+                  </Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link href="/solo-project" className="text-[#000000]">
+                    Team Project
+                  </Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Link href="/team-project" className="text-[#000000]">
+                    Solo Project
+                  </Link>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
+
+            <Link 
+              href="/mentorship" 
+              className="relative text-[#e0e0e0] mt-2"
+              isIconOnly
+              variant="light"
+        
+            >
+              Mentorship
+            </Link>
+      
+            </Badge>
+
+            <hr className="border-green-900 my-1" />
+
+            <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
+              Blog
+            </Link>
+            <Link href="/faq" className="relative text-[#e0e0e0] mt-2">
+              FAQ
+            </Link>
+
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </NavbarContent>
+        </div>
+      )}
     </Navbar>
   );
 }

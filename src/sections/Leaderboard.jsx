@@ -13,14 +13,13 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  Chip,
   User,
   Pagination,
   Link,
 } from "@nextui-org/react";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
-import { columns, users, statusOptions } from "./data";
+import { columns, users } from "./data";
 import { capitalize } from "./utils";
 import useGetLeaderboard from "../hooks/useGetLeaderboard";
 
@@ -38,7 +37,7 @@ const Leaderboard = () => {
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "streak",
     direction: "ascending",
@@ -149,32 +148,6 @@ const Leaderboard = () => {
           />
           <div className="flex gap-3 h-full">
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex h-full">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                  color="success"
-                  className="h-full"
-                >
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
               <DropdownTrigger className="sm:flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
@@ -233,11 +206,6 @@ const Leaderboard = () => {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${rankedUsers.length} selected`}
-        </span>
         <Pagination
           isCompact
           showControls
