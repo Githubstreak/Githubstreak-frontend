@@ -123,8 +123,8 @@ export default function App() {
           FAQ
         </Link>
 
-        <SignedOut>
-          <SignInButton />
+        <SignedOut >
+          <SignInButton className="mt-2"/>
         </SignedOut>
         <SignedIn>
           <UserButton />
