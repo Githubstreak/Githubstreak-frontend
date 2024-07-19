@@ -21,7 +21,9 @@ const App = () => {
       </section>
 
       {isLoading ? (
-        "Loading" //TODO: Show loading component
+        <div className="flex items-center justify-center">
+          <span className="text-center loading loading-spinner loading-md"></span>
+        </div>
       ) : (
         <Fragment>
           <section>
