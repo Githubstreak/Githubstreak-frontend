@@ -22,7 +22,6 @@ import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { columns, users } from "./data";
 import { capitalize } from "./utils";
-import useGetLeaderboard from "../hooks/useGetLeaderboard";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
@@ -31,7 +30,7 @@ const INITIAL_VISIBLE_COLUMNS = [
   "contributions",
 ];
 
-const Leaderboard = () => {
+const Leaderboard = ({ leaderboard }) => {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
@@ -46,7 +45,6 @@ const Leaderboard = () => {
 
   const [page, setPage] = React.useState(1);
 
-  const { leaderboard, isLoading } = useGetLeaderboard();
 
   const rankedUsers = leaderboard ?? [];
 
@@ -248,10 +246,6 @@ const Leaderboard = () => {
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
-
-  console.log(rankedUsers);
-
-  if (isLoading) return <p>Loading...</p>;
 
   return (
     <Table

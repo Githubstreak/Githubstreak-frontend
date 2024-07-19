@@ -1,12 +1,7 @@
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { User, Link } from "@nextui-org/react";
-import useGetLeaderboard from "../hooks/useGetLeaderboard";
 
-const Topthree = () => {
-  const { topThree, isLoading } = useGetLeaderboard();
-
-  if (isLoading) return <p>Loading...</p>;
-
+const Topthree = ({ topThree }) => {
   return (
   <>
   <b className="p-10 ">Top 1% Contributors: Last 7 days</b>
