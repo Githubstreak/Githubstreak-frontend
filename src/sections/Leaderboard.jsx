@@ -93,7 +93,7 @@ const Leaderboard = () => {
       case "streak":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">
+            <p className="capitalize text-bold text-small">
               {user.currentStreak.count}
             </p>
           </div>
@@ -137,7 +137,7 @@ const Leaderboard = () => {
   const topContent = React.useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end ">
+        <div className="flex items-end justify-between gap-3 ">
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
@@ -147,9 +147,9 @@ const Leaderboard = () => {
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className="flex gap-3 h-full">
+          <div className="flex h-full gap-3">
             <Dropdown>
-              <DropdownTrigger className="hidden sm:flex h-full">
+              <DropdownTrigger className="hidden h-full sm:flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
@@ -201,7 +201,7 @@ const Leaderboard = () => {
             </Dropdown>
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <span className="text-default-400 text-small">
             Total users {rankedUsers.length}
           </span>
@@ -232,7 +232,7 @@ const Leaderboard = () => {
 
   const bottomContent = React.useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
+      <div className="flex items-center justify-between px-2 py-2">
         <span className="w-[30%] text-small text-default-400">
           {selectedKeys === "all"
             ? "All items selected"
@@ -252,7 +252,7 @@ const Leaderboard = () => {
             isDisabled={pages === 1}
             size="sm"
             variant="flat"
-            color="success"
+            color="default"
             onPress={onPreviousPage}
           >
             Previous

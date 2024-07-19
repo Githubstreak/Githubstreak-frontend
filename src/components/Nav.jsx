@@ -30,11 +30,11 @@ export default function App() {
     <Navbar className="bg-gray-800">
       <NavbarBrand>
         <Link href="/">
-          <img
-            height={150}
-            width={150}
+        <img
+            height={100}
+            width={100}
             src="/logo.png"
-            className="w-[100px] md:w-[150px]"
+            className="w-[100px] md:w-[100px]"
           />
         </Link>
       </NavbarBrand>
