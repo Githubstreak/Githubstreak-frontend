@@ -46,7 +46,7 @@ export default function App() {
             height={150}
             width={150}
             src="/logo.png"
-            className="w-[135px] md:w-[150px] p-8 sm:w-[140px] lg:w-[150px]"
+            className="w-[145px] md:w-[150px] p-8 sm:w-[145px] lg:w-[150px]"
           />
         </Link>
       </NavbarBrand>
