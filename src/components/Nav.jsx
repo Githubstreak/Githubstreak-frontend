@@ -77,13 +77,13 @@ export default function App() {
             </DropdownItem>
 
             <DropdownItem>
-              <Link href="/solo-project" className="text-[#000000]">
+              <Link href="/team-project" className="text-[#000000]">
                 Team Project 
               </Link>
             </DropdownItem>
 
             <DropdownItem>
-              <Link href="/team-project" className="text-[#000000]">
+              <Link href="/solo-project" className="text-[#000000]">
                 Solo Project
               </Link>
             </DropdownItem>
@@ -168,12 +168,12 @@ export default function App() {
                   </Link>
                 </DropdownItem>
                 <DropdownItem>
-                  <Link href="/solo-project" className="text-[#000000]">
+                  <Link href="/team-project" className="text-[#000000]">
                     Team Project
                   </Link>
                 </DropdownItem>
                 <DropdownItem>
-                  <Link href="/team-project" className="text-[#000000]">
+                  <Link href="/solo-project" className="text-[#000000]">
                     Solo Project
                   </Link>
                 </DropdownItem>
