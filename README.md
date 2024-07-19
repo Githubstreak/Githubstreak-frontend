@@ -4,11 +4,15 @@ GitHubStreak is an open-source project that aims to rank developers based on the
 
 ## Features
 
-- **Contribution Ranking**: Developers are ranked based on the number of contributions (commits, pull requests, issues, etc.) they have made to GitHub repositories.
-- **Streak Tracking**: The application tracks and displays the longest streak of consecutive days a developer has committed code to a repository.
-- **Leaderboard**: A leaderboard showcases the top-ranked developers based on their contributions and streaks.
-- **User Profiles**: Detailed profiles for each developer, displaying their contributions, streak history, and other relevant information.
-- **GitHub Integration**: GitHubStreak seamlessly integrates with the GitHub API to fetch and analyze developer data.
+- **Contribution Ranking**: Rank developers based on their activity on GitHub, including the number of commits, pull requests, and issues. The ranking system highlights top contributors and provides insights into their activity levels.
+
+- **Streak Tracking**: Monitor and display the longest streak of consecutive days that a developer has committed code to their GitHub repositories. This feature helps track ongoing contributions and encourages consistent activity.
+
+- **Leaderboard**: A dynamic leaderboard that showcases the top developers based on their contributions and streaks. This motivates developers to maintain high levels of activity and engage with the community.
+
+- **User Profiles**: Comprehensive profiles for each developer that include their contribution statistics, streak history, and additional relevant details. Profiles offer a deeper view into individual achievements and activity trends.
+
+- **GitHub Integration**: Seamless integration with the GitHub API to fetch and analyze developer data. This ensures accurate and up-to-date information is displayed, providing a reliable overview of contributions and activity.
 
 ## Installation
 

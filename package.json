@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.2.7",
+    "@jridgewell/gen-mapping": "^0.3.5",
     "@nextui-org/react": "^2.4.3",
     "axios": "^1.6.8",
     "express-session": "^1.18.0",
