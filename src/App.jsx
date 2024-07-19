@@ -21,7 +21,7 @@ const App = () => {
       </section>
 
       {isLoading ? (
-        "Loading" //TODO: Show loading component
+        <span className="loading loading-spinner loading-md"></span>
       ) : (
         <Fragment>
           <section>
