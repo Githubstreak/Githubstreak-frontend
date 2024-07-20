@@ -13,7 +13,9 @@ const useGetLeaderboard = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.get(`${API_URL}/v1/users/leaderboard`);
+      const response = await axios.get(
+        `${API_URL}/v1/users/leaderboard?t=${Date.now()}`,
+      );
 
       setLeaderboard(response.data);
     } catch (e) {
