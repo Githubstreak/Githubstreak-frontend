@@ -46,12 +46,12 @@ export default function App() {
             height={150}
             width={150}
             src="/logo.png"
-            className="w-[100px] md:w-[150px] p-8 sm:w-[120px] lg:w-[150px]"
+            className="w-[145px] md:w-[150px] p-8 sm:w-[145px] lg:w-[150px]"
           />
         </Link>
       </NavbarBrand>
      
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <Dropdown>
 
           <NavbarItem>
@@ -59,7 +59,7 @@ export default function App() {
               <Button
                 className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium"
               >
-                Projects <FaChevronDown className="ml-1 pt-1" />
+                Projects <FaChevronDown className="pt-1 ml-1" />
               </Button>
             </DropdownTrigger>
           </NavbarItem>
@@ -93,7 +93,7 @@ export default function App() {
 
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4">
+      <NavbarContent className="hidden gap-4 sm:flex">
 
       <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
 
@@ -141,19 +141,19 @@ export default function App() {
       </NavbarContent>
 
       <Button
-        className="sm:hidden p-2 bg-success"
+        className="p-2 sm:hidden bg-success"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         <FaBars />
       </Button>
 
       {menuOpen && (
-        <div className="sm:hidden absolute top-16 left-0 w-full bg-gray-800">
+        <div className="absolute left-0 w-full bg-gray-800 sm:hidden top-16">
           <NavbarContent className="flex flex-col gap-4 p-4">
             <Dropdown>
               <DropdownTrigger>
                 <Button className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium">
-                  Projects <FaChevronDown className="ml-1 pt-1" />
+                  Projects <FaChevronDown className="pt-1 ml-1" />
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -193,7 +193,7 @@ export default function App() {
       
             </Badge>
 
-            <hr className="border-green-900 my-1" />
+            <hr className="my-1 border-green-900" />
 
             <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
               Blog

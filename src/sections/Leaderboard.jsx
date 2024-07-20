@@ -77,9 +77,9 @@ const Leaderboard = ({ leaderboard }) => {
       case "rank":
         return (
           <div className="flex items-center">
-            {user.rank === 1 && <FaMedal className="text-yellow-600 mr-1" />}
-            {user.rank === 2 && <FaMedal className="text-gray-700 mr-1" />}
-            {user.rank === 3 && <FaMedal className="text-brown-500 mr-1" />}
+            {user.rank === 1 && <FaMedal className="mr-1 text-yellow-600" />}
+            {user.rank === 2 && <FaMedal className="mr-1 text-gray-700" />}
+            {user.rank === 3 && <FaMedal className="mr-1 text-brown-500" />}
             {user.rank}
           </div>
         );
@@ -100,7 +100,7 @@ const Leaderboard = ({ leaderboard }) => {
       case "streak":
         return (
           <div className="flex flex-col">
-            <p className="text-bold text-small capitalize">
+            <p className="capitalize text-bold text-small">
               {user.currentStreak.count}
             </p>
           </div>
@@ -144,7 +144,7 @@ const Leaderboard = ({ leaderboard }) => {
   const topContent = React.useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex justify-between gap-3 items-end ">
+        <div className="flex items-end justify-between gap-3 ">
           <Input
             isClearable
             className="w-full sm:max-w-[44%]"
@@ -154,7 +154,7 @@ const Leaderboard = ({ leaderboard }) => {
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className="flex gap-3 h-full">
+          <div className="flex h-full gap-3">
             <Dropdown>
               <DropdownTrigger className="sm:flex">
                 <Button
@@ -182,7 +182,7 @@ const Leaderboard = ({ leaderboard }) => {
             </Dropdown>
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <span className="text-default-400 text-small">
             Total users {rankedUsers.length}
           </span>
@@ -213,7 +213,7 @@ const Leaderboard = ({ leaderboard }) => {
 
   const bottomContent = React.useMemo(() => {
     return (
-      <div className="py-2 px-2 flex justify-between items-center">
+      <div className="flex items-center justify-between px-2 py-2">
         <Pagination
           isCompact
           showControls
@@ -228,7 +228,7 @@ const Leaderboard = ({ leaderboard }) => {
             isDisabled={pages === 1}
             size="sm"
             variant="flat"
-            color="success"
+            color="default"
             onPress={onPreviousPage}
           >
             Previous
