@@ -228,7 +228,7 @@ const Leaderboard = ({ leaderboard }) => {
             isDisabled={pages === 1}
             size="sm"
             variant="flat"
-            color="default"
+            color="success"
             onPress={onPreviousPage}
           >
             Previous
