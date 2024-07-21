@@ -22,7 +22,7 @@ const Footer = () => {
     </div>
   </nav> 
     <aside>
-    <p className="mb-2">Copyright © 2024 - All right reserved #githubstreak '24</p>
+    <p className="mb-2">Copyright © 2024 - All right reserved #githubstreak &apos;24</p>
   </aside>
 </footer>
   )
