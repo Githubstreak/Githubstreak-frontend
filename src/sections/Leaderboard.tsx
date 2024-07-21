@@ -1,5 +1,4 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
-import axios from "axios";
+import { useState, useMemo, useCallback } from "react";
 import {
   Table,
   TableHeader,
@@ -23,7 +22,7 @@ import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { columns, users } from "./data";
 import { capitalize } from "./utils";
-import { Leaderboard as LeaderboardType } from "../types";
+import { Leaderboard as LeaderboardType, UserRank } from "../types";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
@@ -35,10 +34,12 @@ const INITIAL_VISIBLE_COLUMNS = [
 const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardType }) => {
   const [filterValue, setFilterValue] = useState("");
   const [selectedKeys, setSelectedKeys] = useState(new Set([]));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [visibleColumns, setVisibleColumns] = useState<any>( // TODO: Fix any type
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [statusFilter, setStatusFilter] = useState("all");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [statusFilter] = useState<any>("all");
   const [rowsPerPage, setRowsPerPage] = useState(15);
   const [sortDescriptor, setSortDescriptor] = useState({
     column: "streak",
@@ -73,45 +74,53 @@ const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardType }) => {
       .slice(start, end);
   }, [page, rankedUsers, rowsPerPage, filterValue]);
 
-  const renderCell = useCallback((user, columnKey) => {
-    const cellValue = user[columnKey];
-
-    switch (columnKey) {
-      case "rank":
-        return (
-          <div className="flex items-center">
-            {user.rank === 1 && <FaMedal className="mr-1 text-yellow-600" />}
-            {user.rank === 2 && <FaMedal className="mr-1 text-gray-700" />}
-            {user.rank === 3 && <FaMedal className="mr-1 text-brown-500" />}
-            {user.rank}
-          </div>
-        );
-      case "developer":
-        return (
-          <Link
-            isExternal
-            href={`https://awesome-gh-insights.vercel.app/devs/${user.username}`}
-          >
-            <User
-              avatarProps={{ radius: "lg", src: user.avatar }}
-              description={user.username}
-              className="text-green-400"
-              name={user.username}
-            />
-          </Link>
-        );
-      case "streak":
-        return (
-          <div className="flex flex-col">
-            <p className="capitalize text-bold text-small">
-              {user.currentStreak.count}
-            </p>
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+  const renderCell = useCallback(
+    (userRank: UserRank, columnKey: keyof UserRank) => {
+      const cellValue = userRank[columnKey];
+      switch (columnKey) {
+        case "rank":
+          return (
+            <div className="flex items-center">
+              {userRank.rank === 1 && (
+                <FaMedal className="mr-1 text-yellow-600" />
+              )}
+              {userRank.rank === 2 && (
+                <FaMedal className="mr-1 text-gray-700" />
+              )}
+              {userRank.rank === 3 && (
+                <FaMedal className="mr-1 text-brown-500" />
+              )}
+              {userRank.rank}
+            </div>
+          );
+        case "developer":
+          return (
+            <Link
+              isExternal
+              href={`https://awesome-gh-insights.vercel.app/devs/${userRank.username}`}
+            >
+              <User
+                avatarProps={{ radius: "lg", src: userRank.avatar }}
+                description={userRank.username}
+                className="text-green-400"
+                name={userRank.username}
+              />
+            </Link>
+          );
+        case "streak":
+          return (
+            <div className="flex flex-col">
+              <p className="capitalize text-bold text-small">
+                {userRank.currentStreak.count}
+              </p>
+            </div>
+          );
+        default:
+          return cellValue;
+      }
+    },
+    []
+  );
 
   const onNextPage = useCallback(() => {
     if (page < pages) {
@@ -125,19 +134,25 @@ const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardType }) => {
     }
   }, [page]);
 
-  const onRowsPerPageChange = useCallback((e) => {
-    setRowsPerPage(Number(e.target.value));
-    setPage(1);
-  }, []);
-
-  const onSearchChange = useCallback((value) => {
-    if (value) {
-      setFilterValue(value);
+  const onRowsPerPageChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setRowsPerPage(Number(e.target.value));
       setPage(1);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
+    },
+    []
+  );
+
+  const onSearchChange = useCallback(
+    (value: React.ChangeEvent<HTMLSelectElement>["target"]["value"]) => {
+      if (value) {
+        setFilterValue(value);
+        setPage(1);
+      } else {
+        setFilterValue("");
+      }
+    },
+    []
+  );
 
   const onClear = useCallback(() => {
     setFilterValue("");
@@ -264,9 +279,9 @@ const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardType }) => {
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
-      // @ts-ignore
+      // @ts-expect-error TODO: Fix, add types
       onSelectionChange={setSelectedKeys}
-      // @ts-ignore
+      // @ts-expect-error TODO: Fix, add types
       onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>
@@ -280,6 +295,7 @@ const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardType }) => {
         {(item) => (
           <TableRow key={item.rank}>
             {(columnKey) => (
+              // @ts-expect-error TODO: Fix
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>

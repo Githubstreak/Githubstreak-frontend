@@ -12,7 +12,7 @@ const Footer = () => {
           Please follow Githubstreak on all of our socials.
         </b>
         <div className="grid grid-flow-col gap-4">
-          <a href="https://x.com/githubstreak" target="_blank">
+          <a href="https://x.com/githubstreak" target="_blank" rel="noreferrer">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -57,7 +57,7 @@ const Footer = () => {
       </nav>
       <aside>
         <p className="mb-2">
-          Copyright © 2024 - All right reserved #githubstreak '24
+          Copyright © 2024 - All right reserved #githubstreak &apos;24
         </p>
       </aside>
     </footer>

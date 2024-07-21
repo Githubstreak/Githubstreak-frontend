@@ -4,10 +4,10 @@ import App from "./App.js";
 import "./index.css";
 import { ClerkProvider } from "@clerk/clerk-react";
 
-// @ts-ignore TODO: Fix this
+// @ts-expect-error TODO: Fix this
 const clerkPKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-// @ts-ignore  https://github.com/DefinitelyTyped/DefinitelyTyped/issues/43848
+// @ts-expect-error  https://github.com/DefinitelyTyped/DefinitelyTyped/issues/43848
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={clerkPKey}>

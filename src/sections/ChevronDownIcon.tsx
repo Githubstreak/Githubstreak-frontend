@@ -1,4 +1,11 @@
-export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }) => (
+import { HTMLProps } from "react";
+
+export const ChevronDownIcon = ({
+  strokeWidth = 1.5,
+  ...otherProps
+}: {
+  strokeWidth?: number;
+} & Partial<HTMLProps<SVGSVGElement>>) => (
   <svg
     aria-hidden="true"
     fill="none"

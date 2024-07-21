@@ -26,12 +26,13 @@ import { UserResource } from "@clerk/types";
 
 export default function App() {
   const { user, isLoaded, isSignedIn } = useUser();
-  const [userStats, setUserStats] = useState<any>(); // Change this to the correct type. Backend returns a 500 error so I can't infer it
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [userStats, setUserStats] = useState<any>(); // TODO: Replace any with a proper type. The backend returns a 500 error so I can't see the response and type it properly.
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const getUserStats = async (user: UserResource | undefined) => {
-      if (!isLoaded || !isSignedIn) {
+    const getUserStats = async (user: UserResource | null | undefined) => {
+      if (!isLoaded || !isSignedIn || !user) {
         return;
       }
 

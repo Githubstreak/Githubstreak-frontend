@@ -6,6 +6,7 @@ export type User = {
   status: string;
   streak: string;
   contributions?: string;
+  username?: string;
   avatar: string;
   email: string;
 };
