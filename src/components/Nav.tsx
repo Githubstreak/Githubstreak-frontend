@@ -1,15 +1,16 @@
-import { 
-  Navbar, 
+import {
+  Navbar,
   Badge,
-  NavbarBrand, 
-  NavbarContent, 
-  Link, 
+  NavbarBrand,
+  NavbarContent,
+  Link,
   Dropdown,
   DropdownTrigger,
-  DropdownMenu, 
+  DropdownMenu,
   DropdownItem,
   NavbarItem,
-  Button } from "@nextui-org/react";
+  Button,
+} from "@nextui-org/react";
 import {
   SignedIn,
   SignedOut,
@@ -21,23 +22,30 @@ import { useEffect, useState } from "react";
 import { FaChevronDown, FaBars, FaFire } from "react-icons/fa";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
+import { UserResource } from "@clerk/types";
 
 export default function App() {
-  const { user } = useUser();
-  const [userStats, setUserStats] = useState();
+  const { user, isLoaded, isSignedIn } = useUser();
+  const [userStats, setUserStats] = useState<any>(); // Change this to the correct type. Backend returns a 500 error so I can't infer it
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const getUserStats = async (user) => {
-      if (!user) return;
+    const getUserStats = async (user: UserResource | undefined) => {
+      if (!isLoaded || !isSignedIn) {
+        return;
+      }
 
       const res = await axios.get(`${API_URL}/v1/users/stat?id=${user.id}`);
+
+      if (res.status > 299) {
+        return;
+      }
 
       setUserStats(res.data);
     };
 
     getUserStats(user);
-  }, [user]);
+  }, [isLoaded, isSignedIn]);
   return (
     <Navbar className="bg-gray-800">
       <NavbarBrand>
@@ -50,20 +58,17 @@ export default function App() {
           />
         </Link>
       </NavbarBrand>
-     
+
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <Dropdown>
-
           <NavbarItem>
             <DropdownTrigger>
-              <Button
-                className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium"
-              >
+              <Button className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium">
                 Projects <FaChevronDown className="pt-1 ml-1" />
               </Button>
             </DropdownTrigger>
           </NavbarItem>
-          
+
           <DropdownMenu
             className="w-[120px]"
             itemClasses={{
@@ -78,7 +83,7 @@ export default function App() {
 
             <DropdownItem>
               <Link href="/team-project" className="text-[#000000]">
-                Team Project 
+                Team Project
               </Link>
             </DropdownItem>
 
@@ -87,44 +92,37 @@ export default function App() {
                 Solo Project
               </Link>
             </DropdownItem>
-           
           </DropdownMenu>
         </Dropdown>
-
       </NavbarContent>
 
       <NavbarContent className="hidden gap-4 sm:flex">
-
-      <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
-
-        <Link 
-        href="/mentorship" 
-        className="relative text-[#e0e0e0] mt-2"
-        isIconOnly
-        variant="light"
-        
+        <Badge
+          content="soon"
+          shape="circle"
+          color="success"
+          className="h-5 text-green-900"
         >
-          Mentorship
-        </Link>
-      
-    </Badge>
-
-        
-
+          <Link href="/mentorship" className="relative text-[#e0e0e0] mt-2">
+            Mentorship
+          </Link>
+        </Badge>
       </NavbarContent>
-      
 
-      <NavbarContent as="div" justify="end" className="hidden sm:flex gap-4 text-[#e0e0e0]">
-
-      <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
-         Blog
+      <NavbarContent
+        as="div"
+        justify="end"
+        className="hidden sm:flex gap-4 text-[#e0e0e0]"
+      >
+        <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
+          Blog
         </Link>
         <Link href="/faq" className="relative text-[#e0e0e0] mt-2">
           FAQ
         </Link>
 
-        <SignedOut >
-          <SignInButton className="mt-2"/>
+        <SignedOut>
+          <SignInButton />
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -179,18 +177,15 @@ export default function App() {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
-
-            <Link 
-              href="/mentorship" 
-              className="relative text-[#e0e0e0] mt-2"
-              isIconOnly
-              variant="light"
-        
+            <Badge
+              content="soon"
+              shape="circle"
+              color="success"
+              className="h-5 text-green-900"
             >
-              Mentorship
-            </Link>
-      
+              <Link href="/mentorship" className="relative text-[#e0e0e0] mt-2">
+                Mentorship
+              </Link>
             </Badge>
 
             <hr className="my-1 border-green-900" />

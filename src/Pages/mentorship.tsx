@@ -1,4 +1,4 @@
-import Mentorship from '../components/Mentorship';
+import Mentorship from "../components/Mentorship";
 
 const MentorshipPage = () => {
   return <Mentorship />;

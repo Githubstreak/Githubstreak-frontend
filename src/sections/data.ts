@@ -1,18 +1,20 @@
-const columns = [
+import { Column, User } from "../types";
+
+const columns: Column[] = [
   { name: "RANK", uid: "rank", sortable: true },
-  { name: "DEVELOPER", uid: "developer" },
+  { name: "DEVELOPER", uid: "developer", sortable: false }, // I'm assuming where sortable isn't defined, it should be false. Correct if wrong.
   { name: "STREAK", uid: "streak", sortable: true },
   { name: "CONTRIBUTIONS", uid: "contributions", sortable: true },
   { name: "ROLE", uid: "role", sortable: true },
-  { name: "STATUS", uid: "status" },
+  { name: "STATUS", uid: "status", sortable: false },
 ];
 
 const statusOptions = [
   { name: "Active", uid: "active" },
   { name: "Paused", uid: "paused" },
-];
+] as const;
 
-const users = [
+const users: User[] = [
   {
     rank: 1,
     developer: "Edmond Akwasi",
@@ -232,6 +234,6 @@ const users = [
     avatar: "https://i.pravatar.cc/150?img=45",
     email: "mariama.robinson@example.com",
   },
-];
+] as const;
 
 export { columns, users, statusOptions };

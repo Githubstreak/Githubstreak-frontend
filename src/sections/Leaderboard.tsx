@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import axios from "axios";
 import {
   Table,
@@ -16,12 +16,14 @@ import {
   User,
   Pagination,
   Link,
+  SortDescriptor,
 } from "@nextui-org/react";
 import { FaMedal } from "react-icons/fa";
 import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "./ChevronDownIcon";
 import { columns, users } from "./data";
 import { capitalize } from "./utils";
+import { Leaderboard as LeaderboardType } from "../types";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
@@ -30,27 +32,28 @@ const INITIAL_VISIBLE_COLUMNS = [
   "contributions",
 ];
 
-const Leaderboard = ({ leaderboard }) => {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [visibleColumns, setVisibleColumns] = React.useState(
+const Leaderboard = ({ leaderboard }: { leaderboard: LeaderboardType }) => {
+  const [filterValue, setFilterValue] = useState("");
+  const [selectedKeys, setSelectedKeys] = useState(new Set([]));
+  const [visibleColumns, setVisibleColumns] = useState<any>( // TODO: Fix any type
     new Set(INITIAL_VISIBLE_COLUMNS)
   );
-  const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(15);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [rowsPerPage, setRowsPerPage] = useState(15);
+  const [sortDescriptor, setSortDescriptor] = useState({
     column: "streak",
-    direction: "ascending",
+    direction: "ascending" as SortDescriptor["direction"],
   });
 
-  const [page, setPage] = React.useState(1);
-
+  const [page, setPage] = useState(1);
 
   const rankedUsers = leaderboard ?? [];
 
   const hasSearchFilter = Boolean(filterValue);
-  const headerColumns = React.useMemo(() => {
-    if (visibleColumns === "all") return columns;
+  const headerColumns = useMemo(() => {
+    if (visibleColumns === "all") {
+      return columns;
+    }
 
     return columns.filter((column) =>
       Array.from(visibleColumns).includes(column.uid)
@@ -59,7 +62,7 @@ const Leaderboard = ({ leaderboard }) => {
 
   const pages = Math.ceil(rankedUsers.length / rowsPerPage);
 
-  const items = React.useMemo(() => {
+  const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
@@ -70,7 +73,7 @@ const Leaderboard = ({ leaderboard }) => {
       .slice(start, end);
   }, [page, rankedUsers, rowsPerPage, filterValue]);
 
-  const renderCell = React.useCallback((user, columnKey) => {
+  const renderCell = useCallback((user, columnKey) => {
     const cellValue = user[columnKey];
 
     switch (columnKey) {
@@ -110,24 +113,24 @@ const Leaderboard = ({ leaderboard }) => {
     }
   }, []);
 
-  const onNextPage = React.useCallback(() => {
+  const onNextPage = useCallback(() => {
     if (page < pages) {
       setPage(page + 1);
     }
   }, [page, pages]);
 
-  const onPreviousPage = React.useCallback(() => {
+  const onPreviousPage = useCallback(() => {
     if (page > 1) {
       setPage(page - 1);
     }
   }, [page]);
 
-  const onRowsPerPageChange = React.useCallback((e) => {
+  const onRowsPerPageChange = useCallback((e) => {
     setRowsPerPage(Number(e.target.value));
     setPage(1);
   }, []);
 
-  const onSearchChange = React.useCallback((value) => {
+  const onSearchChange = useCallback((value) => {
     if (value) {
       setFilterValue(value);
       setPage(1);
@@ -136,12 +139,12 @@ const Leaderboard = ({ leaderboard }) => {
     }
   }, []);
 
-  const onClear = React.useCallback(() => {
+  const onClear = useCallback(() => {
     setFilterValue("");
     setPage(1);
   }, []);
 
-  const topContent = React.useMemo(() => {
+  const topContent = useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex items-end justify-between gap-3 ">
@@ -211,7 +214,7 @@ const Leaderboard = ({ leaderboard }) => {
     hasSearchFilter,
   ]);
 
-  const bottomContent = React.useMemo(() => {
+  const bottomContent = useMemo(() => {
     return (
       <div className="flex items-center justify-between px-2 py-2">
         <Pagination
@@ -261,16 +264,14 @@ const Leaderboard = ({ leaderboard }) => {
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
+      // @ts-ignore
       onSelectionChange={setSelectedKeys}
+      // @ts-ignore
       onSortChange={setSortDescriptor}
     >
       <TableHeader columns={headerColumns}>
         {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
+          <TableColumn key={column.uid} align={"start"}>
             {column.name}
           </TableColumn>
         )}
