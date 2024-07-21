@@ -10,7 +10,7 @@ const Footer = () => {
   <nav>
     <b className="mb-5">Please follow Githubstreak on all of our socials.</b>
     <div className="grid grid-flow-col gap-4">
-      <a href="https://x.com/githubstreak" target="_blank">
+      <a href="https://x.com/githubstreak" target="_blank" rel="noreferrer">
         <XLogo />
       </a>
       <a href=" https://youtube.com/@githubstreak01?si=tUr9EsmpuhAzgGad " target="_blank">
