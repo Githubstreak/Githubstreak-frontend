@@ -1,1 +1,3 @@
-export const API_URL = "https://githubstreak-backend.vercel.app";
+export const API_URL = import.meta.env.DEV
+  ? "http://localhost:3001"
+  : "https://githubstreak-backend.vercel.app";
