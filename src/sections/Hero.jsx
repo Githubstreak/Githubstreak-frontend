@@ -4,7 +4,7 @@ const Hero = () => {
       <div className="hero min-h-[60vh] xl:min-h-screen bg-base-200 mb-5">
         <div className="text-center hero-content">
           <div>
-            <h1 className="text-3xl font-bold text-gray-50 md:text-6xl xl:text-8xl">
+            <h1 className="text-3xl font-bold md:text-6xl xl:text-8xl">
               Welcome to{" "}
               <span class="text-green-700 font-extrabold">Githubstreak</span>
             </h1>
