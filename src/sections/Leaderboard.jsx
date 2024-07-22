@@ -90,7 +90,7 @@ const Leaderboard = ({ leaderboard }) => {
             href={`https://awesome-gh-insights.vercel.app/devs/${user.username}`}
           >
             <User
-              avatarProps={{ radius: "lg", src: user.avatar }}
+              avatarProps={{ radius: "lg", src: user.avatar + "&s=48" }}
               description={user.username}
               className="text-green-400"
               name={user.username}
