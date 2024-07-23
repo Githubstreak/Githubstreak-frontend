@@ -2,14 +2,14 @@ import {
   Navbar, 
   Badge,
   NavbarBrand, 
-  NavbarContent, 
-  Link, 
+  NavbarContent,
   Dropdown,
   DropdownTrigger,
   DropdownMenu, 
   DropdownItem,
   NavbarItem,
   Button } from "@nextui-org/react";
+import { Link } from 'react-router-dom';
 import {
   SignedIn,
   SignedOut,
@@ -41,7 +41,7 @@ export default function App() {
   return (
     <Navbar className="bg-gray-800">
       <NavbarBrand>
-        <Link href="/">
+        <Link to="/">
           <img
             height={150}
             width={150}
@@ -71,19 +71,19 @@ export default function App() {
             }}
           >
             <DropdownItem>
-              <Link href="/team-project" className="text-[#000000]">
+              <Link to="/team-project" className="text-[#000000]">
                 Project Ideas
               </Link>
             </DropdownItem>
 
             <DropdownItem>
-              <Link href="/team-project" className="text-[#000000]">
+              <Link to="/team-project" className="text-[#000000]">
                 Team Project 
               </Link>
             </DropdownItem>
 
             <DropdownItem>
-              <Link href="/solo-project" className="text-[#000000]">
+              <Link to="/solo-project" className="text-[#000000]">
                 Solo Project
               </Link>
             </DropdownItem>
@@ -98,9 +98,8 @@ export default function App() {
       <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
 
         <Link 
-        href="/mentorship" 
+        to="/mentorship" 
         className="relative text-[#e0e0e0] mt-2"
-        isIconOnly
         variant="light"
         
         >
@@ -116,10 +115,10 @@ export default function App() {
 
       <NavbarContent as="div" justify="end" className="hidden sm:flex gap-4 text-[#e0e0e0]">
 
-      <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
+      <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
          Blog
         </Link>
-        <Link href="/faq" className="relative text-[#e0e0e0] mt-2">
+        <Link to="/faq" className="relative text-[#e0e0e0] mt-2">
           FAQ
         </Link>
 
@@ -163,17 +162,17 @@ export default function App() {
                 }}
               >
                 <DropdownItem>
-                  <Link href="/team-project" className="text-[#000000]">
+                  <Link to="/team-project" className="text-[#000000]">
                     Project Ideas
                   </Link>
                 </DropdownItem>
                 <DropdownItem>
-                  <Link href="/team-project" className="text-[#000000]">
+                  <Link to="/team-project" className="text-[#000000]">
                     Team Project
                   </Link>
                 </DropdownItem>
                 <DropdownItem>
-                  <Link href="/solo-project" className="text-[#000000]">
+                  <Link to="/solo-project" className="text-[#000000]">
                     Solo Project
                   </Link>
                 </DropdownItem>
@@ -182,9 +181,8 @@ export default function App() {
             <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
 
             <Link 
-              href="/mentorship" 
+              to="/mentorship" 
               className="relative text-[#e0e0e0] mt-2"
-              isIconOnly
               variant="light"
         
             >
@@ -195,10 +193,10 @@ export default function App() {
 
             <hr className="my-1 border-green-900" />
 
-            <Link href="/blog" className="relative text-[#e0e0e0] mt-2">
+            <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
               Blog
             </Link>
-            <Link href="/faq" className="relative text-[#e0e0e0] mt-2">
+            <Link to="/faq" className="relative text-[#e0e0e0] mt-2">
               FAQ
             </Link>
 

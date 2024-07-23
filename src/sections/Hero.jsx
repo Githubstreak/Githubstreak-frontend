@@ -6,11 +6,11 @@ const Hero = () => {
           <div>
             <h1 className="text-3xl font-bold md:text-6xl xl:text-8xl">
               Welcome to{" "}
-              <span class="text-green-700 font-extrabold">Githubstreak</span>
+              <span className="text-green-700 font-extrabold">Githubstreak</span>
             </h1>
             <p className="py-6 text-xl md:text-3xl xl:text-6xl">
               Level up your coding game, set new records, and revel in the
-              camaraderie of GitHub CodeStreak's Leaderboard
+              camaraderie of GitHub CodeStreak&apos;s Leaderboard
             </p>
           </div>
         </div>
