@@ -19,7 +19,8 @@ import {
 } from "@nextui-org/react";
 import { FaMedal } from "react-icons/fa";
 import { SearchIcon } from "./SearchIcon";
-import { ChevronDownIcon } from "../components/icons/ChevronDownIcon";
+import { ChevronDownIcon } from "./component/icons/ChevronDownIcon";
+import { columns, users } from "./data";
 import { capitalize } from "./utils";
 
 const INITIAL_VISIBLE_COLUMNS = [
