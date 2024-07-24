@@ -4,7 +4,7 @@ const Footer = () => {
   return (
   <footer className="footer footer-center p-10 bg-base-300 text-base-content rounded">
   <nav className="grid grid-flow-col gap-4">
-    <a href="Githubstreak-pdf" className="link link-hover">About us</a>
+    <a href="/" className="link link-hover">About us</a>
     <a className="link link-hover">Contact githubstreak@gmail.com</a>
   </nav> 
   <nav>
