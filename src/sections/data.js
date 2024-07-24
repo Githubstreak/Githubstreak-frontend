@@ -4,7 +4,6 @@ const columns = [
   { name: "STREAK", uid: "streak", sortable: true },
   { name: "CONTRIBUTIONS", uid: "contributions", sortable: true },
   { name: "ROLE", uid: "role", sortable: true },
-  { name: "STATUS", uid: "status" },
 ];
 
-export { columns, users, statusOptions };
+export { columns };

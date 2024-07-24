@@ -19,8 +19,8 @@ import {
 } from "@nextui-org/react";
 import { FaMedal } from "react-icons/fa";
 import { SearchIcon } from "./SearchIcon";
-import { ChevronDownIcon } from "./component/icons/ChevronDownIcon";
-import { columns, users } from "./data";
+import { ChevronDownIcon } from "../components/icons/ChevronDownIcon";
+import { columns } from "./data";
 import { capitalize } from "./utils";
 
 const INITIAL_VISIBLE_COLUMNS = [
@@ -206,7 +206,6 @@ const Leaderboard = ({ leaderboard }) => {
     rankedUsers,
     visibleColumns,
     onRowsPerPageChange,
-    users.length,
     onSearchChange,
     hasSearchFilter,
   ]);
