@@ -11,7 +11,10 @@ import ProjectIdea from './Pages/ProjectIdea.jsx';
 import TeamProject from './Pages/TeamProject.jsx';
 import SoloProject from './Pages/SoloProject.jsx';
 import MentorshipPage from './Pages/mentorship';
-import NotFound from './Pages/NotFound.jsx';
+import Blog from './Pages/Blog';
+import Faq from './Pages/Faq';
+import AboutUs from './Pages/AboutUs';
+
 // Import other pages/components as needed
 
 const clerkPKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -28,7 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="team-project" element={<TeamProject />} />
           <Route path="solo-project" element={<SoloProject />} />
           <Route path="mentorship" element={<MentorshipPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="faq" element={<Faq />} />
+          <Route path="About-us" element={<AboutUs />} />
         </Route>
       </Routes>
     </Router>
