@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from "react";
 import { FaChevronDown, FaBars, FaFire } from "react-icons/fa";
 import axios from "axios";
+import { Github } from "../components/icons/Github";
 import { API_URL } from "../utils/constants";
 
 export default function App() {
@@ -122,6 +123,10 @@ export default function App() {
           FAQ
         </Link>
 
+        <Link to="https://github.com/Githubstreak" target="_blank" rel="noreferrer">
+            <Github />
+        </Link>
+
         <SignedOut >
           <SignInButton className="mt-2"/>
         </SignedOut>
@@ -196,8 +201,13 @@ export default function App() {
             <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
               Blog
             </Link>
+            
             <Link to="/faq" className="relative text-[#e0e0e0] mt-2">
               FAQ
+            </Link>
+
+            <Link to="https://github.com/Githubstreak" target="_blank" rel="noreferrer">
+            <Github />
             </Link>
 
             <SignedOut>
