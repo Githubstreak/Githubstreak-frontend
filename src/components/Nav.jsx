@@ -72,7 +72,7 @@ export default function App() {
             }}
           >
             <DropdownItem>
-              <Link to="/team-project" className="text-[#000000]">
+              <Link to="/project-idea" className="text-[#000000]">
                 Project Ideas
               </Link>
             </DropdownItem>
@@ -167,7 +167,7 @@ export default function App() {
                 }}
               >
                 <DropdownItem>
-                  <Link to="/team-project" className="text-[#000000]">
+                  <Link to="/project-idea" className="text-[#000000]">
                     Project Ideas
                   </Link>
                 </DropdownItem>
