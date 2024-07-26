@@ -14,7 +14,7 @@ const Hero = () => {
     >
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between h-full px-6 py-12">
         <div className="text-left md:w-1/2">
-          <h1 className="text-6xl font-bold md:text-6xl xl:text-8xl">
+          <h1 className="text-4xl font-bold md:text-6xl xl:text-8xl">
             Welcome to{" "}
             <span className="text-green-500  font-extrabold">Githubstreak</span>
           </h1>
