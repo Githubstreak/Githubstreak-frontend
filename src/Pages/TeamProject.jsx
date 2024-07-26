@@ -1,106 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'animate.css';
 import ReactPaginate from 'react-paginate';
 
-const teamProjects = [
-  {
-    id: 1,
-    projectName: "E-commerce Platform",
-    description: "A full-fledged e-commerce platform with user authentication, product management, and payment integration.",
-    type: "Community-based",
-    developers: [
-      { name: "John Doe", role: "Frontend Developer", username: "johndoe", progress: 75 },
-      { name: "Jane Smith", role: "Backend Developer", username: "janesmith", progress: 40 },
-      { name: "Alice Johnson", role: "UI/UX Designer", username: "alicejohnson", progress: 90 }
-    ]
-  },
-  {
-    id: 2,
-    projectName: "E-commerce Platform",
-    description: "A full-fledged e-commerce platform with user authentication, product management, and payment integration.",
-    type: "Community-based",
-    developers: [
-      { name: "John Doe", role: "Frontend Developer", username: "johndoe", progress: 75 },
-      { name: "Jane Smith", role: "Backend Developer", username: "janesmith", progress: 40 },
-      { name: "Alice Johnson", role: "UI/UX Designer", username: "alicejohnson", progress: 90 }
-    ]
-  },
-  {
-    id: 3,
-    projectName: "E-commerce Platform",
-    description: "A full-fledged e-commerce platform with user authentication, product management, and payment integration.",
-    type: "Community-based",
-    developers: [
-      { name: "John Doe", role: "Frontend Developer", username: "johndoe", progress: 75 },
-      { name: "Jane Smith", role: "Backend Developer", username: "janesmith", progress: 40 },
-      { name: "Alice Johnson", role: "UI/UX Designer", username: "alicejohnson", progress: 90 }
-    ]
-  },
-  {
-    id: 4,
-    projectName: "E-commerce Platform",
-    description: "A full-fledged e-commerce platform with user authentication, product management, and payment integration.",
-    type: "Community-based",
-    developers: [
-      { name: "John Doe", role: "Frontend Developer", username: "johndoe", progress: 75 },
-      { name: "Jane Smith", role: "Backend Developer", username: "janesmith", progress: 40 },
-      { name: "Alice Johnson", role: "UI/UX Designer", username: "alicejohnson", progress: 90 }
-    ]
-  },
-  {
-    id: 5,
-    projectName: "Social Media App",
-    description: "A social media application with features like user profiles, posts, comments, and likes.",
-    type: "Personal idea",
-    developers: [
-      { name: "Bob Brown", role: "Full Stack Developer", username: "bobbrown", progress: 80 },
-      { name: "Charlie Davis", role: "Mobile Developer", username: "charliedavis", progress: 65 }
-    ]
-  },
-  {
-    id: 6,
-    projectName: "Social Media App",
-    description: "A social media application with features like user profiles, posts, comments, and likes.",
-    type: "Personal idea",
-    developers: [
-      { name: "Bob Brown", role: "Full Stack Developer", username: "bobbrown", progress: 80 },
-      { name: "Charlie Davis", role: "Mobile Developer", username: "charliedavis", progress: 65 }
-    ]
-  },
-  {
-    id: 7,
-    projectName: "Social Media App",
-    description: "A social media application with features like user profiles, posts, comments, and likes.",
-    type: "Personal idea",
-    developers: [
-      { name: "Bob Brown", role: "Full Stack Developer", username: "bobbrown", progress: 80 },
-      { name: "Charlie Davis", role: "Mobile Developer", username: "charliedavis", progress: 65 }
-    ]
-  },
-  {
-    id: 8,
-    projectName: "Social Media App",
-    description: "A social media application with features like user profiles, posts, comments, and likes.",
-    type: "Personal idea",
-    developers: [
-      { name: "Bob Brown", role: "Full Stack Developer", username: "bobbrown", progress: 80 },
-      { name: "Charlie Davis", role: "Mobile Developer", username: "charliedavis", progress: 65 }
-    ]
-  },
-  // Add more team projects as needed
-];
-
 const TeamProject = () => {
-  const itemsPerPage = 6;
+  const [projects, setProjects] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('/api/team-projects'); // Replace with your actual API endpoint
+      const data = await response.json();
+      setProjects(data);
+    } catch (error) {
+      console.error('Error fetching team projects:', error);
+    }
+  };
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentItems = teamProjects.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(teamProjects.length / itemsPerPage);
+  const currentItems = projects.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(projects.length / itemsPerPage);
 
   return (
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -119,8 +46,8 @@ const TeamProject = () => {
               <p className="mt-2 text-sm font-medium text-gray-600">{project.type}</p>
               <p className="mt-4 text-gray-600">{project.description}</p>
               <div className="mt-4">
-                {project.developers.map((dev, index) => (
-                  <div key={index} className="mt-4 flex items-center space-x-4">
+                {project.developers.map((dev) => (
+                  <div key={dev.id} className="mt-4 flex items-center space-x-4">
                     <img
                       src={`https://github.com/${dev.username}.png`}
                       alt={`${dev.name}'s avatar`}

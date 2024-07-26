@@ -1,103 +1,34 @@
-import React, { useState } from 'react';
-import 'animate.css';
+import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import 'animate.css'; // Import Animate.css for animations
 
-const soloProjects = [
-  {
-    id: 1,
-    developer: "John Doe",
-    username: "johndoe",
-    projectName: "Personal Portfolio",
-    description: "A personal portfolio website to showcase my projects and skills.",
-    github: "https://github.com/johndoe",
-    progress: 75 // Progress in percentage
-  },
-  {
-    id: 2,
-    developer: "Jane Smith",
-    username: "janesmith",
-    projectName: "Recipe App",
-    description: "A mobile app for browsing and sharing recipes.",
-    github: "https://github.com/janesmith",
-    progress: 40
-  },
-  {
-    id: 3,
-    developer: "Alice Johnson",
-    username: "alicejohnson",
-    projectName: "Task Manager",
-    description: "A web application to manage and organize tasks.",
-    github: "https://github.com/alicejohnson",
-    progress: 90
-  },
-  {
-    id: 4,
-    developer: "John Doe",
-    username: "johndoe",
-    projectName: "Personal Portfolio",
-    description: "A personal portfolio website to showcase my projects and skills.",
-    github: "https://github.com/johndoe",
-    progress: 75 // Progress in percentage
-  },
-  {
-    id: 5,
-    developer: "Jane Smith",
-    username: "janesmith",
-    projectName: "Recipe App",
-    description: "A mobile app for browsing and sharing recipes.",
-    github: "https://github.com/janesmith",
-    progress: 40
-  },
-  {
-    id: 6,
-    developer: "Alice Johnson",
-    username: "alicejohnson",
-    projectName: "Task Manager",
-    description: "A web application to manage and organize tasks.",
-    github: "https://github.com/alicejohnson",
-    progress: 90
-  },
-  {
-    id: 7,
-    developer: "John Doe",
-    username: "johndoe",
-    projectName: "Personal Portfolio",
-    description: "A personal portfolio website to showcase my projects and skills.",
-    github: "https://github.com/johndoe",
-    progress: 75 // Progress in percentage
-  },
-  {
-    id: 8,
-    developer: "Jane Smith",
-    username: "janesmith",
-    projectName: "Recipe App",
-    description: "A mobile app for browsing and sharing recipes.",
-    github: "https://github.com/janesmith",
-    progress: 40
-  },
-  {
-    id: 9,
-    developer: "Alice Johnson",
-    username: "alicejohnson",
-    projectName: "Task Manager",
-    description: "A web application to manage and organize tasks.",
-    github: "https://github.com/alicejohnson",
-    progress: 90
-  },
-  // Add more solo projects as needed
-];
-
-const SoloProject = () => {
-  const itemsPerPage = 6;
+function SoloProject() {
+  const [projects, setProjects] = useState([]);
+  const itemsPerPage = 6; // Number of projects per page
   const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    // Fetch solo projects from your API
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('/api/solo-projects'); // Replace with your actual API endpoint
+      const data = await response.json();
+      setProjects(data);
+    } catch (error) {
+      console.error('Error fetching solo projects:', error);
+    }
+  };
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentItems = soloProjects.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(soloProjects.length / itemsPerPage);
+  const currentItems = projects.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(projects.length / itemsPerPage);
 
   return (
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -151,16 +82,14 @@ const SoloProject = () => {
           marginPagesDisplayed={2}
           pageRangeDisplayed={2}
           onPageChange={handlePageClick}
-          containerClassName={"pagination"}
+          containerClassName={"pagination flex justify-center space-x-2"}
           subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-          className="flex justify-center space-x-2"
+          activeClassName={"active bg-blue-500 text-white"}
           pageClassName="px-3 py-2 bg-gray-200 rounded-md hover:bg-gray-300 cursor-pointer"
-          active ClassName="bg-blue-500 text-white"
         />
       </div>
     </div>
   );
-};
+}
 
 export default SoloProject;

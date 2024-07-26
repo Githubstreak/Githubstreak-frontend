@@ -1,127 +1,32 @@
-import React, { useState } from 'react';
-import 'animate.css';
+import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
-const projectIdeas = [
-  {
-    id: 1,
-    name: "E-Waste Management System",
-    description: "A platform to manage and recycle electronic waste efficiently.",
-    client: "Environmental Agencies",
-    status: "In Progress"
-  },
-  {
-    id: 2,
-    name: "Online Learning Platform",
-    description: "An interactive platform for online courses and learning resources.",
-    client: "Educational Institutions",
-    status: "Completed"
-  },
-  {
-    id: 3,
-    name: "Freelance Job Portal",
-    description: "A website connecting freelancers with clients looking for various services.",
-    client: "Small Businesses",
-    status: "In Progress"
-  },
-  {
-    id: 4,
-    name: "E-Waste Management System",
-    description: "A platform to manage and recycle electronic waste efficiently.",
-    client: "Environmental Agencies",
-    status: "In Progress"
-  },
-  {
-    id: 5,
-    name: "Online Learning Platform",
-    description: "An interactive platform for online courses and learning resources.",
-    client: "Educational Institutions",
-    status: "Completed"
-  },
-  {
-    id: 6,
-    name: "Freelance Job Portal",
-    description: "A website connecting freelancers with clients looking for various services.",
-    client: "Small Businesses",
-    status: "In Progress"
-  },
-  {
-    id: 7,
-    name: "E-Waste Management System",
-    description: "A platform to manage and recycle electronic waste efficiently.",
-    client: "Environmental Agencies",
-    status: "In Progress"
-  },
-  {
-    id: 8,
-    name: "Online Learning Platform",
-    description: "An interactive platform for online courses and learning resources.",
-    client: "Educational Institutions",
-    status: "Completed"
-  },
-  {
-    id: 9,
-    name: "Freelance Job Portal",
-    description: "A website connecting freelancers with clients looking for various services.",
-    client: "Small Businesses",
-    status: "In Progress"
-  },
-  {
-    id: 10,
-    name: "E-Waste Management System",
-    description: "A platform to manage and recycle electronic waste efficiently.",
-    client: "Environmental Agencies",
-    status: "In Progress"
-  },
-  {
-    id: 11,
-    name: "Online Learning Platform",
-    description: "An interactive platform for online courses and learning resources.",
-    client: "Educational Institutions",
-    status: "Completed"
-  },
-  {
-    id: 12,
-    name: "Freelance Job Portal",
-    description: "A website connecting freelancers with clients looking for various services.",
-    client: "Small Businesses",
-    status: "In Progress"
-  },
-  {
-    id: 13,
-    name: "E-Waste Management System",
-    description: "A platform to manage and recycle electronic waste efficiently.",
-    client: "Environmental Agencies",
-    status: "In Progress"
-  },
-  {
-    id: 14,
-    name: "Online Learning Platform",
-    description: "An interactive platform for online courses and learning resources.",
-    client: "Educational Institutions",
-    status: "Completed"
-  },
-  {
-    id: 15,
-    name: "Freelance Job Portal",
-    description: "A website connecting freelancers with clients looking for various services.",
-    client: "Small Businesses",
-    status: "In Progress"
-  },
-  // Add more project ideas as needed
-];
-
 const ProjectIdea = () => {
-  const itemsPerPage = 6;
+  const [ideas, setIdeas] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    fetchIdeas();
+  }, []);
+
+  const fetchIdeas = async () => {
+    try {
+      const response = await fetch('/api/project-ideas'); // Replace with your actual API endpoint
+      const data = await response.json();
+      setIdeas(data);
+    } catch (error) {
+      console.error('Error fetching project ideas:', error);
+    }
+  };
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentItems = projectIdeas.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(projectIdeas.length / itemsPerPage);
+  const currentItems = ideas.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(ideas.length / itemsPerPage);
 
   return (
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
@@ -136,7 +41,7 @@ const ProjectIdea = () => {
             className="bg-white shadow-md rounded-lg overflow-hidden animate__animated animate__fadeInUp hover:animate__pulse transition-transform duration-300 transform hover:scale-105"
           >
             <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-800">{project.name}</h2>
+              <h2 className="text-xl font-semibold text-gray-800">{project.title}</h2>
               <p className="mt-4 text-gray-600">{project.description}</p>
               <p className="mt-2 text-gray-500"><strong>Client:</strong> {project.client}</p>
               <p className={`mt-4 text-lg font-semibold ${
