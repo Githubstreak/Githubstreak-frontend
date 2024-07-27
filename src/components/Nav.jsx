@@ -1,15 +1,16 @@
-import { 
-  Navbar, 
+import {
+  Navbar,
   Badge,
-  NavbarBrand, 
+  NavbarBrand,
   NavbarContent,
   Dropdown,
   DropdownTrigger,
-  DropdownMenu, 
+  DropdownMenu,
   DropdownItem,
   NavbarItem,
-  Button } from "@nextui-org/react";
-import { Link } from 'react-router-dom';
+  Button,
+} from "@nextui-org/react";
+import { Link, useLocation } from "react-router-dom";
 import {
   SignedIn,
   SignedOut,
@@ -27,6 +28,7 @@ export default function App() {
   const { user } = useUser();
   const [userStats, setUserStats] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const getUserStats = async (user) => {
@@ -39,6 +41,14 @@ export default function App() {
 
     getUserStats(user);
   }, [user]);
+
+  const handleCloseMenu = () => {
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    handleCloseMenu();
+  }, [location]);
   return (
     <Navbar className="bg-gray-800">
       <NavbarBrand>
@@ -51,20 +61,17 @@ export default function App() {
           />
         </Link>
       </NavbarBrand>
-     
+
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <Dropdown>
-
           <NavbarItem>
             <DropdownTrigger>
-              <Button
-                className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium"
-              >
+              <Button className="p-0 mt-2 bg-transparent data-[hover=true]:bg-transparent text-[#e0e0e0] text-medium">
                 Projects <FaChevronDown className="pt-1 ml-1" />
               </Button>
             </DropdownTrigger>
           </NavbarItem>
-          
+
           <DropdownMenu
             className="w-[120px]"
             itemClasses={{
@@ -79,7 +86,7 @@ export default function App() {
 
             <DropdownItem>
               <Link to="/team-project" className="text-[#000000]">
-                Team Project 
+                Team Project
               </Link>
             </DropdownItem>
 
@@ -88,47 +95,49 @@ export default function App() {
                 Solo Project
               </Link>
             </DropdownItem>
-           
           </DropdownMenu>
         </Dropdown>
-
       </NavbarContent>
 
       <NavbarContent className="hidden gap-4 sm:flex">
-
-      <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
-
-        <Link 
-        to="/mentorship" 
-        className="relative text-[#e0e0e0] mt-2"
-        variant="light"
-        
+        <Badge
+          content="soon"
+          shape="circle"
+          color="success"
+          className="h-5 text-green-900"
         >
-          Mentorship
-        </Link>
-      
-    </Badge>
-
-        
-
+          <Link
+            to="/mentorship"
+            className="relative text-[#e0e0e0] mt-2"
+            variant="light"
+          >
+            Mentorship
+          </Link>
+        </Badge>
       </NavbarContent>
-      
 
-      <NavbarContent as="div" justify="end" className="hidden sm:flex gap-4 text-[#e0e0e0]">
-
-      <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
-         Blog
+      <NavbarContent
+        as="div"
+        justify="end"
+        className="hidden sm:flex gap-4 text-[#e0e0e0]"
+      >
+        <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
+          Blog
         </Link>
         <Link to="/faq" className="relative text-[#e0e0e0] mt-2">
           FAQ
         </Link>
 
-        <Link to="https://github.com/Githubstreak" target="_blank" rel="noreferrer">
-            <Github />
+        <Link
+          to="https://github.com/Githubstreak"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Github />
         </Link>
 
-        <SignedOut >
-          <SignInButton className="mt-2"/>
+        <SignedOut>
+          <SignInButton className="mt-2" />
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -183,17 +192,19 @@ export default function App() {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
-
-            <Link 
-              to="/mentorship" 
-              className="relative text-[#e0e0e0] mt-2"
-              variant="light"
-        
+            <Badge
+              content="soon"
+              shape="circle"
+              color="success"
+              className="h-5 text-green-900"
             >
-              Mentorship
-            </Link>
-      
+              <Link
+                to="/mentorship"
+                className="relative text-[#e0e0e0] mt-2"
+                variant="light"
+              >
+                Mentorship
+              </Link>
             </Badge>
 
             <hr className="my-1 border-green-900" />
@@ -201,13 +212,17 @@ export default function App() {
             <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
               Blog
             </Link>
-            
+
             <Link to="/faq" className="relative text-[#e0e0e0] mt-2">
               FAQ
             </Link>
 
-            <Link to="https://github.com/Githubstreak" target="_blank" rel="noreferrer">
-            <Github />
+            <Link
+              to="https://github.com/Githubstreak"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Github />
             </Link>
 
             <SignedOut>
