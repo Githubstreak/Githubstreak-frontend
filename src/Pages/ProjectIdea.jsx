@@ -45,7 +45,9 @@ const ProjectIdea = () => {
               <p className="mt-4 text-gray-600">{project.description}</p>
               <p className="mt-2 text-gray-500"><strong>Client:</strong> {project.client}</p>
               <p className={`mt-4 text-lg font-semibold ${
-                project.status === "In Progress" ? "text-yellow-500" : "text-green-500"
+                project.status === "In Progress" ? "text-yellow-500" : 
+                project.status === "Done" ? "text-green-500" : 
+                "text-gray-500"
               }`}>
                 Status: {project.status}
               </p>
