@@ -1,3 +1,4 @@
+import { track } from '@vercel/analytics';
 import { XLogo, YoutubeLogo, WhatsappLogo } from "../components/icons";
 
 const Footer = () => {
@@ -10,13 +11,25 @@ const Footer = () => {
   <nav>
     <b className="mb-5">Please follow Githubstreak on all of our socials.</b>
     <div className="grid grid-flow-col gap-4">
-      <a href="https://x.com/githubstreak" target="_blank" rel="noreferrer">
+      <a href="https://x.com/githubstreak" target="_blank" rel="noreferrer"
+       onClick={() => {
+        track(<XLogo />)
+        }}
+      >
         <XLogo />
       </a>
-      <a href=" https://youtube.com/@githubstreak01?si=tUr9EsmpuhAzgGad " target="_blank">
+      <a href=" https://youtube.com/@githubstreak01?si=tUr9EsmpuhAzgGad " target="_blank"
+       onClick={() => {
+        track(<YoutubeLogo />)
+        }}
+      >
         <YoutubeLogo />
       </a>
-      <a href="https://whatsapp.com/channel/0029VajqURrEQIanKQ3Z7z3R" target="_blank" rel="noopener noreferrer">
+      <a href="https://whatsapp.com/channel/0029VajqURrEQIanKQ3Z7z3R" target="_blank" rel="noopener noreferrer"
+       onClick={() => {
+        track(<WhatsappLogo />)
+        }}
+      >
         <WhatsappLogo />
       </a>
     </div>
