@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, AvatarGroup } from "@nextui-org/react";
+import { API_URL } from "../utils/constants";
 
 const ContributorsProfile = () => {
   const [contributors, setContributors] = useState([]);
@@ -7,10 +8,9 @@ const ContributorsProfile = () => {
   useEffect(() => {
     const fetchContributors = async () => {
       try {
-        // Replace 'owner' and 'repo' with the actual owner and repository name
-        const response = await fetch('https://api.github.com/repos/owner/repo/contributors');
+        const response = await fetch(`${API_URL}/v1/projects/contributors`);
         const data = await response.json();
-        setContributors(data.slice(0, 9)); // Limit to 9 contributors (or adjust as needed)
+        setContributors(data);
       } catch (error) {
         console.error('Error fetching contributors:', error);
       }
@@ -24,9 +24,9 @@ const ContributorsProfile = () => {
       {/* <b className="mb-5 sm:text-2xl">Open source contributors</b> */}
       <AvatarGroup isBordered isGrid max={7}>
         {contributors.map((contributor) => (
-          <Avatar 
-            key={contributor.id} 
-            src={contributor.avatar_url} 
+          <Avatar
+            key={contributor.login}
+            src={contributor.avatarUrl}
             alt={contributor.login}
           />
         ))}
