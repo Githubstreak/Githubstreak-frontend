@@ -152,7 +152,7 @@ export default function App() {
         </Link>
 
         <SignedOut>
-          <SignInButton className="mt-2 light-mode-button" />
+          <SignInButton className= "light-mode-button" />
         </SignedOut>
         <SignedIn>
           <UserButton />
