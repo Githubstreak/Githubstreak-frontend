@@ -21,7 +21,7 @@ const ContributorsProfile = () => {
 
   return (
     <div className="grid place-items-center p-5">
-      {/* <b className="mb-5 sm:text-2xl">Open source contributors</b> */}
+      <b className="mb-5 sm:text-2xl">Open source contributors</b>
       <AvatarGroup isBordered isGrid max={7}>
         {contributors.map((contributor) => (
           <Avatar
