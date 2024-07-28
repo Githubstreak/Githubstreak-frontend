@@ -24,6 +24,7 @@ import { FaChevronDown, FaBars, FaFire } from "react-icons/fa";
 import axios from "axios";
 import { Github } from "../components/icons/Github";
 import { API_URL } from "../utils/constants";
+import '../index.css'; // Ensure this imports your custom styles
 
 export default function App() {
   const { user } = useUser();
@@ -145,12 +146,13 @@ export default function App() {
           to="https://github.com/Githubstreak"
           target="_blank"
           rel="noreferrer"
+          className="light-mode-github"
         >
           <Github />
         </Link>
 
         <SignedOut>
-          <SignInButton className="mt-2" />
+          <SignInButton className="mt-2 light-mode-button" />
         </SignedOut>
         <SignedIn>
           <UserButton />
@@ -246,12 +248,13 @@ export default function App() {
               to="https://github.com/Githubstreak"
               target="_blank"
               rel="noreferrer"
+              className="light-mode-github"
             >
               <Github />
             </Link>
 
             <SignedOut>
-              <SignInButton className="mt-2" />
+              <SignInButton className="mt-2 light-mode-button" />
             </SignedOut>
             <SignedIn>
               <UserButton />
