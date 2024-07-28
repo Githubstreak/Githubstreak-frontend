@@ -1,7 +1,6 @@
 import { track } from '@vercel/analytics';
 import { 
   Navbar, 
-  main,
   Badge,
   NavbarBrand,
   NavbarContent,
@@ -51,6 +50,7 @@ export default function App() {
   useEffect(() => {
     handleCloseMenu();
   }, [location]);
+
   return (
     <Navbar className="bg-gray-800">
       <NavbarBrand>
@@ -106,53 +106,36 @@ export default function App() {
       </NavbarContent>
 
       <NavbarContent className="hidden gap-4 sm:flex">
-
         <Badge
           content="soon"
           shape="circle"
           color="success"
           className="h-5 text-green-900"
-
-      <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
-
-        <Link 
-        to="/mentorship" 
-        className="relative text-[#e0e0e0] mt-2"
-        variant="light"
-        onClick={() => {
-          track("Mentorship");
-        }}
-
-        
         >
-          <Link
-            to="/mentorship"
+          <Link 
+            to="/mentorship" 
             className="relative text-[#e0e0e0] mt-2"
             variant="light"
+            onClick={() => {
+              track("Mentorship");
+            }}
           >
             Mentorship
           </Link>
         </Badge>
       </NavbarContent>
 
-
       <NavbarContent
         as="div"
         justify="end"
         className="hidden sm:flex gap-4 text-[#e0e0e0]"
       >
-        <Link to="/blog" className="relative text-[#e0e0e0] mt-2">
+        <Link to="/blog" className="relative text-[#e0e0e0] mt-2"
+          onClick={() => {
+            track("Blog");
+          }}
+        >
           Blog
-
-      <NavbarContent as="div" justify="end" className="hidden sm:flex gap-4 text-[#e0e0e0]">
-
-      <Link to="/blog" className="relative text-[#e0e0e0] mt-2"
-         onClick={() => {
-          track("Blog");
-        }}
-      >
-         Blog
-
         </Link>
         <Link to="/faq" className="relative text-[#e0e0e0] mt-2">
           FAQ
@@ -166,23 +149,10 @@ export default function App() {
           <Github />
         </Link>
 
-
         <SignedOut>
           <SignInButton className="mt-2" />
-
-        <SignedOut 
-          onClick={() => {
-            track(<SignInButton />);
-          }}
-        >
-          <SignInButton className="mt-2"/>
-
         </SignedOut>
-        <SignedIn
-           onClick={() => {
-            track(<UserButton />);
-          }}
-        >
+        <SignedIn>
           <UserButton />
         </SignedIn>
 
@@ -221,9 +191,8 @@ export default function App() {
                 <DropdownItem>
                   <Link to="/project-idea" className="text-[#000000]"
                    onClick={() => {
-                    track(" Project Ideas");
+                    track("Project Ideas");
                   }}
-
                   >
                     Project Ideas
                   </Link>
@@ -246,23 +215,14 @@ export default function App() {
               shape="circle"
               color="success"
               className="h-5 text-green-900"
-
-            <Badge content="soon" shape="circle" color="success" className="h-5 text-green-900">
-
-            <Link 
-              to="/mentorship" 
-              className="relative text-[#e0e0e0] mt-2"
-              variant="light"
-              onClick={() => {
-                track("Mentorship");
-              }}
-        
-
             >
-              <Link
-                to="/mentorship"
+              <Link 
+                to="/mentorship" 
                 className="relative text-[#e0e0e0] mt-2"
                 variant="light"
+                onClick={() => {
+                  track("Mentorship");
+                }}
               >
                 Mentorship
               </Link>
@@ -271,9 +231,9 @@ export default function App() {
             <hr className="my-1 border-green-900" />
 
             <Link to="/blog" className="relative text-[#e0e0e0] mt-2"
-             onClick={() => {
-              track("Blog");
-            }}
+              onClick={() => {
+                track("Blog");
+              }}
             >
               Blog
             </Link>
@@ -290,18 +250,10 @@ export default function App() {
               <Github />
             </Link>
 
-            <SignedOut
-               onClick={() => {
-                track(<SignInButton />);
-              }}
-            >
-              <SignInButton />
+            <SignedOut>
+              <SignInButton className="mt-2" />
             </SignedOut>
-            <SignedIn
-               onClick={() => {
-                track(<UserButton />);
-              }}
-            >
+            <SignedIn>
               <UserButton />
             </SignedIn>
           </NavbarContent>
