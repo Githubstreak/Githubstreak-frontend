@@ -23,14 +23,6 @@ const faqData = [
     answer: "The green boxes represent your coding journey. They showcase your dedication to personal projects, teamwork, and open-source contributions. It's a visual representation of your progress and the collective achievements of the community."
   },
   {
-    question: "How can I create a new project?",
-    answer: "You can create a new project by navigating to the 'Create a project' page and filling out the necessary details."
-  },
-  {
-    question: "How do I invite team members?",
-    answer: "Once you've created a project, you can invite team members by sending them the invitation link generated for your project."
-  },
-  {
     question: "Can I track the progress of my project?",
     answer: "Yes, the platform provides tools to track the progress of your project at every stage."
   }
