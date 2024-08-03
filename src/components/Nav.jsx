@@ -124,8 +124,16 @@ export default function App() {
             Mentorship
           </Link>
         </Badge>
+
+        <a href="https://nas.io/githubstreak" className="relative text-[#e0e0e0] mt-2"
+
+        >
+          Join Community
+        </a>
+
       </NavbarContent>
 
+      
       <NavbarContent
         as="div"
         justify="end"
