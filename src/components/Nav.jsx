@@ -351,7 +351,7 @@ export default function App() {
              <span>
                <FaFire size={22} color="green" />
              </span>
-             {userStats}
+             {userStats.currentStreak.count}
            </p>
          )}
         <Link  to="https://github.com/Githubstreak" target='_blank' className=' bg-white p-1 rounded-full'>
