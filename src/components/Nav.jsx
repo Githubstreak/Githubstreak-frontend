@@ -3,14 +3,14 @@ import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
-  DropdownSection,
+  
   Button,
   Badge,
   DropdownItem
 } from "@nextui-org/react";
 import { FaAngleDown } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
-import fire from '../../public/flame.png'
+
 import { Link, useLocation } from "react-router-dom";
 import {
   SignedIn,
@@ -31,7 +31,7 @@ export default function App() {
   const [userStats, setUserStats] = useState(0);
   
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
+  // const location = useLocation();
 
   useEffect(() => {
     const getUserStats = async (user) => {

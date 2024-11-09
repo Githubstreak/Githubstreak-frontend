@@ -14,7 +14,7 @@ import MentorshipPage from './Pages/mentorship';
 import Blog from './Pages/Blog';
 import Faq from './Pages/Faq';
 import AboutUs from './Pages/AboutUs';
-
+import Meme from "./Pages/Meme.jsx";
 // Import other pages/components as needed
 
 const clerkPKey = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -34,6 +34,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="blog" element={<Blog />} />
           <Route path="faq" element={<Faq />} />
           <Route path="About-us" element={<AboutUs />} />
+          <Route path="meme" element={<Meme />} />
+          {/* Add more routes here */}
         </Route>
       </Routes>
     </Router>
