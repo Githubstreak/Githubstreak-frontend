@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -40,7 +40,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-28">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-extrabold text-white-900">Frequently Asked Questions</h2>
         <p className="mt-4 text-lg text-gray-500">Find answers to the most commonly asked questions below.</p>

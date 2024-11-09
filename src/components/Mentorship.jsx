@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import 'animate.css'; // Import Animate.css for animations
 
