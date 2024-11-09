@@ -3,7 +3,7 @@ const columns = [
   { name: "DEVELOPER", uid: "developer" },
   { name: "STREAK", uid: "streak", sortable: true },
   { name: "CONTRIBUTIONS", uid: "contributions", sortable: true },
-  { name: "ROLE", uid: "role", sortable: true },
+  { name: "COMPARE", uid: "compare", sortable: false },
 ];
 
 export { columns };

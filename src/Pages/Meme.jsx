@@ -9,10 +9,12 @@ import { ButtonArrow } from "../assets/buttonArrow";
 import { AnimatePresence, motion } from "framer-motion";
 import html2canvas from "html2canvas";
 import { Loader } from "../components/Loader";
+import { useSearchParams } from "react-router-dom";
 
 function Meme() {
-  const [myUserName, setMyUserName] = useState("");
-  const [comparerUserInput, setComparerUserInput] = useState("");
+  const [params, setParams]= useSearchParams()
+  const [myUserName, setMyUserName] = useState(params.get("me"));
+  const [comparerUserInput, setComparerUserInput] = useState(params.get("other"));
   const [myData, setMyData] = useState(null);
   const [comparerData, setComparerData] = useState(null);
   const [myName, setMyName] = useState("");
@@ -29,6 +31,7 @@ function Meme() {
 const headingContainer = useRef(null)
   const containerRef = useRef(null);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,6 +47,12 @@ const headingContainer = useRef(null)
       setIsLoading(false);
       return
     }
+
+    params.set("me", myUserName )
+    params.set("other", comparerUserInput)
+
+    setParams(params)
+
     try {
       const [
         myProfileData,

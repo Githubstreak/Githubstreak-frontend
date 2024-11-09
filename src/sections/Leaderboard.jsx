@@ -22,12 +22,14 @@ import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "../components/icons/ChevronDownIcon";
 import { columns } from "./data";
 import { capitalize } from "./utils";
+import { useUser } from "@clerk/clerk-react"
 
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
   "developer",
   "streak",
   "contributions",
+  "compare",
 ];
 
 const Leaderboard = ({ leaderboard }) => {
@@ -45,6 +47,7 @@ const Leaderboard = ({ leaderboard }) => {
 
   const [page, setPage] = React.useState(1);
 
+  const { user: currentUser } = useUser();
 
   const rankedUsers = leaderboard ?? [];
 
@@ -105,6 +108,19 @@ const Leaderboard = ({ leaderboard }) => {
             </p>
           </div>
         );
+      case "compare":
+      return (
+        !currentUser ? <p>Sign in to compare</p> 
+        : <a href={`/meme?me=${currentUser.username}&other=${user.username}`}> 
+          <Button
+            variant="flat"
+            color="success"
+          >
+            Compare
+          </Button>
+        </a>
+
+      )
       default:
         return cellValue;
     }
