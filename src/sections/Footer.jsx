@@ -1,7 +1,10 @@
 import { track } from '@vercel/analytics';
 import { XLogo, YoutubeLogo, Discord } from "../components/icons";
+
+
 import logo from '/logo.png'
 import { Link } from 'react-router-dom';
+
 const Footer = () => {
   return (
 
