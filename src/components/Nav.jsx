@@ -334,12 +334,7 @@ export default function App() {
             >
               Join Community
             </Link>
-            <Link to={'/faq'}
-              className="transition mt-2"
-              
-            >
-              Faq
-            </Link>
+            
            
            
             

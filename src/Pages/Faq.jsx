@@ -40,7 +40,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 mt-28">
+    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8  mb-5">
       <div className="text-center mb-12">
         <h2 className="text-3xl font-extrabold text-white-900">Frequently Asked Questions</h2>
         <p className="mt-4 text-lg text-gray-500">Find answers to the most commonly asked questions below.</p>
