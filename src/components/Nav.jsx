@@ -360,7 +360,7 @@ export default function App() {
 
        
         <SignedOut >
-               <SignInButton className=" rounded-full p-2 bg-green-500" />
+               <SignInButton className=" rounded-full p-2 bg-green-500 text-black" />
              </SignedOut>
              <SignedIn  >
                <UserButton  />
