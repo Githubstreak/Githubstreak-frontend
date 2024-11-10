@@ -90,7 +90,7 @@ const Leaderboard = ({ leaderboard }) => {
         return (
           <Link
             isExternal
-            href={`https://awesome-gh-insights.vercel.app/devs/${user.username}`}
+            href={`https://github-insights.owbird.site/devs/${user.username}`}
           >
             <User
               avatarProps={{ radius: "lg", src: user.avatar + "&s=48" }}
