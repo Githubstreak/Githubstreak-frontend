@@ -6,15 +6,15 @@ const Footer = () => {
   return (
 
 <footer className="footer bg-neutral text-neutral-content items-center p-4">
- <div className=' w-full flex justify-between'>
- <aside className="grid-flow-col items-center">
-    <img src={logo} alt="logo" className="  sm:w-24 "/>
+ <div className=' w-full flex sm:flex-row flex-col items-center justify-between'>
+ <aside className="flex  mx-auto sm:mx-0 items-center">
+    <img src={logo} alt="logo" className="  w-24 "/>
     
   </aside>
   <div className=' ml-4'>
-  <p>Copyright © {new Date().getFullYear()} - All right reserved #githubstreak '24</p>
+  <p className=' font-semibold  mx-auto'>Copyright © {new Date().getFullYear()} - All right reserved #githubstreak '24</p>
   </div>
-  <nav className=" flex gap-4 md:place-self-center md:justify-self-end">
+  <nav className=" flex gap-4  mx-auto sm:m-0 ">
     <Link to={'https://x.com/githubstreak'} target="_blank" onClick={()=>{
       track(<XLogo/>)
     }}>
