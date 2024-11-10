@@ -2,7 +2,7 @@ import {
   Hero,
   Leaderboard,
   Topthree,
-  ContributorsProfile,
+ 
   CommunityLead,
 } from "../sections";
 import useGetLeaderboard from "../hooks/useGetLeaderboard";
@@ -31,9 +31,7 @@ const Home = () => {
           </section>
         </Fragment>
       )}
-      <section>
-        <ContributorsProfile />
-      </section>
+      
       <section>
         <CommunityLead />
       </section>
