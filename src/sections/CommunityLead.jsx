@@ -3,7 +3,7 @@ import { User, Link } from "@nextui-org/react";
 const CommunityLead = () => {
   return (
     <>
-      <div className="grid p-10 place-items-center ">
+      <div className="grid p-10 place-items-center">
         <b className="mb-2 text-2xl sm:">
           &quot;Consistency Beats Talent&quot;
         </b>
