@@ -85,11 +85,8 @@ export default function App() {
                    track("Project Ideas");
                  }} to={'/project-idea'}>Project Ideas</Link>
         </DropdownItem>
-        <DropdownItem key="team-project">
-          <Link to={'/team-project'}>Team Project</Link>
-        </DropdownItem>
         <DropdownItem key="solo-project">
-          <Link to={'/solo-project'}>Solo Project</Link>
+          <Link to={'/project'}>Projects</Link>
         </DropdownItem>
         
       </DropdownMenu>

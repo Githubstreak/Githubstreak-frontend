@@ -90,7 +90,7 @@ const Leaderboard = ({ leaderboard }) => {
         return (
           <Link
             isExternal
-            href={`https://github-insights.owbird.site/devs/${user.username}`}
+            href={`https://analytics.ggithubstreak.com/devs/${user.username}`}
           >
             <User
               avatarProps={{ radius: "lg", src: user.avatar + "&s=48" }}
