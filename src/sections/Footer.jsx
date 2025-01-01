@@ -15,7 +15,7 @@ const Footer = () => {
         <div className=" ml-4">
           <p className=" font-semibold  mx-auto">
             Copyright © {new Date().getFullYear()} - All right reserved
-            #githubstreak '24
+            #githubstreak '25
           </p>
         </div>
         <nav className=" flex gap-4  mx-auto sm:m-0 ">
