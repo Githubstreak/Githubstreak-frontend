@@ -4,17 +4,17 @@ import summmary from '../assets/images/summary.png';
 import meme from '../assets/meme.png';
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+
 const Hero = () => {
   const navigate = useNavigate()
+
   return (
-    <div
-      className="hero min-h-[100vh] xl:min-h-screen mb-5"
+    <div className="hero min-h-[100vh] xl:min-h-screen mb-5"
       style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: 'cover',
+        backgroundImage: `url(${background})`, 
+        backgroundSize: 'cover', 
         backgroundPosition: 'center',
-      }}
-    >
+        }}>
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between h-full px-6 py-12">
         <div className="text-left md:w-1/2">
           <h1 className="text-4xl font-bold md:text-6xl xl:text-8xl">
