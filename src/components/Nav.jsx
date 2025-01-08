@@ -51,7 +51,7 @@ export default function App() {
   // }, [location]);
 
   return (
-    <header className="w-screen py-4 border-b md:border-none fixed top-0 left-0 right-0 bg-[#211f21] md:bg-white/0 z-40">
+    <header className="w-screen py-4 border-b drop-shadow-2xl md:border-none fixed top-0 left-0 right-0 bg-[#211f21] md:bg-white/0 z-40">
       <div className="container md:pl-36 px-3">
         <div className="flex justify-between items-center md:border md:p-2.5 rounded-xl max-w-2xl lg:max-w-3xl mx-auto  md:bg-slate-800 md:backdrop:blur-xl">
           <div>
