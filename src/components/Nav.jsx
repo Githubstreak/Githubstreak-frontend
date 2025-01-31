@@ -51,9 +51,9 @@ export default function App() {
   // }, [location]);
 
   return (
-    <header className="w-screen py-4 border-b drop-shadow-2xl md:border-none fixed top-0 left-0 right-0 bg-[#211f21] md:bg-white/0 z-40">
-      <div className="container md:pl-36 px-3">
-        <div className="flex justify-between items-center md:border md:p-2.5 rounded-xl max-w-2xl lg:max-w-3xl mx-auto  md:bg-slate-800 md:backdrop:blur-xl">
+    <header className="w-full fixed top-0 left-0 right-0 z-40">
+      <div className="flex justify-between md:justify-center px-3 py-4 border-b drop-shadow-2xl md:border-none bg-[#211f21] md:bg-white/0">
+        <div className="w-full flex md:w-auto justify-between items-center md:border md:py-2.5 sm:px-7 rounded-xl lg:max-w-3xl md:bg-slate-800 md:backdrop:blur-xl gap-10 sm:gap-16">
           <div>
             <Link to="/">
               <img height={100} width={100} src="/logo.png" className='p-2' 

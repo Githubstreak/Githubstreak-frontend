@@ -7,6 +7,7 @@ import {
 } from "../sections";
 import useGetLeaderboard from "../hooks/useGetLeaderboard";
 import { Fragment } from "react";
+import CompareButton from "../components/CompareButton";
 
 const Home = () => {
   const { leaderboard, topThree, isLoading } = useGetLeaderboard();
@@ -35,6 +36,9 @@ const Home = () => {
       <section>
         <CommunityLead />
       </section>
+      <div className="fixed z-41 bottom-0 right-0 left-0 md:w-1/2 flex align-center px-10 mb-5">
+        <CompareButton />
+      </div>
     </main>
   );
 };
