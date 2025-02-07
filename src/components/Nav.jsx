@@ -71,7 +71,7 @@ export default function App() {
                         <Link onClick={() => {track("Project Ideas");}} to={"/project-ideas"}>Project Ideas</Link>
                       </DropdownItem>
                       <DropdownItem key="project">
-                        <Link to={'/projects'}>Projects</Link>
+                        <Link to={'/project'}>Projects</Link>
                       </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
