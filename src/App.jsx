@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react"
 import Nav from "./components/Nav"
 import Footer from './sections/Footer'
 import Project from "./Pages/Project";
-
+import Meme from "./Pages/Meme";
 import LandingPage from "./Pages/LandingPage";
 
 const App = () => {
@@ -14,6 +14,9 @@ const App = () => {
 
     <Routes>
       <Route path="/" element={<LandingPage/>}/>
+
+     
+      <Route path="meme" element={<Meme/>}/>
 
     
       <Route path="project" element={<Project/>}/>
