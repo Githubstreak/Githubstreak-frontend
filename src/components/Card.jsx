@@ -5,7 +5,7 @@ import { Bookmark } from 'lucide-react';
 
 const Card = ({ title, description, author, points, progress }) => {
   return (
-    <div className="bg-[#1C2128] rounded-lg p-4  sm:p-6 w-full text-white hover:scale-105 transition-transform duration-200">
+    <div className="bg-[#232323] rounded-lg p-4  sm:p-6 w-full text-white hover:scale-105 transition-transform duration-200">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 sm:gap-3">
           <img
