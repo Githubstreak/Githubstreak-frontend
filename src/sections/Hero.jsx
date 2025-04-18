@@ -1,10 +1,10 @@
 import background from '../assets/images/background.jpg';
 import summmary from '../assets/images/summary.png';
+
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
-  const navigate = useNavigate()
 
   return (
     <div className="hero min-h-[100vh] xl:min-h-screen mb-5 pt-16"
@@ -13,8 +13,13 @@ const Hero = () => {
         backgroundSize: 'cover', 
         backgroundPosition: 'center',
     }}>
+
       <div className="flex flex-col md:flex-row items-center justify-between h-full px-6 py-12 gap-8 sm:px-12 lg:px-16">
         <div className="text-left w-full md:w-1/2 max-w-2xl">
+        
+      <div className="md:container flex flex-col lg:flex-row items-center lg:items-center justify-between h-full px-6 py-12 gap-3 md:gap-6 sm:px-12 lg:px-16">
+        <div className="text-left">
+
           <h1 className="pt-16 text-4xl font-extrabold sm:text-6xl md:text-6xl lg:text-7xl">
             Welcome to
             <span className="text-green-500"> Githubstreak</span>
@@ -26,7 +31,11 @@ const Hero = () => {
             Join a community of developers who stay accountable to each other to stay consistent in their coding journey.
           </h5>
         </div>
+        
         <div className="w-full md:w-1/2 h-auto flex justify-end">
+
+        <div className="w-full md:w-auto h-auto">
+
           <img
             src={summmary}
             alt="GitHub Streak Cards"
