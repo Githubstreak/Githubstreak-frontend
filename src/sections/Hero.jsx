@@ -13,8 +13,8 @@ const Hero = () => {
         backgroundSize: 'cover', 
         backgroundPosition: 'center',
     }}>
-      <div className="flex flex-col items-center justify-between h-full px-6 py-12 gap-3 md:gap-16 sm:px-12 lg:px-16">
-        <div className="text-left w-full max-w-4xl">
+      <div className="flex flex-col md:flex-row items-center justify-between h-full px-6 py-12 gap-8 sm:px-12 lg:px-16">
+        <div className="text-left w-full md:w-1/2 max-w-2xl">
           <h1 className="pt-16 text-4xl font-extrabold sm:text-6xl md:text-6xl lg:text-7xl">
             Welcome to
             <span className="text-green-500"> Githubstreak</span>
@@ -26,11 +26,11 @@ const Hero = () => {
             Join a community of developers who stay accountable to each other to stay consistent in their coding journey.
           </h5>
         </div>
-        <div className="w-full md:w-auto h-auto mt-8">
+        <div className="w-full md:w-1/2 h-auto flex justify-end">
           <img
             src={summmary}
             alt="GitHub Streak Cards"
-            className="mx-auto"
+            className="object-contain max-w-full md:max-w-[90%]"
           />
         </div>
       </div>
