@@ -63,7 +63,7 @@ export default function App() {
           </div>
           <div className="hidden md:block text-white">
             <nav className="flex gap-8 text-sm">
-              <div className=" transition mt-2 flex  items-center">
+              {/* <div className=" transition mt-2 flex  items-center">
                 <Dropdown>
                   <DropdownTrigger className="cursor-pointer">Project</DropdownTrigger>
                     <DropdownMenu  aria-label="Static Actions">
@@ -76,10 +76,10 @@ export default function App() {
                     </DropdownMenu>
                 </Dropdown>
                 <FaAngleDown className="cursor-pointer"/>
-              </div>
-              <Badge classNames="" content="soon" color='success' className="h-4 text-green-900" shape='circle'>
+              </div> */}
+              {/* <Badge classNames="" content="soon" color='success' className="h-4 text-green-900" shape='circle'>
                 <Link className=" transition relative  mt-2" to={"/mentorship"}>Mentorship</Link>
-              </Badge>
+              </Badge> */}
               <Link  to={"https://nas.io/githubstreak"} className="transition mt-2">Join Community</Link>
             </nav>
           </div>
@@ -109,7 +109,7 @@ export default function App() {
             <div className='absolute left-0 w-full bg-gray-800   py-16 sm:hidden top-[73px] rounded-md backdrop-blur-md'>
               <div className="flex flex-col   p-4">
                 <ul className=' flex flex-col justify-center items-center space-y-4 text-white    '>
-                  <li className=''>
+                  {/* <li className=''>
                     <Dropdown>
                       <DropdownTrigger>
                         <Button>Project</Button>
@@ -118,7 +118,7 @@ export default function App() {
                   </li>
                   <li>
                     <Link to={'/'}>Mentorship</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to={'https://github.com/Githubstreak'}>Join Community</Link>
                   </li>
