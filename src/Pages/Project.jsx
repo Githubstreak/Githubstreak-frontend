@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Card from '../components/Card';
+// import Card from '../components/Card';
 import PlusModel from '../components/PlusModel';
 const Project = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,25 +1,18 @@
 import background from '../assets/images/background.jpg';
 import summmary from '../assets/images/summary.png';
-
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
-
   return (
     <div className="hero min-h-[100vh] xl:min-h-screen mb-5 pt-16"
       style={{
-        backgroundImage: `url(${background})`, 
-        backgroundSize: 'cover', 
+        backgroundImage: `url(${background})`,
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
     }}>
-
-      <div className="flex flex-col md:flex-row items-center justify-between h-full px-6 py-12 gap-8 sm:px-12 lg:px-16">
-        <div className="text-left w-full md:w-1/2 max-w-2xl">
-        
-      <div className="md:container flex flex-col lg:flex-row items-center lg:items-center justify-between h-full px-6 py-12 gap-3 md:gap-6 sm:px-12 lg:px-16">
-        <div className="text-left">
-
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between h-full px-6 py-12 gap-8 sm:px-12 lg:px-16">
+        <div className="text-left w-full md:w-2/5 max-w-2xl">
           <h1 className="pt-16 text-4xl font-extrabold sm:text-6xl md:text-6xl lg:text-7xl">
             Welcome to
             <span className="text-green-500"> Githubstreak</span>
@@ -32,14 +25,11 @@ const Hero = () => {
           </h5>
         </div>
         
-        <div className="w-full md:w-1/2 h-auto flex justify-end">
-
-        <div className="w-full md:w-auto h-auto">
-
+        <div className="w-full md:w-3/5 h-auto flex justify-end">
           <img
             src={summmary}
             alt="GitHub Streak Cards"
-            className="object-contain max-w-full md:max-w-[90%]"
+            className="object-contain w-full max-w-[800px] drop-shadow-2xl backdrop-blur-sm backdrop-filter rounded-lg"
           />
         </div>
       </div>
