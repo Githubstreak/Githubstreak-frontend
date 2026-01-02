@@ -6,11 +6,15 @@ const Topthree = ({ topThree }) => {
     <div className="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-16">
       <div className="pl-0 md:pl-0 lg:pl-0">
         <b className="text-lg md:text-xl lg:text-2xl font-bold block mb-8">
-          Top 1% Contributors in the last 7 days
+          🏆 Top Contributors This Week
         </b>
         <div className="gap-5 grid lg:grid-cols-3 grid-cols-1 w-full">
           {topThree.map((user) => (
-            <Card shadow="sm" className="bg-green-900 flex-row" key={user.username}>
+            <Card
+              shadow="sm"
+              className="bg-green-900 flex-row"
+              key={user.username}
+            >
               <CardBody className="overflow-visible p-5">
                 <User
                   className="text-white justify-start"

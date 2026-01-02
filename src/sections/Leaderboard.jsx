@@ -22,7 +22,7 @@ import { SearchIcon } from "./SearchIcon";
 import { ChevronDownIcon } from "../components/icons/ChevronDownIcon";
 import { columns } from "./data";
 import { capitalize } from "./utils";
-import { useUser } from "@clerk/clerk-react"
+import { useUser } from "@clerk/clerk-react";
 
 const INITIAL_VISIBLE_COLUMNS = [
   "rank",
@@ -42,7 +42,7 @@ const Leaderboard = ({ leaderboard }) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "streak",
-    direction: "ascending",
+    direction: "descending",
   });
 
   const [page, setPage] = React.useState(1);
@@ -109,18 +109,15 @@ const Leaderboard = ({ leaderboard }) => {
           </div>
         );
       case "compare":
-      return (
-        !currentUser ? <p>Sign in to compare</p> 
-        : <a href={`/meme?me=${currentUser.username}&other=${user.username}`}> 
-          <Button
-            variant="flat"
-            color="success"
-          >
-            Compare
-          </Button>
-        </a>
-
-      )
+        return !currentUser ? (
+          <p>Sign in to compare</p>
+        ) : (
+          <a href={`/meme?me=${currentUser.username}&other=${user.username}`}>
+            <Button variant="flat" color="success">
+              Compare
+            </Button>
+          </a>
+        );
       default:
         return cellValue;
     }
@@ -292,9 +289,28 @@ const Leaderboard = ({ leaderboard }) => {
       </TableHeader>
       <TableBody emptyContent={"No users found"} items={items}>
         {(item) => (
-          <TableRow key={item.rank}>
+          <TableRow
+            key={item.rank}
+            className={
+              currentUser?.username === item.username
+                ? "bg-green-900/30 border-l-4 border-green-500"
+                : ""
+            }
+          >
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell>
+                {columnKey === "developer" &&
+                currentUser?.username === item.username ? (
+                  <div className="flex items-center gap-2">
+                    {renderCell(item, columnKey)}
+                    <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
+                      YOU
+                    </span>
+                  </div>
+                ) : (
+                  renderCell(item, columnKey)
+                )}
+              </TableCell>
             )}
           </TableRow>
         )}
