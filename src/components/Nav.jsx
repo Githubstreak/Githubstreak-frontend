@@ -1,13 +1,3 @@
-import { track } from "@vercel/analytics";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  Button,
-  Badge,
-  DropdownItem,
-} from "@nextui-org/react";
-import { FaAngleDown } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import {
@@ -19,10 +9,10 @@ import {
 import { useState } from "react";
 import { FaFire } from "react-icons/fa";
 import { Github } from "../components/icons/Github";
-import useUserStats from "../hooks/useUserStats";
-import "../index.css"; // Ensure this imports your custom styles
+import { useUserStats } from "../context/UserStatsContext";
+import "../index.css";
 
-export default function App() {
+export default function Nav() {
   const { userStats, streakStatus } = useUserStats();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -41,6 +31,20 @@ export default function App() {
         return "text-red-500";
       default:
         return "text-green-500";
+    }
+  };
+
+  // Get tooltip text based on status
+  const getTooltip = () => {
+    switch (streakStatus) {
+      case "today":
+        return "✓ Committed today!";
+      case "pending":
+        return "⚠️ Commit today to keep streak!";
+      case "broken":
+        return "Start a new streak!";
+      default:
+        return "Your streak";
     }
   };
 
@@ -89,20 +93,14 @@ export default function App() {
           <div className="flex gap-4 items-center">
             {userStats && (
               <p
-                className="flex items-center text-white gap-1"
-                title={`${
-                  streakStatus === "today"
-                    ? "Committed today!"
-                    : streakStatus === "pending"
-                    ? "Commit today to keep streak!"
-                    : "Start a new streak!"
-                }`}
+                className="flex items-center text-white gap-1 cursor-default"
+                title={getTooltip()}
               >
                 <span>
                   <FaFire size={22} className={getFireColor()} />
                 </span>
                 <span className="font-semibold">
-                  {userStats.currentStreak?.count || 0}
+                  {userStats.currentStreak?.count ?? 0}
                 </span>
               </p>
             )}

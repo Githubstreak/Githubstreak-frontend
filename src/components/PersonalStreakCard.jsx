@@ -3,8 +3,12 @@ import {
   FaTrophy,
   FaCalendarCheck,
   FaExclamationTriangle,
+  FaGithub,
+  FaInfoCircle,
 } from "react-icons/fa";
 import { SignInButton } from "@clerk/clerk-react";
+import MilestoneProgress from "./MilestoneProgress";
+import StreakResetCountdown from "./StreakResetCountdown";
 
 const PersonalStreakCard = ({
   userStats,
@@ -70,17 +74,25 @@ const PersonalStreakCard = ({
           <h3 className="text-xl font-bold text-white mb-2">
             Start Your Streak
           </h3>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm mb-4">
             Make your first commit to start tracking your streak!
           </p>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition-colors text-sm"
+          >
+            <FaGithub /> Go to GitHub
+          </a>
         </div>
       </div>
     );
   }
 
-  const currentStreak = userStats.currentStreak?.count || 0;
-  const longestStreak = userStats.longestStreak?.count || currentStreak;
-  const totalContributions = userStats.contributions || 0;
+  const currentStreak = userStats.currentStreak?.count ?? 0;
+  const longestStreak = userStats.longestStreak?.count ?? currentStreak;
+  const totalContributions = userStats.contributions ?? 0;
 
   // Streak status styling
   const getStatusConfig = () => {
@@ -98,7 +110,7 @@ const PersonalStreakCard = ({
           bg: "from-yellow-900/30 to-slate-900",
           border: "border-yellow-600",
           badge: "bg-yellow-500",
-          badgeText: "⏳ Commit Today!",
+          badgeText: "⚠️ Not Yet Today",
           fireColor: "text-yellow-400",
         };
       case "broken":
@@ -153,19 +165,29 @@ const PersonalStreakCard = ({
         </div>
       </div>
 
+      {/* Streak reset countdown */}
+      <StreakResetCountdown streakStatus={streakStatus} />
+
       {/* Stats grid */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 mt-4">
         <div className="bg-slate-800/50 rounded-xl p-4 text-center">
           <FaTrophy className="mx-auto text-xl text-yellow-500 mb-2" />
           <p className="text-2xl font-bold text-white">{longestStreak}</p>
           <p className="text-xs text-gray-400">Best Streak</p>
         </div>
-        <div className="bg-slate-800/50 rounded-xl p-4 text-center">
+        <div className="bg-slate-800/50 rounded-xl p-4 text-center group relative">
           <FaCalendarCheck className="mx-auto text-xl text-blue-400 mb-2" />
           <p className="text-2xl font-bold text-white">
             {totalContributions.toLocaleString()}
           </p>
-          <p className="text-xs text-gray-400">Contributions</p>
+          <p className="text-xs text-gray-400 flex items-center justify-center gap-1">
+            Contributions
+            <FaInfoCircle className="text-gray-500 cursor-help" />
+          </p>
+          {/* Tooltip */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none w-48 z-10">
+            Commits, PRs, and issues on public repositories
+          </div>
         </div>
       </div>
 
@@ -175,33 +197,18 @@ const PersonalStreakCard = ({
           <MilestoneProgress currentStreak={currentStreak} />
         </div>
       )}
-    </div>
-  );
-};
 
-// Sub-component for milestone progress
-const MilestoneProgress = ({ currentStreak }) => {
-  const milestones = [7, 30, 100];
-  const nextMilestone = milestones.find((m) => m > currentStreak) || 100;
-  const prevMilestone = milestones.filter((m) => m <= currentStreak).pop() || 0;
-  const progress =
-    ((currentStreak - prevMilestone) / (nextMilestone - prevMilestone)) * 100;
-
-  return (
-    <div>
-      <div className="flex justify-between text-xs text-gray-400 mb-1">
-        <span>{prevMilestone > 0 ? `${prevMilestone} days ✓` : "Start"}</span>
-        <span>{nextMilestone} days</span>
-      </div>
-      <div className="w-full bg-slate-700 rounded-full h-2">
-        <div
-          className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full transition-all duration-500"
-          style={{ width: `${Math.min(progress, 100)}%` }}
-        />
-      </div>
-      <p className="text-center text-xs text-gray-500 mt-2">
-        {nextMilestone - currentStreak} days to {nextMilestone}-day milestone 🎯
-      </p>
+      {/* GitHub link */}
+      {userStats.username && (
+        <a
+          href={`https://github.com/${userStats.username}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 flex items-center justify-center gap-2 text-gray-400 hover:text-white text-sm transition-colors"
+        >
+          <FaGithub /> View GitHub Profile
+        </a>
+      )}
     </div>
   );
 };

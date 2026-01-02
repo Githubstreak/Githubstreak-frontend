@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
+import { transformLeaderboard } from "../utils/transforms";
 
 const useGetLeaderboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,14 +19,10 @@ const useGetLeaderboard = () => {
 
         const response = await axios.get(`${API_URL}/v1/users/leaderboard`);
 
-        // Sort by streak descending by default
-        const sortedData = [...response.data].sort((a, b) => {
-          const streakA = a.currentStreak?.count || 0;
-          const streakB = b.currentStreak?.count || 0;
-          return streakB - streakA;
-        });
+        // Transform and sort using centralized transform layer
+        const transformedData = transformLeaderboard(response.data);
 
-        setLeaderboard(sortedData);
+        setLeaderboard(transformedData);
       } catch (e) {
         console.error("Error fetching leaderboard:", e);
         setError("Failed to load leaderboard. Please try again.");
