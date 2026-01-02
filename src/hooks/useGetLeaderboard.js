@@ -1,27 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { API_URL } from "../utils/constants";
 
 const useGetLeaderboard = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [leaderboard, setLeaderboard] = useState();
+  const [leaderboard, setLeaderboard] = useState(null);
+  const [error, setError] = useState(null);
 
-  const getLeaderboard = async () => {
-    // Don't refetch if board is already present
-    if (leaderboard) return;
+  const getLeaderboard = useCallback(
+    async (forceRefresh = false) => {
+      // Don't refetch if board is already present (unless forced)
+      if (leaderboard && !forceRefresh) return;
 
-    try {
-      setIsLoading(true);
+      try {
+        setIsLoading(true);
+        setError(null);
 
-      const response = await axios.get(`${API_URL}/v1/users/leaderboard`);
+        const response = await axios.get(`${API_URL}/v1/users/leaderboard`);
 
-      setLeaderboard(response.data);
-    } catch (e) {
-      //TODO: Show error to user
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        // Sort by streak descending by default
+        const sortedData = [...response.data].sort((a, b) => {
+          const streakA = a.currentStreak?.count || 0;
+          const streakB = b.currentStreak?.count || 0;
+          return streakB - streakA;
+        });
+
+        setLeaderboard(sortedData);
+      } catch (e) {
+        console.error("Error fetching leaderboard:", e);
+        setError("Failed to load leaderboard. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [leaderboard]
+  );
 
   useEffect(() => {
     getLeaderboard();
@@ -30,7 +43,9 @@ const useGetLeaderboard = () => {
   return {
     isLoading,
     leaderboard,
+    error,
     topThree: leaderboard ? leaderboard.slice(0, 3) : [],
+    refetch: () => getLeaderboard(true),
   };
 };
 
