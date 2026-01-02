@@ -2,19 +2,19 @@ import { User, Link } from "@nextui-org/react";
 
 const CommunityLead = () => {
   return (
-    <>
-      <div className="grid p-10 place-items-center">
-        <b className="mb-2 text-2xl sm:">
+    <section className="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-16 py-12">
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 text-center">
+        <p className="text-3xl md:text-4xl font-bold text-white mb-4">
           &quot;Consistency Beats Talent&quot;
-        </b>
-        <p className="mb-5 text-xl text-justify sm:text-medium">
-          Consistency beats talent because it is more sustainable, adaptable,
-          and rewarding. <br />
-          It helps one improve skills, achieve goals, and overcome challenges.
         </p>
-        <Link href={`https://x.com/edmond_akwasi`} size="sm" isExternal>
+        <p className="text-gray-400 max-w-2xl mx-auto mb-6">
+          Consistency beats talent because it is more sustainable, adaptable,
+          and rewarding. It helps one improve skills, achieve goals, and
+          overcome challenges.
+        </p>
+        <Link href="https://x.com/edmond_akwasi" size="sm" isExternal>
           <User
-            className="text-green-400"
+            className="text-green-400 justify-center"
             name="Edmond Akwasi"
             description="Githubstreak Community Lead"
             avatarProps={{
@@ -23,7 +23,7 @@ const CommunityLead = () => {
           />
         </Link>
       </div>
-    </>
+    </section>
   );
 };
 

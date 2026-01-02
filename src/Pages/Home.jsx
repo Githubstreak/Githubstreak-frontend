@@ -1,6 +1,6 @@
 import { Hero, Leaderboard, Topthree, CommunityLead } from "../sections";
 import useGetLeaderboard from "../hooks/useGetLeaderboard";
-import useUserStats from "../hooks/useUserStats";
+import { useUserStats } from "../context/UserStatsContext";
 import { Fragment } from "react";
 import CompareButton from "../components/CompareButton";
 import PersonalStreakCard from "../components/PersonalStreakCard";
