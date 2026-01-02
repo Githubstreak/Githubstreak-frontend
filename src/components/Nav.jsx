@@ -122,9 +122,9 @@ export default function Nav() {
             </span>
           </div>
           {menuOpen && (
-            <div className="absolute left-0 w-full bg-gray-800   py-16 sm:hidden top-[73px] rounded-md backdrop-blur-md">
-              <div className="flex flex-col   p-4">
-                <ul className=" flex flex-col justify-center items-center space-y-4 text-white    ">
+            <div className="absolute left-0 w-full bg-slate-800 border border-slate-700 py-16 sm:hidden top-[73px] rounded-xl backdrop-blur-md">
+              <div className="flex flex-col p-4">
+                <ul className="flex flex-col justify-center items-center space-y-4 text-white">
                   {/* <li className=''>
                     <Dropdown>
                       <DropdownTrigger>
@@ -136,7 +136,10 @@ export default function Nav() {
                     <Link to={'/'}>Mentorship</Link>
                   </li> */}
                   <li>
-                    <Link to={"https://github.com/Githubstreak"}>
+                    <Link
+                      to={"https://nas.io/githubstreak"}
+                      className="text-white hover:text-green-400 transition-colors"
+                    >
                       Join Community
                     </Link>
                   </li>

@@ -1,27 +1,31 @@
-import  { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from '@fortawesome/fontawesome-svg-core';
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
 const faqData = [
   {
     question: "What is this platform about?",
-    answer: "This platform (Githubstreak) is designed to help developers in any way as much as possible."
+    answer:
+      "This platform (Githubstreak) is designed to help developers in any way as much as possible.",
   },
   {
     question: "How do I get involved?",
-    answer: "Joining Githubstreak is simple! On this our community website, signup with your Github account, and start your coding journey. Engage with solo projects, team projects, and contribute to open-source initiatives.."
+    answer:
+      "Joining Githubstreak is simple! On this our community website, signup with your Github account, and start your coding journey. Engage with solo projects, team projects, and contribute to open-source initiatives..",
   },
   {
     question: "What if I'm new to coding?",
-    answer: "The Githubstreak community is inclusive and beginner-friendly. Our community values growth, and members at all skill levels are encouraged to participate. Ask questions, seek guidance, and learn alongside experienced developers."
+    answer:
+      "The Githubstreak community is inclusive and beginner-friendly. Our community values growth, and members at all skill levels are encouraged to participate. Ask questions, seek guidance, and learn alongside experienced developers.",
   },
   {
     question: "What's the significance of the green boxes?",
-    answer: "The green boxes represent your coding journey. They showcase your dedication to personal projects, teamwork, and open-source contributions. It's a visual representation of your progress and the collective achievements of the community."
-  }
+    answer:
+      "The green boxes represent your coding journey. They showcase your dedication to personal projects, teamwork, and open-source contributions. It's a visual representation of your progress and the collective achievements of the community.",
+  },
 ];
 
 const FAQ = () => {
@@ -36,30 +40,36 @@ const FAQ = () => {
   };
 
   return (
-    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8  mb-5">
+    <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 mb-5">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-extrabold text-white-900">Frequently Asked Questions</h2>
-        <p className="mt-4 text-lg text-gray-500">Find answers to the most commonly asked questions below.</p>
+        <h2 className="text-3xl font-extrabold text-white">
+          Frequently Asked Questions
+        </h2>
+        <p className="mt-4 text-lg text-gray-400">
+          Find answers to the most commonly asked questions below.
+        </p>
       </div>
       <div className="max-w-2xl mx-auto">
         {faqData.map((faq, index) => (
           <div key={index} className="mb-4">
             <button
               onClick={() => toggleFAQ(index)}
-              className="w-full text-left text-lg font-semibold text-gray-700 p-4 bg-gray-200 rounded-md focus:outline-none flex items-center justify-between"
+              className="w-full text-left text-lg font-semibold text-white p-4 bg-slate-800 rounded-lg border border-slate-700 hover:bg-slate-700 focus:outline-none flex items-center justify-between transition-colors"
             >
               <span>{faq.question}</span>
               <FontAwesomeIcon
                 icon={faChevronDown}
-                className={`transition-transform duration-500 ${activeIndex === index ? 'rotate-180' : ''}`}
+                className={`transition-transform duration-500 text-green-500 ${
+                  activeIndex === index ? "rotate-180" : ""
+                }`}
               />
             </button>
             <div
               className={`overflow-hidden transition-max-height duration-500 ease-in-out ${
-                activeIndex === index ? 'max-h-screen' : 'max-h-0'
+                activeIndex === index ? "max-h-screen" : "max-h-0"
               }`}
             >
-              <p className="p-4 text-gray-600 bg-gray-50 rounded-md">
+              <p className="p-4 text-gray-300 bg-slate-900 rounded-b-lg border-x border-b border-slate-700">
                 {faq.answer}
               </p>
             </div>
