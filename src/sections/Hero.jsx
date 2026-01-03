@@ -59,11 +59,11 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-3/5 h-auto flex justify-end">
+        <div className="w-full md:w-3/5 h-auto flex justify-end md:pr-0 lg:pr-4 xl:pr-8">
           <img
             src={summary}
             alt="GitHub Streak Cards"
-            className="object-contain w-full max-w-[800px] drop-shadow-2xl rounded-lg"
+            className="object-contain w-full max-w-[960px] lg:max-w-[1040px] drop-shadow-2xl rounded-lg md:-mr-4 lg:-mr-8"
           />
         </div>
       </div>
