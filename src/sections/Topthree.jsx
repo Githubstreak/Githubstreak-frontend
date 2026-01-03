@@ -11,7 +11,7 @@ const Topthree = ({ topThree }) => {
           {topThree.map((user, index) => (
             <Card
               shadow="sm"
-              className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 flex-row"
+              className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 flex-row card-hover"
               key={user.username}
             >
               <CardBody className="overflow-visible p-5">

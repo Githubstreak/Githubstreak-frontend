@@ -9,6 +9,8 @@ import {
 import { SignInButton } from "@clerk/clerk-react";
 import MilestoneProgress from "./MilestoneProgress";
 import StreakResetCountdown from "./StreakResetCountdown";
+import WeeklyCalendar from "./WeeklyCalendar";
+import ShareButton from "./ShareButton";
 
 const PersonalStreakCard = ({
   userStats,
@@ -21,7 +23,7 @@ const PersonalStreakCard = ({
   // Not signed in - show sign in prompt
   if (!isSignedIn) {
     return (
-      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700">
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700 card-hover">
         <div className="text-center">
           <FaFire className="mx-auto text-4xl text-gray-500 mb-3" />
           <h3 className="text-xl font-bold text-white mb-2">
@@ -36,12 +38,21 @@ const PersonalStreakCard = ({
     );
   }
 
-  // Loading state
+  // Loading state with skeleton
   if (isLoading) {
     return (
       <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700">
-        <div className="flex items-center justify-center py-8">
-          <span className="loading loading-spinner loading-md text-green-500"></span>
+        <div className="flex items-center justify-between mb-6">
+          <div className="skeleton h-6 w-24 rounded"></div>
+          <div className="skeleton h-6 w-32 rounded-full"></div>
+        </div>
+        <div className="flex flex-col items-center mb-6">
+          <div className="skeleton h-16 w-32 rounded mb-2"></div>
+          <div className="skeleton h-4 w-20 rounded"></div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="skeleton h-24 rounded-xl"></div>
+          <div className="skeleton h-24 rounded-xl"></div>
         </div>
       </div>
     );
@@ -68,7 +79,7 @@ const PersonalStreakCard = ({
   // No stats yet
   if (!userStats) {
     return (
-      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700">
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700 card-hover">
         <div className="text-center">
           <FaFire className="mx-auto text-4xl text-gray-500 mb-3" />
           <h3 className="text-xl font-bold text-white mb-2">
@@ -93,6 +104,7 @@ const PersonalStreakCard = ({
   const currentStreak = userStats.currentStreak?.count ?? 0;
   const longestStreak = userStats.longestStreak?.count ?? currentStreak;
   const totalContributions = userStats.contributions ?? 0;
+  const contributionDays = userStats.contributionDays ?? [];
 
   // Streak status styling
   const getStatusConfig = () => {
@@ -104,6 +116,8 @@ const PersonalStreakCard = ({
           badge: "bg-green-500",
           badgeText: "✓ Committed Today",
           fireColor: "text-green-400",
+          fireAnim: "fire-active",
+          glow: "glow-green",
         };
       case "pending":
         return {
@@ -112,6 +126,8 @@ const PersonalStreakCard = ({
           badge: "bg-yellow-500",
           badgeText: "⚠️ Not Yet Today",
           fireColor: "text-yellow-400",
+          fireAnim: "fire-flicker",
+          glow: "glow-yellow",
         };
       case "broken":
         return {
@@ -120,6 +136,8 @@ const PersonalStreakCard = ({
           badge: "bg-red-500",
           badgeText: "💔 Streak Broken",
           fireColor: "text-red-400",
+          fireAnim: "",
+          glow: "glow-red",
         };
       default:
         return {
@@ -128,6 +146,8 @@ const PersonalStreakCard = ({
           badge: "bg-gray-500",
           badgeText: "",
           fireColor: "text-orange-400",
+          fireAnim: "",
+          glow: "",
         };
     }
   };
@@ -136,7 +156,7 @@ const PersonalStreakCard = ({
 
   return (
     <div
-      className={`bg-gradient-to-br ${statusConfig.bg} rounded-2xl p-6 border ${statusConfig.border} transition-all duration-300`}
+      className={`bg-gradient-to-br ${statusConfig.bg} rounded-2xl p-6 border ${statusConfig.border} ${statusConfig.glow} transition-all duration-300 card-hover`}
     >
       {/* Header with status badge */}
       <div className="flex items-center justify-between mb-6">
@@ -154,7 +174,9 @@ const PersonalStreakCard = ({
       <div className="flex items-center justify-center mb-6">
         <div className="text-center">
           <div className="flex items-center justify-center gap-2">
-            <FaFire className={`text-4xl ${statusConfig.fireColor}`} />
+            <FaFire
+              className={`text-5xl ${statusConfig.fireColor} ${statusConfig.fireAnim}`}
+            />
             <span className="text-6xl font-bold text-white">
               {currentStreak}
             </span>
@@ -168,14 +190,19 @@ const PersonalStreakCard = ({
       {/* Streak reset countdown */}
       <StreakResetCountdown streakStatus={streakStatus} />
 
+      {/* Weekly calendar */}
+      <div className="mt-4">
+        <WeeklyCalendar contributionDays={contributionDays} />
+      </div>
+
       {/* Stats grid */}
       <div className="grid grid-cols-2 gap-4 mt-4">
-        <div className="bg-slate-800/50 rounded-xl p-4 text-center">
+        <div className="bg-slate-800/50 rounded-xl p-4 text-center hover:bg-slate-700/50 transition-colors">
           <FaTrophy className="mx-auto text-xl text-yellow-500 mb-2" />
           <p className="text-2xl font-bold text-white">{longestStreak}</p>
           <p className="text-xs text-gray-400">Best Streak</p>
         </div>
-        <div className="bg-slate-800/50 rounded-xl p-4 text-center group relative">
+        <div className="bg-slate-800/50 rounded-xl p-4 text-center group relative hover:bg-slate-700/50 transition-colors">
           <FaCalendarCheck className="mx-auto text-xl text-blue-400 mb-2" />
           <p className="text-2xl font-bold text-white">
             {totalContributions.toLocaleString()}
@@ -197,6 +224,12 @@ const PersonalStreakCard = ({
           <MilestoneProgress currentStreak={currentStreak} />
         </div>
       )}
+
+      {/* Share button */}
+      <ShareButton
+        currentStreak={currentStreak}
+        username={userStats.username}
+      />
 
       {/* GitHub link */}
       {userStats.username && (

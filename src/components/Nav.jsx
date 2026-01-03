@@ -25,18 +25,20 @@ export default function Nav() {
   };
 
   // Streak fire color based on status
-  const getFireColor = () => {
+  const getFireConfig = () => {
     switch (streakStatus) {
       case "today":
-        return "text-green-500";
+        return { color: "text-green-500", animation: "fire-active" };
       case "pending":
-        return "text-yellow-500";
+        return { color: "text-yellow-500", animation: "fire-flicker" };
       case "broken":
-        return "text-red-500";
+        return { color: "text-red-500", animation: "" };
       default:
-        return "text-green-500";
+        return { color: "text-green-500", animation: "" };
     }
   };
+
+  const fireConfig = getFireConfig();
 
   // Get tooltip text based on status
   const getTooltip = () => {
@@ -93,7 +95,7 @@ export default function Nav() {
               >
                 <FaFire
                   size={22}
-                  className={getFireColor()}
+                  className={`${fireConfig.color} ${fireConfig.animation}`}
                   aria-hidden="true"
                 />
                 <span className="font-semibold">
