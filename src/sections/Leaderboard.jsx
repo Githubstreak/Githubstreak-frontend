@@ -14,7 +14,6 @@ import {
   DropdownItem,
   User,
   Pagination,
-  Link,
 } from "@nextui-org/react";
 import { FaMedal } from "react-icons/fa";
 import { SearchIcon } from "./SearchIcon";
@@ -119,17 +118,14 @@ const Leaderboard = ({ leaderboard }) => {
           );
         case "developer":
           return (
-            <Link
-              isExternal
-              href={`https://analytics.ggithubstreak.com/devs/${user.username}`}
-            >
-              <User
-                avatarProps={{ radius: "lg", src: user.avatar + "&s=48" }}
-                description={`@${user.username}`}
-                className="text-green-400"
-                name={user.username}
-              />
-            </Link>
+            <User
+              avatarProps={{ radius: "lg", src: user.avatar + "&s=48" }}
+              description={
+                <span className="text-green-400">@{user.username}</span>
+              }
+              className="text-white"
+              name={user.username}
+            />
           );
         case "streak":
           return (
