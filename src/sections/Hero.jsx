@@ -16,8 +16,8 @@ const Hero = () => {
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/50" />
 
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between h-full px-6 py-12 gap-8 sm:px-12 lg:px-16 relative z-10">
-        <div className="text-left w-full md:w-2/5 max-w-2xl">
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between h-full px-6 py-12 gap-8 sm:px-12 lg:px-8 relative z-10">
+        <div className="text-left w-full md:w-[40%] max-w-xl">
           <h1 className="pt-16 text-4xl font-extrabold sm:text-6xl md:text-6xl lg:text-7xl">
             Welcome to
             <span className="text-green-500"> Githubstreak</span>
@@ -59,11 +59,11 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-3/5 h-auto flex justify-end md:pr-0 lg:pr-4 xl:pr-8">
+        <div className="w-full md:w-[58%] h-auto flex justify-end md:-mr-8 lg:-mr-12">
           <img
             src={summary}
             alt="GitHub Streak Cards"
-            className="object-contain w-full max-w-[960px] lg:max-w-[1040px] drop-shadow-2xl rounded-lg md:-mr-4 lg:-mr-8"
+            className="object-contain w-full max-w-[950px] drop-shadow-2xl rounded-lg"
           />
         </div>
       </div>
