@@ -12,7 +12,7 @@ const CommunityLead = () => {
           and rewarding. It helps one improve skills, achieve goals, and
           overcome challenges.
         </p>
-        <Link href="https://x.com/edmond_akwasi" size="sm" isExternal>
+        <Link href="https://x.com/Kwame_Tech1" size="sm" isExternal>
           <User
             className="text-green-400 justify-center"
             name="Kwame Edmond "
