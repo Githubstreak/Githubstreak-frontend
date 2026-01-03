@@ -2,32 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body{
-    margin: 3rem;
-} */
+/* Hide scrollbars globally while keeping scroll functionality */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 .light-mode-github {
-    color: #000000; /* Text color */
-    background-color: #ffffff; /* Background color */
-    border: 1px solid #000000; /* Optional: Border color for better visibility */
-    padding: 5px; /* Optional: Padding for better click area */
-    border-radius: 5px; /* Optional: Rounded corners */
-  }
-  
-  .light-mode-github:hover {
-    background-color: #f0f0f0; /* Optional: Slightly darker background on hover */
-  }
+  color: #000000; /* Text color */
+  background-color: #ffffff; /* Background color */
+  border: 1px solid #000000; /* Optional: Border color for better visibility */
+  padding: 5px; /* Optional: Padding for better click area */
+  border-radius: 5px; /* Optional: Rounded corners */
+}
 
-  .light-mode-button {
-    color: #000000; /* Text color */
-    background-color: #ffffff; /* Background color */
-    border: 1px solid #000000; /* Optional: Border color for better visibility */
-    padding: 5px; /* Optional: Padding for better click area */
-    border-radius: 5px; /* Optional: Rounded corners */
-  }
-  
-  .light-mode-button:hover {
-    background-color: #f0f0f0; /* Optional: Slightly darker background on hover */
-  }
-  
-  
+.light-mode-github:hover {
+  background-color: #f0f0f0; /* Optional: Slightly darker background on hover */
+}
+
+.light-mode-button {
+  color: #000000; /* Text color */
+  background-color: #ffffff; /* Background color */
+  border: 1px solid #000000; /* Optional: Border color for better visibility */
+  padding: 5px; /* Optional: Padding for better click area */
+  border-radius: 5px; /* Optional: Rounded corners */
+}
+
+.light-mode-button:hover {
+  background-color: #f0f0f0; /* Optional: Slightly darker background on hover */
+}
