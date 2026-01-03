@@ -1,5 +1,4 @@
-import { Card, CardBody, CardFooter } from "@nextui-org/react";
-import { User, Link } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, User } from "@nextui-org/react";
 
 const Topthree = ({ topThree }) => {
   return (
@@ -22,14 +21,9 @@ const Topthree = ({ topThree }) => {
                       className="text-white justify-start"
                       name={user.username}
                       description={
-                        <Link
-                          href={`https://analytics.ggithubstreak.com/devs/${user.username}`}
-                          className="text-green-400"
-                          size="sm"
-                          isExternal
-                        >
+                        <span className="text-green-400">
                           {`@${user.username}`}
-                        </Link>
+                        </span>
                       }
                       avatarProps={{
                         src: user.avatar,
