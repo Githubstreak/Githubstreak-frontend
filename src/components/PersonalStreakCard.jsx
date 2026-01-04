@@ -5,12 +5,14 @@ import {
   FaExclamationTriangle,
   FaGithub,
   FaInfoCircle,
+  FaSync,
 } from "react-icons/fa";
 import { SignInButton } from "@clerk/clerk-react";
 import MilestoneProgress from "./MilestoneProgress";
 import StreakResetCountdown from "./StreakResetCountdown";
 import WeeklyCalendar from "./WeeklyCalendar";
 import ShareButton from "./ShareButton";
+import { useState } from "react";
 
 const PersonalStreakCard = ({
   userStats,
@@ -20,6 +22,19 @@ const PersonalStreakCard = ({
   isSignedIn,
   refetch,
 }) => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = async () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
+    try {
+      await refetch();
+    } finally {
+      // Add a minimum delay so users see the animation
+      setTimeout(() => setIsRefreshing(false), 1000);
+    }
+  };
+
   // Not signed in - show sign in prompt
   if (!isSignedIn) {
     return (
@@ -158,9 +173,21 @@ const PersonalStreakCard = ({
     <div
       className={`bg-gradient-to-br ${statusConfig.bg} rounded-2xl p-6 border ${statusConfig.border} ${statusConfig.glow} transition-all duration-300 card-hover`}
     >
-      {/* Header with status badge */}
+      {/* Header with status badge and refresh */}
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-white">Your Streak</h3>
+        <div className="flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-white">Your Streak</h3>
+          <button
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="text-gray-400 hover:text-green-400 transition-colors p-1"
+            title="Refresh stats from GitHub"
+          >
+            <FaSync
+              className={`text-sm ${isRefreshing ? "animate-spin" : ""}`}
+            />
+          </button>
+        </div>
         {statusConfig.badgeText && (
           <span
             className={`${statusConfig.badge} text-white text-xs font-bold px-3 py-1 rounded-full`}
