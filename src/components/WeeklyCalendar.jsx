@@ -3,23 +3,62 @@
  * Visual representation like a mini GitHub contribution graph
  */
 
-const WeeklyCalendar = ({ contributionDays = [] }) => {
+const WeeklyCalendar = ({
+  contributionDays = [],
+  lastContributionDate,
+  streakStatus,
+  currentStreakCount = 0,
+}) => {
   // Get last 7 days
   const getLast7Days = () => {
     const days = [];
     const today = new Date();
+    const todayStr = today.toISOString().split("T")[0];
+
+    // Parse lastContributionDate
+    const lastContribDate = lastContributionDate
+      ? new Date(lastContributionDate).toISOString().split("T")[0]
+      : null;
 
     for (let i = 6; i >= 0; i--) {
       const date = new Date(today);
       date.setDate(date.getDate() - i);
       const dateStr = date.toISOString().split("T")[0];
 
-      // Check if this day has contributions
-      const hasContribution = contributionDays.some((d) => {
-        if (typeof d === "string") return d.startsWith(dateStr);
-        if (d?.date) return d.date.startsWith(dateStr);
-        return false;
-      });
+      // Check if this day has contributions using multiple methods
+      let hasContribution = false;
+
+      // Method 1: Check contributionDays array
+      if (contributionDays.length > 0) {
+        hasContribution = contributionDays.some((d) => {
+          if (typeof d === "string") return d.startsWith(dateStr);
+          if (d?.date) return d.date.startsWith(dateStr);
+          return false;
+        });
+      }
+
+      // Method 2: Use lastContributionDate and streak status
+      if (!hasContribution && lastContribDate) {
+        // If this is the last contribution date, mark it green
+        if (dateStr === lastContribDate) {
+          hasContribution = true;
+        }
+        // If streak is active and this day is within the streak period
+        else if (currentStreakCount > 0) {
+          const daysDiff = Math.floor(
+            (today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
+          );
+          // If within current streak count and before/equal to last contribution
+          if (daysDiff < currentStreakCount && dateStr <= lastContribDate) {
+            hasContribution = true;
+          }
+        }
+      }
+
+      // Method 3: Today is green if streakStatus is "today"
+      if (dateStr === todayStr && streakStatus === "today") {
+        hasContribution = true;
+      }
 
       days.push({
         date: dateStr,
