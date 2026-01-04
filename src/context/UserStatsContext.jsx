@@ -8,6 +8,7 @@ import {
 } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
+import PropTypes from "prop-types";
 import { API_URL } from "../utils/constants";
 import { transformUserStats } from "../utils/transforms";
 
@@ -134,6 +135,10 @@ export const UserStatsProvider = ({ children }) => {
       {children}
     </UserStatsContext.Provider>
   );
+};
+
+UserStatsProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 /**

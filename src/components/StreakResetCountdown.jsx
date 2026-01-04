@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaExclamationTriangle } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 /**
  * Displays a countdown timer until streak resets (midnight UTC).
@@ -47,7 +48,7 @@ const StreakResetCountdown = ({ streakStatus }) => {
   if (streakStatus === "today") {
     return (
       <p className="text-xs text-green-400 text-center mt-2">
-        ✓ You're safe! Streak continues tomorrow.
+        ✓ You&apos;re safe! Streak continues tomorrow.
       </p>
     );
   }
@@ -148,6 +149,10 @@ const StreakResetCountdown = ({ streakStatus }) => {
   }
 
   return null;
+};
+
+StreakResetCountdown.propTypes = {
+  streakStatus: PropTypes.oneOf(["today", "pending", "broken"]),
 };
 
 export default StreakResetCountdown;

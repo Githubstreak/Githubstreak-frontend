@@ -8,6 +8,7 @@ import {
   FaSync,
 } from "react-icons/fa";
 import { SignInButton } from "@clerk/clerk-react";
+import PropTypes from "prop-types";
 import MilestoneProgress from "./MilestoneProgress";
 import StreakResetCountdown from "./StreakResetCountdown";
 import WeeklyCalendar from "./WeeklyCalendar";
@@ -276,6 +277,26 @@ const PersonalStreakCard = ({
       )}
     </div>
   );
+};
+
+PersonalStreakCard.propTypes = {
+  userStats: PropTypes.shape({
+    currentStreak: PropTypes.shape({
+      count: PropTypes.number,
+    }),
+    longestStreak: PropTypes.shape({
+      count: PropTypes.number,
+    }),
+    contributions: PropTypes.number,
+    contributionDays: PropTypes.array,
+    lastContributionDate: PropTypes.string,
+    username: PropTypes.string,
+  }),
+  isLoading: PropTypes.bool,
+  error: PropTypes.string,
+  streakStatus: PropTypes.oneOf(["today", "pending", "broken"]),
+  isSignedIn: PropTypes.bool,
+  refetch: PropTypes.func,
 };
 
 export default PersonalStreakCard;

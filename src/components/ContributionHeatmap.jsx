@@ -1,4 +1,5 @@
 import { FaCalendarAlt } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 /**
  * GitHub-style contribution heatmap showing contribution patterns
@@ -205,6 +206,10 @@ const ContributionHeatmap = ({ contributionDays = [] }) => {
       </div>
     </div>
   );
+};
+
+ContributionHeatmap.propTypes = {
+  contributionDays: PropTypes.array,
 };
 
 export default ContributionHeatmap;
