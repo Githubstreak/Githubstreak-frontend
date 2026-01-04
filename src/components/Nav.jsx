@@ -81,6 +81,16 @@ export default function Nav() {
                   Join Community
                 </a>
               </li>
+              <SignedIn>
+                <li>
+                  <Link
+                    to="/profile"
+                    className="hover:text-green-400 transition-colors"
+                  >
+                    Profile
+                  </Link>
+                </li>
+              </SignedIn>
             </ul>
           </nav>
           <div className="flex gap-4 items-center">
@@ -148,6 +158,17 @@ export default function Nav() {
                       Join Community
                     </a>
                   </li>
+                  <SignedIn>
+                    <li>
+                      <Link
+                        to="/profile"
+                        onClick={closeMenu}
+                        className="text-lg text-white hover:text-green-400 transition-colors"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                  </SignedIn>
                   <li>
                     <a
                       href="https://github.com/Githubstreak"

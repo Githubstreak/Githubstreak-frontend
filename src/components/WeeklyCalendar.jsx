@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 /**
  * WeeklyCalendar - Shows last 7 days of contribution activity
  * Visual representation like a mini GitHub contribution graph
@@ -120,6 +122,13 @@ const WeeklyCalendar = ({
       </div>
     </div>
   );
+};
+
+WeeklyCalendar.propTypes = {
+  contributionDays: PropTypes.array,
+  lastContributionDate: PropTypes.string,
+  streakStatus: PropTypes.oneOf(["today", "pending", "broken"]),
+  currentStreakCount: PropTypes.number,
 };
 
 export default WeeklyCalendar;

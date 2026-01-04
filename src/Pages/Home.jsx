@@ -1,9 +1,14 @@
 import { Hero, Leaderboard, Topthree, CommunityLead } from "../sections";
 import useGetLeaderboard from "../hooks/useGetLeaderboard";
 import { useUserStats } from "../context/UserStatsContext";
-import { Fragment } from "react";
+import { Fragment, useState, useEffect } from "react";
 import CompareButton from "../components/CompareButton";
 import PersonalStreakCard from "../components/PersonalStreakCard";
+import AchievementBadges from "../components/AchievementBadges";
+import DailyChallenge from "../components/DailyChallenge";
+import LevelProgress from "../components/LevelProgress";
+import ConfettiCelebration from "../components/ConfettiCelebration";
+import MotivationalQuote from "../components/MotivationalQuote";
 import { FaExclamationTriangle } from "react-icons/fa";
 
 const Home = () => {
@@ -18,8 +23,34 @@ const Home = () => {
     refetch: refetchUser,
   } = useUserStats();
 
+  // Track previous streak for confetti celebration
+  const [previousStreak, setPreviousStreak] = useState(0);
+
+  useEffect(() => {
+    if (userStats?.currentStreak?.count !== undefined) {
+      // Only update previous if current changed
+      const current = userStats.currentStreak.count;
+      if (current !== previousStreak && previousStreak !== 0) {
+        // Streak changed, confetti will handle the celebration
+      }
+      setPreviousStreak(current);
+    }
+  }, [userStats?.currentStreak?.count]);
+
+  const currentStreak = userStats?.currentStreak?.count ?? 0;
+  const longestStreak = userStats?.longestStreak?.count ?? currentStreak;
+  const totalContributions = userStats?.contributions ?? 0;
+
   return (
     <main>
+      {/* Confetti celebration for milestones */}
+      {isSignedIn && (
+        <ConfettiCelebration
+          currentStreak={currentStreak}
+          previousStreak={previousStreak}
+        />
+      )}
+
       <section>
         <Hero />
       </section>
@@ -27,7 +58,7 @@ const Home = () => {
       {/* Personal Streak Dashboard */}
       <section className="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-16 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <PersonalStreakCard
               userStats={userStats}
               isLoading={userLoading}
@@ -36,45 +67,34 @@ const Home = () => {
               isSignedIn={isSignedIn}
               refetch={refetchUser}
             />
+            {/* Motivational Quote */}
+            <MotivationalQuote />
           </div>
-          <div className="lg:col-span-2">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700 h-full">
-              <h3 className="text-lg font-semibold text-white mb-4">
-                Why Daily Streaks Matter
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="text-center p-4">
-                  <span className="text-3xl mb-2 block">🧠</span>
-                  <h4 className="font-medium text-white text-sm">
-                    Build Muscle Memory
-                  </h4>
-                  <p className="text-gray-400 text-xs mt-1">
-                    Daily practice turns coding into a habit
-                  </p>
-                </div>
-                <div className="text-center p-4">
-                  <span className="text-3xl mb-2 block">📈</span>
-                  <h4 className="font-medium text-white text-sm">
-                    Compound Progress
-                  </h4>
-                  <p className="text-gray-400 text-xs mt-1">
-                    Small daily wins add up to big results
-                  </p>
-                </div>
-                <div className="text-center p-4">
-                  <span className="text-3xl mb-2 block">🏆</span>
-                  <h4 className="font-medium text-white text-sm">
-                    Join Top Developers
-                  </h4>
-                  <p className="text-gray-400 text-xs mt-1">
-                    Climb the leaderboard with consistency
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="lg:col-span-2 space-y-6">
+            {/* Daily Challenge - Always visible */}
+            <DailyChallenge />
+
+            {/* Level & XP Progress - Only when signed in */}
+            {isSignedIn && userStats && (
+              <LevelProgress
+                totalContributions={totalContributions}
+                currentStreak={currentStreak}
+                longestStreak={longestStreak}
+              />
+            )}
           </div>
         </div>
       </section>
+
+      {/* Achievements Section - Only when signed in */}
+      {isSignedIn && userStats && (
+        <section className="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-16 pb-8">
+          <AchievementBadges
+            currentStreak={currentStreak}
+            totalContributions={totalContributions}
+          />
+        </section>
+      )}
 
       {/* Error state for leaderboard */}
       {error ? (
