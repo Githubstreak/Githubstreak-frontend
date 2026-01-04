@@ -192,7 +192,12 @@ const PersonalStreakCard = ({
 
       {/* Weekly calendar */}
       <div className="mt-4">
-        <WeeklyCalendar contributionDays={contributionDays} />
+        <WeeklyCalendar
+          contributionDays={contributionDays}
+          lastContributionDate={userStats.lastContributionDate}
+          streakStatus={streakStatus}
+          currentStreakCount={currentStreak}
+        />
       </div>
 
       {/* Stats grid */}

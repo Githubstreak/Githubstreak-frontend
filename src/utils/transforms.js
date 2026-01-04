@@ -14,6 +14,23 @@
 export const transformUserStats = (data) => {
   if (!data) return null;
 
+  // Parse contributionDays - could be array of strings or objects
+  let contributionDays = [];
+  if (Array.isArray(data.contributionDays)) {
+    contributionDays = data.contributionDays;
+  } else if (Array.isArray(data.contributions?.days)) {
+    contributionDays = data.contributions.days;
+  } else if (data.currentStreak?.startDate && data.lastContributionDate) {
+    // Fallback: Generate days from streak start to last contribution
+    const start = new Date(data.currentStreak.startDate);
+    const end = new Date(data.lastContributionDate);
+    const days = [];
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      days.push(d.toISOString().split("T")[0]);
+    }
+    contributionDays = days;
+  }
+
   return {
     currentStreak: {
       count: data.currentStreak?.count ?? 0,
@@ -27,6 +44,7 @@ export const transformUserStats = (data) => {
     contributions: data.contributions ?? 0,
     lastContributionDate: data.lastContributionDate ?? null,
     username: data.username ?? null,
+    contributionDays,
   };
 };
 
