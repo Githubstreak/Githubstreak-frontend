@@ -31,10 +31,12 @@ const Dashboard = () => {
     isLoading: userLoading,
     error: userError,
     streakStatus,
-    isSignedIn,
     refetch: refetchUser,
   } = useUserStats();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
+
+  // Use stable isSignedIn that waits for Clerk to load
+  const isSignedIn = isLoaded && !!user;
 
   // Dashboard view mode: 'simple' or 'full'
   const [viewMode, setViewMode] = useState(() => {

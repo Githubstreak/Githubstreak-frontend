@@ -37,12 +37,14 @@ export const UserStatsProvider = ({ children }) => {
         } catch (err) {
           console.error("Failed to get auth token:", err);
           setAuthToken(null, null);
-          setIsAuthReady(false);
+          // Don't set isAuthReady to false on error to prevent flash
         }
-      } else {
+      } else if (isLoaded && !user) {
+        // Only clear auth when we're certain user is not signed in
         setAuthToken(null, null);
         setIsAuthReady(false);
       }
+      // If not loaded yet, keep previous state to prevent flash
     };
     setupAuth();
   }, [isLoaded, user, getToken]);
