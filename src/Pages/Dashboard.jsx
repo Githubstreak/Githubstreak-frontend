@@ -8,6 +8,7 @@ import DailyChallenge from "../components/DailyChallenge";
 import LevelProgress from "../components/LevelProgress";
 import ConfettiCelebration from "../components/ConfettiCelebration";
 import MotivationalQuote from "../components/MotivationalQuote";
+import AIStreakCoach from "../components/AIStreakCoach";
 import Nav from "../components/Nav";
 import { TopThreeSkeleton, LeaderboardSkeleton } from "../components/Skeleton";
 import {
@@ -125,6 +126,9 @@ const Dashboard = () => {
 
             {/* Right Column - Challenges & Level */}
             <div className="lg:col-span-2 space-y-6">
+              {/* AI Streak Coach - Always visible */}
+              <AIStreakCoach />
+
               {/* Daily Challenge - Full view only */}
               {viewMode === "full" && <DailyChallenge />}
 
