@@ -1,7 +1,34 @@
-import { User } from "@nextui-org/react";
+import PropTypes from "prop-types";
 import { FaFire, FaGithub, FaCrown } from "react-icons/fa";
 
 const Topthree = ({ topThree }) => {
+  // Don't render if no top 3 data
+  if (!topThree || topThree.length === 0) {
+    return null;
+  }
+
+  // Handle case where we have less than 3 users
+  if (topThree.length < 3) {
+    return (
+      <div className="py-12">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full mb-4">
+            <FaCrown className="text-yellow-500" />
+            <span className="text-yellow-400 text-sm font-medium">
+              Hall of Fame
+            </span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+            Top Contributors This Week
+          </h2>
+          <p className="text-gray-400 mt-2">
+            More contributors needed for the podium!
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Reorder for podium display: 2nd, 1st, 3rd
   const podiumOrder =
     topThree.length >= 3 ? [topThree[1], topThree[0], topThree[2]] : topThree;
@@ -173,6 +200,23 @@ const Topthree = ({ topThree }) => {
       </div>
     </div>
   );
+};
+
+Topthree.propTypes = {
+  topThree: PropTypes.arrayOf(
+    PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      avatar: PropTypes.string,
+      contributions: PropTypes.number,
+      currentStreak: PropTypes.shape({
+        count: PropTypes.number,
+      }),
+    })
+  ),
+};
+
+Topthree.defaultProps = {
+  topThree: [],
 };
 
 export default Topthree;
