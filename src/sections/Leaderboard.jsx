@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   Table,
   TableHeader,
@@ -8,61 +8,44 @@ import {
   TableCell,
   Input,
   Button,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  User,
   Pagination,
+  Chip,
+  Avatar,
+  Tooltip,
 } from "@nextui-org/react";
-import { FaMedal } from "react-icons/fa";
-import { SearchIcon } from "./SearchIcon";
-import { ChevronDownIcon } from "../components/icons/ChevronDownIcon";
-import { columns } from "./data";
-import { capitalize } from "./utils";
+import {
+  FaFire,
+  FaSearch,
+  FaTrophy,
+  FaGithub,
+  FaArrowUp,
+  FaArrowDown,
+  FaChartLine,
+  FaFilter,
+} from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
 
-const INITIAL_VISIBLE_COLUMNS = [
-  "rank",
-  "developer",
-  "streak",
-  "contributions",
-  "compare",
-];
-
 const Leaderboard = ({ leaderboard }) => {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [visibleColumns, setVisibleColumns] = React.useState(
-    new Set(INITIAL_VISIBLE_COLUMNS)
-  );
-  const [rowsPerPage, setRowsPerPage] = React.useState(15);
-  const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "streak",
-    direction: "descending",
+  const [filterValue, setFilterValue] = useState("");
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sortDescriptor, setSortDescriptor] = useState({
+    column: "rank",
+    direction: "ascending",
   });
-
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
 
   const { user: currentUser } = useUser();
-
   const rankedUsers = leaderboard ?? [];
 
-  const headerColumns = React.useMemo(() => {
-    if (visibleColumns === "all") return columns;
-
-    return columns.filter((column) =>
-      Array.from(visibleColumns).includes(column.uid)
-    );
-  }, [visibleColumns]);
-
-  // Filter, sort, and paginate users
-  const filteredUsers = React.useMemo(() => {
+  // Filter users
+  const filteredUsers = useMemo(() => {
     return rankedUsers.filter((user) =>
       user.username.toLowerCase().includes(filterValue.toLowerCase())
     );
   }, [rankedUsers, filterValue]);
 
-  const sortedUsers = React.useMemo(() => {
+  // Sort users
+  const sortedUsers = useMemo(() => {
     return [...filteredUsers].sort((a, b) => {
       let first, second;
 
@@ -88,166 +71,241 @@ const Leaderboard = ({ leaderboard }) => {
     });
   }, [filteredUsers, sortDescriptor]);
 
+  // Pagination
   const pages = Math.ceil(sortedUsers.length / rowsPerPage);
-
-  const items = React.useMemo(() => {
+  const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    return sortedUsers.slice(start, end);
+    return sortedUsers.slice(start, start + rowsPerPage);
   }, [page, sortedUsers, rowsPerPage]);
 
-  const renderCell = React.useCallback(
+  // Get streak tier
+  const getStreakTier = (streak) => {
+    if (streak >= 100) return { label: "Legend", color: "warning", icon: "👑" };
+    if (streak >= 30)
+      return { label: "Master", color: "secondary", icon: "💎" };
+    if (streak >= 7) return { label: "Warrior", color: "primary", icon: "⚡" };
+    if (streak >= 1) return { label: "Starter", color: "success", icon: "🌱" };
+    return { label: "New", color: "default", icon: "🆕" };
+  };
+
+  // Get rank display
+  const getRankDisplay = (rank) => {
+    if (rank === 1) return { emoji: "🥇", class: "text-yellow-500 font-bold" };
+    if (rank === 2) return { emoji: "🥈", class: "text-gray-400 font-bold" };
+    if (rank === 3) return { emoji: "🥉", class: "text-amber-600 font-bold" };
+    if (rank <= 10)
+      return { emoji: "🔥", class: "text-orange-400 font-semibold" };
+    return { emoji: "", class: "text-gray-400" };
+  };
+
+  const onSearchChange = useCallback((value) => {
+    setFilterValue(value || "");
+    setPage(1);
+  }, []);
+
+  // Check if current user
+  const isCurrentUser = (username) => currentUser?.username === username;
+
+  // Columns configuration
+  const columns = [
+    { key: "rank", label: "RANK", sortable: true },
+    { key: "developer", label: "DEVELOPER" },
+    { key: "streak", label: "STREAK", sortable: true },
+    { key: "contributions", label: "CONTRIBUTIONS", sortable: true },
+    { key: "tier", label: "TIER" },
+    { key: "actions", label: "" },
+  ];
+
+  const renderCell = useCallback(
     (user, columnKey) => {
-      const cellValue = user[columnKey];
+      const streak = user.currentStreak?.count ?? 0;
+      const tier = getStreakTier(streak);
+      const rankDisplay = getRankDisplay(user.rank);
 
       switch (columnKey) {
         case "rank":
           return (
-            <div className="flex items-center gap-1 font-semibold">
-              {user.rank === 1 && (
-                <FaMedal className="text-yellow-500" size={18} />
+            <div className={`flex items-center gap-2 ${rankDisplay.class}`}>
+              {rankDisplay.emoji && (
+                <span className="text-lg">{rankDisplay.emoji}</span>
               )}
-              {user.rank === 2 && (
-                <FaMedal className="text-gray-400" size={18} />
-              )}
-              {user.rank === 3 && (
-                <FaMedal className="text-amber-600" size={18} />
-              )}
-              <span>{user.rank}</span>
+              <span className="text-lg font-mono">#{user.rank}</span>
             </div>
           );
+
         case "developer":
           return (
-            <User
-              avatarProps={{ radius: "lg", src: user.avatar + "&s=48" }}
-              description={
-                <span className="text-green-400">@{user.username}</span>
-              }
-              className="text-white"
-              name={user.username}
-            />
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <Avatar
+                  src={user.avatar + "&s=64"}
+                  size="md"
+                  className={`ring-2 ${
+                    user.rank <= 3 ? "ring-yellow-500" : "ring-green-500/50"
+                  }`}
+                />
+                {isCurrentUser(user.username) && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                    <span className="text-[8px] text-white font-bold">YOU</span>
+                  </div>
+                )}
+              </div>
+              <div>
+                <p className="font-semibold text-white flex items-center gap-2">
+                  {user.username}
+                  {user.rank <= 10 && (
+                    <FaTrophy className="text-yellow-500 text-xs" />
+                  )}
+                </p>
+                <a
+                  href={`https://github.com/${user.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-400 text-xs hover:underline flex items-center gap-1"
+                >
+                  <FaGithub className="text-[10px]" />@{user.username}
+                </a>
+              </div>
+            </div>
           );
+
         case "streak":
           return (
-            <div className="flex items-center gap-1">
-              <span className="text-lg">🔥</span>
-              <span className="font-semibold">
-                {user.currentStreak?.count ?? 0} days
+            <div className="flex items-center gap-2">
+              <div
+                className={`
+                  flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                  ${streak > 0 ? "bg-orange-500/20" : "bg-slate-700"}
+                `}
+              >
+                <FaFire
+                  className={`${
+                    streak >= 30
+                      ? "text-orange-400 animate-pulse"
+                      : streak > 0
+                      ? "text-orange-400"
+                      : "text-gray-500"
+                  }`}
+                />
+                <span className="font-bold text-white">{streak}</span>
+                <span className="text-gray-400 text-xs">days</span>
+              </div>
+            </div>
+          );
+
+        case "contributions":
+          return (
+            <div className="flex items-center gap-2">
+              <FaChartLine className="text-green-500 text-sm" />
+              <span className="font-semibold text-white">
+                {(user.contributions ?? 0).toLocaleString()}
               </span>
             </div>
           );
-        case "contributions":
+
+        case "tier":
           return (
-            <span className="font-medium">
-              {(user.contributions ?? 0).toLocaleString()}
-            </span>
+            <Tooltip content={`${streak} day streak`}>
+              <Chip
+                startContent={<span className="pl-1">{tier.icon}</span>}
+                variant="flat"
+                color={tier.color}
+                size="sm"
+                className="capitalize"
+              >
+                {tier.label}
+              </Chip>
+            </Tooltip>
           );
-        case "compare":
-          return !currentUser ? (
-            <span className="text-gray-400 text-sm">Sign in to compare</span>
-          ) : (
-            <a href={`/meme?me=${currentUser.username}&other=${user.username}`}>
-              <Button variant="flat" color="success" size="sm">
-                Compare
-              </Button>
-            </a>
+
+        case "actions":
+          return (
+            <div className="flex items-center gap-2">
+              <Tooltip content="View GitHub Profile">
+                <a
+                  href={`https://github.com/${user.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
+                >
+                  <FaGithub className="text-gray-400 hover:text-white" />
+                </a>
+              </Tooltip>
+            </div>
           );
+
         default:
-          return cellValue;
+          return null;
       }
     },
     [currentUser]
   );
 
-  const onNextPage = React.useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1);
-    }
-  }, [page, pages]);
-
-  const onPreviousPage = React.useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  }, [page]);
-
-  const onRowsPerPageChange = React.useCallback((e) => {
-    setRowsPerPage(Number(e.target.value));
-    setPage(1);
-  }, []);
-
-  const onSearchChange = React.useCallback((value) => {
-    if (value) {
-      setFilterValue(value);
-      setPage(1);
-    } else {
-      setFilterValue("");
-    }
-  }, []);
-
-  const onClear = React.useCallback(() => {
-    setFilterValue("");
-    setPage(1);
-  }, []);
-
-  const topContent = React.useMemo(() => {
+  // Top content with search and filters
+  const topContent = useMemo(() => {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex items-end justify-between gap-3">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+              <FaTrophy className="text-yellow-500" />
+              Global Leaderboard
+            </h2>
+            <p className="text-gray-400 text-sm mt-1">
+              {rankedUsers.length} developers competing
+            </p>
+          </div>
+
+          {/* Search */}
           <Input
             isClearable
-            className="w-full sm:max-w-[44%]"
-            placeholder="Search by name..."
-            startContent={<SearchIcon />}
+            className="w-full sm:max-w-xs"
+            placeholder="Search developers..."
+            startContent={<FaSearch className="text-gray-400" />}
             value={filterValue}
-            onClear={() => onClear()}
+            onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
+            classNames={{
+              input: "bg-transparent",
+              inputWrapper:
+                "bg-slate-800 border border-slate-700 hover:bg-slate-700",
+            }}
           />
-          <div className="flex h-full gap-3">
-            <Dropdown>
-              <DropdownTrigger className="sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                  color="success"
-                >
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-default-400 text-small">
-            {filteredUsers.length} of {rankedUsers.length} developers
-          </span>
-          <label className="flex items-center text-default-400 text-small gap-1">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small ml-1"
-              onChange={onRowsPerPageChange}
-              defaultValue={15}
+
+        {/* Stats Bar */}
+        <div className="flex flex-wrap items-center gap-3">
+          <Chip variant="flat" color="success" size="sm">
+            {filteredUsers.length} results
+          </Chip>
+          {filterValue && (
+            <Chip
+              variant="bordered"
+              onClose={() => setFilterValue("")}
+              size="sm"
             >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="25">25</option>
+              Search: {filterValue}
+            </Chip>
+          )}
+
+          {/* Quick Filters */}
+          <div className="flex-1" />
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <span>Show:</span>
+            <select
+              className="bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-white text-sm focus:outline-none focus:border-green-500"
+              value={rowsPerPage}
+              onChange={(e) => {
+                setRowsPerPage(Number(e.target.value));
+                setPage(1);
+              }}
+            >
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
             </select>
-          </label>
+          </div>
         </div>
       </div>
     );
@@ -255,15 +313,20 @@ const Leaderboard = ({ leaderboard }) => {
     filterValue,
     filteredUsers.length,
     rankedUsers.length,
-    visibleColumns,
-    onRowsPerPageChange,
+    rowsPerPage,
     onSearchChange,
-    onClear,
   ]);
 
-  const bottomContent = React.useMemo(() => {
+  // Bottom pagination
+  const bottomContent = useMemo(() => {
     return (
-      <div className="flex items-center justify-between px-2 py-2">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-4">
+        <span className="text-gray-400 text-sm">
+          Showing {(page - 1) * rowsPerPage + 1}-
+          {Math.min(page * rowsPerPage, sortedUsers.length)} of{" "}
+          {sortedUsers.length}
+        </span>
+
         <Pagination
           isCompact
           showControls
@@ -272,100 +335,98 @@ const Leaderboard = ({ leaderboard }) => {
           page={page}
           total={pages}
           onChange={setPage}
+          classNames={{
+            cursor: "bg-green-500",
+          }}
         />
-        <div className="hidden sm:flex w-[30%] justify-end gap-2">
+
+        <div className="hidden sm:flex gap-2">
           <Button
-            isDisabled={pages <= 1}
+            isDisabled={page === 1}
             size="sm"
             variant="flat"
-            color="success"
-            onPress={onPreviousPage}
+            onPress={() => setPage(page - 1)}
+            startContent={<FaArrowUp className="rotate-[-90deg]" />}
           >
             Previous
           </Button>
           <Button
-            isDisabled={pages <= 1}
+            isDisabled={page === pages}
             size="sm"
             variant="flat"
             color="success"
-            onPress={onNextPage}
+            onPress={() => setPage(page + 1)}
+            endContent={<FaArrowDown className="rotate-[-90deg]" />}
           >
             Next
           </Button>
         </div>
       </div>
     );
-  }, [page, pages, onPreviousPage, onNextPage]);
+  }, [page, pages, sortedUsers.length, rowsPerPage]);
 
   return (
     <section id="leaderboard" className="scroll-mt-20">
-      <Table
-        className="p-4 md:p-10 xl:p-16"
-        color="success"
-        isHeaderSticky
-        aria-label="Leaderboard table showing developer rankings"
-        bottomContent={bottomContent}
-        bottomContentPlacement="outside"
-        classNames={{
-          wrapper: "max-h-[500px] md:max-h-[600px]",
-        }}
-        sortDescriptor={sortDescriptor}
-        topContent={topContent}
-        topContentPlacement="outside"
-        onSortChange={setSortDescriptor}
-      >
-        <TableHeader columns={headerColumns}>
-          {(column) => (
-            <TableColumn
-              key={column.uid}
-              align={column.uid === "compare" ? "center" : "start"}
-              allowsSorting={column.sortable}
-            >
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          emptyContent={
-            <div className="text-center py-8">
-              <p className="text-gray-400 text-lg">No developers found</p>
-              <p className="text-gray-500 text-sm mt-1">
-                {filterValue
-                  ? "Try a different search term"
-                  : "Check back soon!"}
-              </p>
-            </div>
-          }
-          items={items}
+      <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
+        <Table
+          aria-label="Leaderboard table showing developer rankings"
+          isHeaderSticky
+          bottomContent={bottomContent}
+          bottomContentPlacement="outside"
+          sortDescriptor={sortDescriptor}
+          topContent={topContent}
+          topContentPlacement="outside"
+          onSortChange={setSortDescriptor}
+          classNames={{
+            wrapper: "bg-transparent shadow-none max-h-[600px]",
+            table: "min-h-[200px]",
+            th: "bg-slate-800/80 text-gray-300 font-semibold uppercase text-xs tracking-wider",
+            td: "py-4",
+            tr: "hover:bg-slate-800/50 transition-colors border-b border-slate-700/50",
+          }}
         >
-          {(item) => (
-            <TableRow
-              key={item.username}
-              className={
-                currentUser?.username === item.username
-                  ? "bg-green-900/30 border-l-4 border-green-500"
-                  : ""
-              }
-            >
-              {(columnKey) => (
-                <TableCell>
-                  {columnKey === "developer" &&
-                  currentUser?.username === item.username ? (
-                    <div className="flex items-center gap-2">
-                      {renderCell(item, columnKey)}
-                      <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">
-                        YOU
-                      </span>
-                    </div>
-                  ) : (
-                    renderCell(item, columnKey)
-                  )}
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn
+                key={column.key}
+                align={column.key === "actions" ? "end" : "start"}
+                allowsSorting={column.sortable}
+              >
+                {column.label}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={items}
+            emptyContent={
+              <div className="text-center py-12">
+                <FaSearch className="mx-auto text-4xl text-gray-600 mb-4" />
+                <p className="text-gray-400 text-lg">No developers found</p>
+                <p className="text-gray-500 text-sm mt-1">
+                  {filterValue
+                    ? "Try a different search term"
+                    : "Check back soon!"}
+                </p>
+              </div>
+            }
+          >
+            {(item) => (
+              <TableRow
+                key={item.username}
+                className={
+                  isCurrentUser(item.username)
+                    ? "!bg-green-900/30 border-l-4 !border-l-green-500"
+                    : ""
+                }
+              >
+                {(columnKey) => (
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </section>
   );
 };
