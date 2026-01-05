@@ -6,10 +6,9 @@ import {
   useMemo,
   useCallback,
 } from "react";
-import axios from "axios";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import PropTypes from "prop-types";
-import { API_URL } from "../utils/constants";
+import api, { setAuthToken } from "../APIs/apiClient";
 import { transformUserStats } from "../utils/transforms";
 
 const UserStatsContext = createContext(null);
@@ -20,10 +19,29 @@ const UserStatsContext = createContext(null);
  */
 export const UserStatsProvider = ({ children }) => {
   const { user, isLoaded } = useUser();
+  const { getToken } = useAuth();
   const [rawStats, setRawStats] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lastFetched, setLastFetched] = useState(null);
+
+  // Set auth token for API requests when user is loaded
+  useEffect(() => {
+    const setupAuth = async () => {
+      if (isLoaded && user) {
+        try {
+          const token = await getToken();
+          setAuthToken(token);
+        } catch (err) {
+          console.error("Failed to get auth token:", err);
+          setAuthToken(null);
+        }
+      } else {
+        setAuthToken(null);
+      }
+    };
+    setupAuth();
+  }, [isLoaded, user, getToken]);
 
   const fetchUserStats = useCallback(async () => {
     if (!user) return;
@@ -31,7 +49,7 @@ export const UserStatsProvider = ({ children }) => {
     try {
       setIsLoading(true);
       setError(null);
-      const res = await axios.get(`${API_URL}/v1/users/stat?id=${user.id}`);
+      const res = await api.get(`/v1/users/stat?id=${user.id}`);
       setRawStats(res.data);
       setLastFetched(new Date());
     } catch (err) {

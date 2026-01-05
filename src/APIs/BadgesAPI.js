@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_BASE = "https://api.ggithubstreak.com";
+import api, { API_BASE } from "./apiClient";
 
 /**
  * Badges & Embed API Service
@@ -10,7 +8,7 @@ const API_BASE = "https://api.ggithubstreak.com";
 // Get all badges for a user
 export const getUserBadges = async (username) => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/badges/${username}`);
+    const response = await api.get(`/v1/badges/${username}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching user badges:", error);
@@ -21,7 +19,7 @@ export const getUserBadges = async (username) => {
 // Get my badges (authenticated)
 export const getMyBadges = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/badges/my`);
+    const response = await api.get("/v1/badges/my");
     return response.data;
   } catch (error) {
     console.error("Error fetching my badges:", error);
@@ -32,7 +30,7 @@ export const getMyBadges = async () => {
 // Get embeddable profile card data
 export const getEmbedData = async (username, theme = "dark") => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/embed/${username}`, {
+    const response = await api.get(`/v1/embed/${username}`, {
       params: { theme },
     });
     return response.data;
@@ -55,7 +53,7 @@ export const getEmbedPNGUrl = (username, theme = "dark") => {
 // Get all available badge types
 export const getBadgeTypes = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/badges/types`);
+    const response = await api.get("/v1/badges/types");
     return response.data;
   } catch (error) {
     console.error("Error fetching badge types:", error);
@@ -66,7 +64,7 @@ export const getBadgeTypes = async () => {
 // Check for new unlocked badges
 export const checkNewBadges = async () => {
   try {
-    const response = await axios.post(`${API_BASE}/v1/badges/check`);
+    const response = await api.post("/v1/badges/check");
     return response.data;
   } catch (error) {
     console.error("Error checking for new badges:", error);
@@ -77,7 +75,7 @@ export const checkNewBadges = async () => {
 // Claim a badge reward
 export const claimBadge = async (badgeId) => {
   try {
-    const response = await axios.post(`${API_BASE}/v1/badges/${badgeId}/claim`);
+    const response = await api.post(`/v1/badges/${badgeId}/claim`);
     return response.data;
   } catch (error) {
     console.error("Error claiming badge:", error);
