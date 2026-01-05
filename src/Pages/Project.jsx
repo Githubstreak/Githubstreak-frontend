@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   FaGithub,
@@ -20,6 +20,7 @@ import {
 } from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
 import Nav from "../components/Nav";
+import { getProjects, submitProject } from "../APIs/ProjectsAPI";
 
 /**
  * Projects Page - Community Project Showcase
@@ -545,121 +546,26 @@ const Project = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
 
-  // Mock data for now - will be replaced with API call
+  // Fetch projects from backend API
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchProjectsData = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        // TODO: Replace with actual API call
-        // const response = await api.get('/v1/projects');
-        // setProjects(response.data.projects);
+        const params = {};
+        if (selectedLanguage !== "All") {
+          params.language = selectedLanguage;
+        }
+        if (showContributorsOnly) {
+          params.lookingForContributors = true;
+        }
+        if (searchQuery) {
+          params.search = searchQuery;
+        }
 
-        // Mock data for demonstration
-        const mockProjects = [
-          {
-            id: 1,
-            name: "GitHubStreak",
-            owner: "Githubstreak",
-            ownerAvatar: "https://avatars.githubusercontent.com/u/123456789",
-            description:
-              "Track your GitHub contribution streaks and compete with developers worldwide. Build consistency, earn badges, and stay motivated!",
-            language: "JavaScript",
-            stars: 1250,
-            forks: 245,
-            watchers: 89,
-            contributors: 32,
-            techStack: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
-            topics: ["github", "streak", "productivity", "gamification"],
-            lookingForContributors: true,
-            repoUrl: "https://github.com/Githubstreak/githubstreak",
-            homepage: "https://ggithubstreak.com",
-          },
-          {
-            id: 2,
-            name: "DevFlow",
-            owner: "devflow-team",
-            description:
-              "A modern developer workflow tool that integrates with your favorite services to boost productivity.",
-            language: "TypeScript",
-            stars: 892,
-            forks: 156,
-            watchers: 45,
-            contributors: 18,
-            techStack: ["Next.js", "Prisma", "PostgreSQL", "Docker"],
-            topics: ["developer-tools", "workflow", "automation"],
-            lookingForContributors: true,
-            repoUrl: "https://github.com/devflow-team/devflow",
-          },
-          {
-            id: 3,
-            name: "CodeMentor",
-            owner: "opensource-mentors",
-            description:
-              "Platform connecting junior developers with experienced mentors for code reviews and guidance.",
-            language: "Python",
-            stars: 567,
-            forks: 89,
-            watchers: 34,
-            contributors: 12,
-            techStack: ["Django", "React", "PostgreSQL", "Redis"],
-            topics: ["mentorship", "learning", "community"],
-            lookingForContributors: false,
-            repoUrl: "https://github.com/opensource-mentors/codementor",
-          },
-          {
-            id: 4,
-            name: "AI-Commit",
-            owner: "ai-tools",
-            description:
-              "Generate meaningful commit messages using AI. Supports multiple LLM providers and custom prompts.",
-            language: "Go",
-            stars: 2341,
-            forks: 312,
-            watchers: 156,
-            contributors: 28,
-            techStack: ["Go", "OpenAI", "Anthropic", "CLI"],
-            topics: ["ai", "git", "developer-tools", "cli"],
-            lookingForContributors: true,
-            repoUrl: "https://github.com/ai-tools/ai-commit",
-          },
-          {
-            id: 5,
-            name: "OpenDash",
-            owner: "dashboard-org",
-            description:
-              "Beautiful, customizable dashboards for your data. Create stunning visualizations in minutes.",
-            language: "TypeScript",
-            stars: 1876,
-            forks: 234,
-            watchers: 98,
-            contributors: 45,
-            techStack: ["React", "D3.js", "GraphQL", "Tailwind"],
-            topics: ["dashboard", "visualization", "data", "charts"],
-            lookingForContributors: false,
-            repoUrl: "https://github.com/dashboard-org/opendash",
-            homepage: "https://opendash.dev",
-          },
-          {
-            id: 6,
-            name: "FastAPI-Boilerplate",
-            owner: "python-community",
-            description:
-              "Production-ready FastAPI boilerplate with auth, database, testing, and deployment configured.",
-            language: "Python",
-            stars: 3456,
-            forks: 567,
-            watchers: 234,
-            contributors: 67,
-            techStack: ["FastAPI", "SQLAlchemy", "Alembic", "Docker"],
-            topics: ["fastapi", "boilerplate", "python", "backend"],
-            lookingForContributors: true,
-            repoUrl: "https://github.com/python-community/fastapi-boilerplate",
-          },
-        ];
-
-        setProjects(mockProjects);
+        const response = await getProjects(params);
+        setProjects(response.projects || response || []);
       } catch (err) {
         console.error("Failed to fetch projects:", err);
         setError("Failed to load projects. Please try again.");
@@ -668,52 +574,14 @@ const Project = () => {
       }
     };
 
-    fetchProjects();
-  }, []);
+    fetchProjectsData();
+  }, [selectedLanguage, showContributorsOnly, searchQuery]);
 
-  // Filter projects
-  const filteredProjects = useMemo(() => {
-    return projects.filter((project) => {
-      // Search filter
-      const searchLower = searchQuery.toLowerCase();
-      const matchesSearch =
-        !searchQuery ||
-        project.name.toLowerCase().includes(searchLower) ||
-        project.description?.toLowerCase().includes(searchLower) ||
-        project.owner.toLowerCase().includes(searchLower) ||
-        project.techStack?.some((t) => t.toLowerCase().includes(searchLower));
-
-      // Language filter
-      const matchesLanguage =
-        selectedLanguage === "All" || project.language === selectedLanguage;
-
-      // Contributors filter
-      const matchesContributors =
-        !showContributorsOnly || project.lookingForContributors;
-
-      return matchesSearch && matchesLanguage && matchesContributors;
-    });
-  }, [projects, searchQuery, selectedLanguage, showContributorsOnly]);
+  // Projects are now filtered on the backend, so we just use the returned list
+  const filteredProjects = projects;
 
   const handleSubmitProject = async (projectData) => {
-    // TODO: Implement actual API call
-    console.log("Submitting project:", projectData);
-
-    // For now, add a mock project
-    const newProject = {
-      id: Date.now(),
-      name: projectData.repoUrl.split("/").pop(),
-      owner: projectData.repoUrl.split("/").slice(-2, -1)[0],
-      description: projectData.description,
-      techStack: projectData.techStack,
-      lookingForContributors: projectData.lookingForContributors,
-      repoUrl: projectData.repoUrl,
-      language: "JavaScript",
-      stars: 0,
-      forks: 0,
-      watchers: 0,
-    };
-
+    const newProject = await submitProject(projectData);
     setProjects([newProject, ...projects]);
   };
 
