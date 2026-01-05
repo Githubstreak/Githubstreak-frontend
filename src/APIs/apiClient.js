@@ -9,6 +9,11 @@ export const API_BASE = import.meta.env.DEV
   : "https://api.ggithubstreak.com";
 
 /**
+ * Store the current user ID for API requests
+ */
+let currentUserId = null;
+
+/**
  * Axios instance with default configuration
  * This instance should be used for all API calls
  */
@@ -21,18 +26,25 @@ const api = axios.create({
 });
 
 /**
- * Set the authentication token for API requests
+ * Set the authentication token and user ID for API requests
  * Call this after the user signs in via Clerk
  *
  * @param {string|null} token - The Clerk session token
+ * @param {string|null} userId - The Clerk user ID
  */
-export const setAuthToken = (token) => {
+export const setAuthToken = (token, userId = null) => {
   if (token) {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
     delete api.defaults.headers.common["Authorization"];
   }
+  currentUserId = userId;
 };
+
+/**
+ * Get the current user ID
+ */
+export const getCurrentUserId = () => currentUserId;
 
 /**
  * Request interceptor for logging and adding timestamps
@@ -46,6 +58,25 @@ api.interceptors.request.use(
         _t: Date.now(),
       };
     }
+
+    // Add userId to request body for POST/PUT/PATCH if not already present
+    if (currentUserId && ["post", "put", "patch"].includes(config.method)) {
+      if (
+        config.data &&
+        typeof config.data === "object" &&
+        !config.data.userId
+      ) {
+        config.data = { ...config.data, userId: currentUserId };
+      }
+    }
+
+    // Add userId to query params for GET/DELETE if not already present
+    if (currentUserId && ["get", "delete"].includes(config.method)) {
+      if (!config.params?.userId) {
+        config.params = { ...config.params, userId: currentUserId };
+      }
+    }
+
     return config;
   },
   (error) => {

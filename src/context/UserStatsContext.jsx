@@ -31,13 +31,13 @@ export const UserStatsProvider = ({ children }) => {
       if (isLoaded && user) {
         try {
           const token = await getToken();
-          setAuthToken(token);
+          setAuthToken(token, user.id);
         } catch (err) {
           console.error("Failed to get auth token:", err);
-          setAuthToken(null);
+          setAuthToken(null, null);
         }
       } else {
-        setAuthToken(null);
+        setAuthToken(null, null);
       }
     };
     setupAuth();
@@ -49,7 +49,8 @@ export const UserStatsProvider = ({ children }) => {
     try {
       setIsLoading(true);
       setError(null);
-      const res = await api.get(`/v1/users/stat?id=${user.id}`);
+      // userId is automatically added by apiClient interceptor
+      const res = await api.get("/v1/users/stat");
       setRawStats(res.data);
       setLastFetched(new Date());
     } catch (err) {
