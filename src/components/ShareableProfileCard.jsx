@@ -251,10 +251,12 @@ const ShareableProfileCard = ({ userStats, username, avatar }) => {
     );
   };
 
-  // Copy embed code
+  // Copy embed code - uses backend API for image generation
   const copyEmbedCode = () => {
-    const embedUrl = `https://ggithubstreak.com/embed/${username}?theme=${selectedTheme}`;
-    const code = `<a href="https://ggithubstreak.com/u/${username}"><img src="${embedUrl}" alt="${username}'s GitHub Streak" /></a>`;
+    const API_BASE = "https://api.ggithubstreak.com";
+    const embedUrl = `${API_BASE}/v1/embed/${username}/svg?theme=${selectedTheme}`;
+    const profileUrl = `https://ggithubstreak.com/u/${username}`;
+    const code = `<a href="${profileUrl}"><img src="${embedUrl}" alt="${username}'s GitHub Streak" /></a>`;
     navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);

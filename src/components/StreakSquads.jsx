@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   FaUsers,
@@ -11,8 +11,16 @@ import {
   FaArrowRight,
   FaLock,
   FaGlobe,
+  FaSpinner,
+  FaExclamationCircle,
 } from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
+import {
+  getMySquads,
+  getPublicSquads,
+  createSquad as createSquadAPI,
+  joinSquad as joinSquadAPI,
+} from "../APIs/SquadsAPI";
 
 /**
  * StreakSquads - Team-based streak challenges
@@ -24,40 +32,6 @@ import { useUser } from "@clerk/clerk-react";
  * - Weekly squad challenges
  * - Squad leaderboards
  */
-
-// Mock data for demo - in production this would come from backend
-const mockSquads = [
-  {
-    id: "squad-1",
-    name: "Code Warriors",
-    code: "CW2026",
-    members: [
-      {
-        username: "alice",
-        avatar: "https://avatars.githubusercontent.com/u/1?v=4",
-        streak: 45,
-        isLeader: true,
-      },
-      {
-        username: "bob",
-        avatar: "https://avatars.githubusercontent.com/u/2?v=4",
-        streak: 32,
-        isLeader: false,
-      },
-      {
-        username: "carol",
-        avatar: "https://avatars.githubusercontent.com/u/3?v=4",
-        streak: 28,
-        isLeader: false,
-      },
-    ],
-    weeklyGoal: 7,
-    weeklyProgress: 5,
-    totalStreak: 105,
-    rank: 3,
-    isPrivate: false,
-  },
-];
 
 // Squad Card Component
 const SquadCard = ({ squad, isUserMember, onJoin }) => {
@@ -325,64 +299,101 @@ JoinSquadModal.propTypes = {
 
 // Main StreakSquads Component
 const StreakSquads = () => {
-  const { user, isSignedIn } = useUser();
+  const { isSignedIn } = useUser();
   const [activeTab, setActiveTab] = useState("discover"); // discover, my-squads
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [mySquads, setMySquads] = useState([]);
-  const [publicSquads] = useState(mockSquads);
+  const [publicSquads, setPublicSquads] = useState([]);
   const [inviteCode, setInviteCode] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Generate invite code for user's squad
-  const generateInviteCode = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let code = "";
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
-  };
+  // Fetch squads data from backend
+  useEffect(() => {
+    const fetchSquadsData = async () => {
+      if (!isSignedIn) return;
 
-  const handleCreateSquad = (data) => {
-    const newSquad = {
-      id: `squad-${Date.now()}`,
-      name: data.name,
-      code: generateInviteCode(),
-      members: [
-        {
-          username: user?.username || "you",
-          avatar:
-            user?.imageUrl || "https://avatars.githubusercontent.com/u/0?v=4",
-          streak: 0,
-          isLeader: true,
-        },
-      ],
-      weeklyGoal: data.weeklyGoal,
-      weeklyProgress: 0,
-      totalStreak: 0,
-      rank: publicSquads.length + 1,
-      isPrivate: data.isPrivate,
+      setLoading(true);
+      setError(null);
+
+      try {
+        const [mySquadsData, publicSquadsData] = await Promise.all([
+          getMySquads().catch(() => ({ squads: [] })),
+          getPublicSquads().catch(() => ({ squads: [] })),
+        ]);
+
+        setMySquads(mySquadsData.squads || []);
+        setPublicSquads(publicSquadsData.squads || []);
+      } catch (err) {
+        console.error("Failed to fetch squads:", err);
+        setError("Failed to load squads. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     };
-    setMySquads([...mySquads, newSquad]);
-    setInviteCode(newSquad.code);
-    setShowCreateModal(false);
-    setActiveTab("my-squads");
-  };
 
-  const handleJoinSquad = (squad) => {
-    if (!mySquads.find((s) => s.id === squad.id)) {
-      setMySquads([...mySquads, squad]);
+    fetchSquadsData();
+  }, [isSignedIn]);
+
+  const handleCreateSquad = async (data) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const newSquad = await createSquadAPI({
+        name: data.name,
+        isPrivate: data.isPrivate,
+        weeklyGoal: data.weeklyGoal,
+      });
+
+      setMySquads([...mySquads, newSquad]);
+      setInviteCode(newSquad.inviteCode || newSquad.code);
+      setShowCreateModal(false);
+      setActiveTab("my-squads");
+    } catch (err) {
+      console.error("Failed to create squad:", err);
+      setError("Failed to create squad. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleJoinByCode = (code) => {
-    // In production, this would validate the code against the backend
-    const squad = publicSquads.find((s) => s.code === code);
-    if (squad) {
-      handleJoinSquad(squad);
+  const handleJoinSquad = async (squad) => {
+    if (mySquads.find((s) => s.id === squad.id)) return;
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      await joinSquadAPI(squad.inviteCode || squad.code);
+      setMySquads([...mySquads, squad]);
+
+      // Remove from public squads list
+      setPublicSquads(publicSquads.filter((s) => s.id !== squad.id));
+    } catch (err) {
+      console.error("Failed to join squad:", err);
+      setError("Failed to join squad. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleJoinByCode = async (code) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const joinedSquad = await joinSquadAPI(code);
+      setMySquads([...mySquads, joinedSquad]);
       setShowJoinModal(false);
       setActiveTab("my-squads");
+    } catch (err) {
+      console.error("Failed to join squad with code:", err);
+      setError("Invalid squad code or squad not found.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -495,9 +506,30 @@ const StreakSquads = () => {
         </div>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="mx-4 mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-2">
+          <FaExclamationCircle className="text-red-400" />
+          <p className="text-red-400 text-sm">{error}</p>
+          <button
+            onClick={() => setError(null)}
+            className="ml-auto text-red-400 hover:text-red-300"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Content */}
       <div className="p-4">
-        {activeTab === "discover" && (
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-8">
+            <FaSpinner className="text-2xl text-green-500 animate-spin" />
+          </div>
+        )}
+
+        {!loading && activeTab === "discover" && (
           <div className="space-y-3">
             {publicSquads.map((squad) => (
               <SquadCard
@@ -519,7 +551,7 @@ const StreakSquads = () => {
           </div>
         )}
 
-        {activeTab === "my-squads" && (
+        {!loading && activeTab === "my-squads" && (
           <div className="space-y-3">
             {mySquads.length > 0 ? (
               mySquads.map((squad) => (
