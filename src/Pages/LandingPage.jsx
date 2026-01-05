@@ -1,19 +1,15 @@
-import Nav from "../components/Nav";
 import Faq from "./Faq";
 import Home from "./Home";
-import Footer from "../sections/Footer";
-import { Analytics } from "@vercel/analytics/react"
+import Features from "../sections/Features";
+
 const LandingPage = () => {
   return (
-    <div>
-       
-        <Home/>
-        <Faq/>
-        
+    <div className="bg-slate-950">
+      <Home />
+      <Features />
+      <Faq />
     </div>
-  )
-}
+  );
+};
 
-export default LandingPage
-
-
+export default LandingPage;
