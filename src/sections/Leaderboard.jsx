@@ -1,4 +1,5 @@
-import React, { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
+import PropTypes from "prop-types";
 import {
   Table,
   TableHeader,
@@ -21,7 +22,6 @@ import {
   FaArrowUp,
   FaArrowDown,
   FaChartLine,
-  FaFilter,
 } from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
 
@@ -319,12 +319,16 @@ const Leaderboard = ({ leaderboard }) => {
 
   // Bottom pagination
   const bottomContent = useMemo(() => {
+    const startItem =
+      sortedUsers.length === 0 ? 0 : (page - 1) * rowsPerPage + 1;
+    const endItem = Math.min(page * rowsPerPage, sortedUsers.length);
+
     return (
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-4">
         <span className="text-gray-400 text-sm">
-          Showing {(page - 1) * rowsPerPage + 1}-
-          {Math.min(page * rowsPerPage, sortedUsers.length)} of{" "}
-          {sortedUsers.length}
+          {sortedUsers.length === 0
+            ? "No results"
+            : `Showing ${startItem}-${endItem} of ${sortedUsers.length}`}
         </span>
 
         <Pagination
@@ -364,6 +368,19 @@ const Leaderboard = ({ leaderboard }) => {
       </div>
     );
   }, [page, pages, sortedUsers.length, rowsPerPage]);
+
+  // Don't render if no data
+  if (!leaderboard || leaderboard.length === 0) {
+    return (
+      <section id="leaderboard" className="scroll-mt-20">
+        <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-700 p-12 text-center">
+          <FaTrophy className="mx-auto text-4xl text-gray-600 mb-4" />
+          <p className="text-gray-400 text-lg">No leaderboard data available</p>
+          <p className="text-gray-500 text-sm mt-1">Check back soon!</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="leaderboard" className="scroll-mt-20">
@@ -429,6 +446,24 @@ const Leaderboard = ({ leaderboard }) => {
       </div>
     </section>
   );
+};
+
+Leaderboard.propTypes = {
+  leaderboard: PropTypes.arrayOf(
+    PropTypes.shape({
+      username: PropTypes.string.isRequired,
+      avatar: PropTypes.string,
+      rank: PropTypes.number,
+      contributions: PropTypes.number,
+      currentStreak: PropTypes.shape({
+        count: PropTypes.number,
+      }),
+    })
+  ),
+};
+
+Leaderboard.defaultProps = {
+  leaderboard: [],
 };
 
 export default Leaderboard;
