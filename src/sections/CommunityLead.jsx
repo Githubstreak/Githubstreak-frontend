@@ -31,7 +31,7 @@ const CommunityLead = () => {
             <Link href="https://x.com/Kwame_Tech1" isExternal>
               <User
                 className="text-white"
-                name="Kwame Edmond"
+                name="Kwame Tech"
                 description={
                   <span className="text-green-400">
                     GitHubStreak Community Lead
