@@ -66,6 +66,14 @@ const Dashboard = () => {
   const totalContributions = userStats?.contributions ?? 0;
 
   // Show loading state while Clerk is initializing
+  console.log(
+    "[Dashboard] Render: isLoaded:",
+    isLoaded,
+    "isSignedIn:",
+    isSignedIn,
+    "user:",
+    user
+  );
   if (!isLoaded) {
     return (
       <>
