@@ -115,7 +115,7 @@ const Dashboard = () => {
               </p>
             </div>
 
-            {/* View Toggle */}
+            {/* View Toggle Button commented out for debugging
             <button
               onClick={toggleViewMode}
               className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 
@@ -137,6 +137,7 @@ const Dashboard = () => {
                 </>
               )}
             </button>
+            */}
           </div>
 
           {/* Main Dashboard Grid */}
