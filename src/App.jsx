@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/react";
 import Nav from "./components/Nav";
 import Footer from "./sections/Footer";
 import Project from "./Pages/Project";
+import WidgetPage from "./Pages/WidgetPage";
 import Meme from "./Pages/Meme";
 import LandingPage from "./Pages/LandingPage";
 import Dashboard from "./Pages/Dashboard";
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="meme" element={<Meme />} />
           <Route path="project" element={<Project />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="widget" element={<WidgetPage />} />
         </Routes>
       </div>
 
