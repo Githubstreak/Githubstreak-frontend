@@ -28,12 +28,22 @@ export const UserStatsProvider = ({ children }) => {
 
   // Set auth token for API requests when user is loaded
   useEffect(() => {
+    console.log(
+      "[UserStatsContext] useEffect: isLoaded:",
+      isLoaded,
+      "user:",
+      user
+    );
     const setupAuth = async () => {
       if (isLoaded && user) {
         try {
           const token = await getToken();
           setAuthToken(token, user.id);
           setIsAuthReady(true);
+          console.log(
+            "[UserStatsContext] Auth ready, token set, userId:",
+            user.id
+          );
         } catch (err) {
           console.error("Failed to get auth token:", err);
           setAuthToken(null, null);
@@ -43,6 +53,7 @@ export const UserStatsProvider = ({ children }) => {
         // Only clear auth when we're certain user is not signed in
         setAuthToken(null, null);
         setIsAuthReady(false);
+        console.log("[UserStatsContext] Auth cleared, user signed out");
       }
       // If not loaded yet, keep previous state to prevent flash
     };
@@ -69,6 +80,14 @@ export const UserStatsProvider = ({ children }) => {
 
   // Only fetch stats after auth is ready to avoid race condition
   useEffect(() => {
+    console.log(
+      "[UserStatsContext] Stats fetch effect: isLoaded:",
+      isLoaded,
+      "user:",
+      user,
+      "isAuthReady:",
+      isAuthReady
+    );
     if (isLoaded && user && isAuthReady) {
       fetchUserStats();
     }
@@ -132,8 +151,8 @@ export const UserStatsProvider = ({ children }) => {
     return { hours, minutes, msUntilReset };
   }, []);
 
-  const value = useMemo(
-    () => ({
+  const value = useMemo(() => {
+    const val = {
       user,
       userStats,
       isLoading,
@@ -144,19 +163,20 @@ export const UserStatsProvider = ({ children }) => {
       timeUntilReset,
       lastFetched,
       refetch: fetchUserStats,
-    }),
-    [
-      user,
-      userStats,
-      isLoading,
-      error,
-      isLoaded,
-      streakStatus,
-      timeUntilReset,
-      lastFetched,
-      fetchUserStats,
-    ]
-  );
+    };
+    console.log("[UserStatsContext] Context value:", val);
+    return val;
+  }, [
+    user,
+    userStats,
+    isLoading,
+    error,
+    isLoaded,
+    streakStatus,
+    timeUntilReset,
+    lastFetched,
+    fetchUserStats,
+  ]);
 
   return (
     <UserStatsContext.Provider value={value}>
