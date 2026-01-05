@@ -209,8 +209,11 @@ const ShareableProfileCard = ({ userStats, username, avatar }) => {
     try {
       const canvas = await html2canvas(cardRef.current, {
         scale: 2,
-        backgroundColor: null,
+        backgroundColor: "#0f172a", // slate-900 fallback
         logging: false,
+        useCORS: true, // Allow cross-origin images
+        allowTaint: true, // Allow tainted canvas for images
+        foreignObjectRendering: false, // Disable for better compatibility
       });
 
       const link = document.createElement("a");
@@ -219,7 +222,10 @@ const ShareableProfileCard = ({ userStats, username, avatar }) => {
       link.click();
     } catch (error) {
       console.error("Error generating image:", error);
-      alert("Failed to generate image. Please try again.");
+      // Show more helpful error message
+      alert(
+        "Failed to generate image. This may be due to browser restrictions. Try refreshing the page."
+      );
     } finally {
       setIsGenerating(false);
     }
