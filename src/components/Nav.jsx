@@ -70,7 +70,7 @@ export default function Nav() {
 
   // Navigation links configuration
   const navLinks = [
-    { path: "/", label: "Leaderboard", icon: FaFire },
+    { path: "/dashboard", label: "Dashboard", icon: FaFire },
     { path: "/project", label: "Projects", icon: FaCode },
     { path: "/meme", label: "Memes", icon: FaImages },
     {
