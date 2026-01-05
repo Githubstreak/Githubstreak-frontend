@@ -244,15 +244,15 @@ const Leaderboard = ({ leaderboard }) => {
   // Top content with search and filters
   const topContent = useMemo(() => {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6 px-4 pt-6 pb-2">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="mb-2 sm:mb-0">
+            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 mb-1">
               <FaTrophy className="text-yellow-500" />
               Global Leaderboard
             </h2>
-            <p className="text-gray-400 text-sm mt-1">
+            <p className="text-gray-400 text-sm">
               {rankedUsers.length} developers competing
             </p>
           </div>
@@ -267,9 +267,9 @@ const Leaderboard = ({ leaderboard }) => {
             onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
             classNames={{
-              input: "bg-transparent",
+              input: "bg-transparent px-3 py-2",
               inputWrapper:
-                "bg-slate-800 border border-slate-700 hover:bg-slate-700",
+                "bg-slate-800 border border-slate-700 hover:bg-slate-700 rounded-lg px-1 py-1",
             }}
           />
         </div>
