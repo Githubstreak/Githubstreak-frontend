@@ -21,7 +21,6 @@ import {
   FaThList,
   FaFire,
 } from "react-icons/fa";
-import { useUser } from "@clerk/clerk-react";
 
 const Dashboard = () => {
   const { leaderboard, topThree, isLoading, error, refetch } =
@@ -31,12 +30,11 @@ const Dashboard = () => {
     isLoading: userLoading,
     error: userError,
     streakStatus,
+    isSignedIn,
+    isLoaded,
+    user,
     refetch: refetchUser,
   } = useUserStats();
-  const { user, isLoaded } = useUser();
-
-  // Use stable isSignedIn that waits for Clerk to load
-  const isSignedIn = isLoaded && !!user;
 
   // Dashboard view mode: 'simple' or 'full'
   const [viewMode, setViewMode] = useState(() => {
@@ -66,6 +64,23 @@ const Dashboard = () => {
   const currentStreak = userStats?.currentStreak?.count ?? 0;
   const longestStreak = userStats?.longestStreak?.count ?? currentStreak;
   const totalContributions = userStats?.contributions ?? 0;
+
+  // Show loading state while Clerk is initializing
+  if (!isLoaded) {
+    return (
+      <>
+        <Nav />
+        <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 pt-20">
+          <div className="flex items-center justify-center py-32">
+            <div className="text-center">
+              <FaFire className="text-5xl text-green-500 mx-auto mb-4 animate-pulse" />
+              <p className="text-gray-400">Loading your dashboard...</p>
+            </div>
+          </div>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
