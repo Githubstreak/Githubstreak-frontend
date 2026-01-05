@@ -12,6 +12,54 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
+/* Thin scrollbar for specific elements that need visual scrolling hint */
+.scrollbar-thin {
+  scrollbar-width: thin; /* Firefox */
+  -ms-overflow-style: auto; /* IE and Edge */
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Focus visible styles for accessibility */
+.focus-ring {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  @apply absolute -top-full left-4 z-50 bg-green-600 text-white px-4 py-2 rounded-b-lg transition-all;
+}
+
+.skip-link:focus {
+  @apply top-0;
+}
+
+/* Improved text contrast for better readability */
+.text-readable {
+  @apply text-gray-200;
+}
+
+.text-readable-muted {
+  @apply text-gray-400;
+}
+
 /* Animated streak fire - pulses when active */
 @keyframes fire-pulse {
   0%,

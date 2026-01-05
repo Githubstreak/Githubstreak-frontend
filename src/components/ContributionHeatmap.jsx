@@ -1,5 +1,6 @@
 import { FaCalendarAlt } from "react-icons/fa";
 import PropTypes from "prop-types";
+import { NoStreakIllustration } from "./Illustrations";
 
 /**
  * GitHub-style contribution heatmap showing contribution patterns
@@ -111,99 +112,119 @@ const ContributionHeatmap = ({ contributionDays = [] }) => {
         <span className="text-sm text-gray-400">Last 12 weeks</span>
       </div>
 
-      {/* Heatmap grid */}
-      <div className="overflow-x-auto">
-        <div className="min-w-[600px]">
-          {/* Month labels */}
-          <div className="flex ml-8 mb-1">
-            {monthLabels.map(({ month, weekIndex }, i) => (
-              <div
-                key={i}
-                className="text-xs text-gray-500"
-                style={{
-                  marginLeft: i === 0 ? `${weekIndex * 14}px` : undefined,
-                  width:
-                    i < monthLabels.length - 1
-                      ? `${(monthLabels[i + 1].weekIndex - weekIndex) * 14}px`
-                      : "auto",
-                }}
-              >
-                {month}
+      {/* Empty state */}
+      {contributionDays.length === 0 ? (
+        <div className="text-center py-8">
+          <NoStreakIllustration className="w-32 h-24 mx-auto mb-4 opacity-75" />
+          <p className="text-gray-400 text-sm mb-2">No contributions yet</p>
+          <p className="text-gray-500 text-xs">
+            Start coding to light up your heatmap! 🔥
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Heatmap grid - scrollable on mobile */}
+          <div className="overflow-x-auto pb-2 -mx-2 px-2 scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-transparent">
+            <div className="min-w-[500px] sm:min-w-[600px]">
+              {/* Month labels */}
+              <div className="flex ml-8 mb-1">
+                {monthLabels.map(({ month, weekIndex }, i) => (
+                  <div
+                    key={i}
+                    className="text-xs text-gray-500"
+                    style={{
+                      marginLeft: i === 0 ? `${weekIndex * 14}px` : undefined,
+                      width:
+                        i < monthLabels.length - 1
+                          ? `${
+                              (monthLabels[i + 1].weekIndex - weekIndex) * 14
+                            }px`
+                          : "auto",
+                    }}
+                  >
+                    {month}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
 
-          <div className="flex">
-            {/* Day labels */}
-            <div className="flex flex-col gap-0.5 mr-2">
-              {dayLabels.map((label, i) => (
-                <div key={i} className="h-3 text-xs text-gray-500 leading-3">
-                  {label}
+              <div className="flex">
+                {/* Day labels */}
+                <div className="flex flex-col gap-0.5 mr-2">
+                  {dayLabels.map((label, i) => (
+                    <div
+                      key={i}
+                      className="h-3 text-xs text-gray-500 leading-3"
+                    >
+                      {label}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
 
-            {/* Weeks grid */}
-            <div className="flex gap-0.5">
-              {weeks.map((week, weekIndex) => (
-                <div key={weekIndex} className="flex flex-col gap-0.5">
-                  {[0, 1, 2, 3, 4, 5, 6].map((dayOfWeek) => {
-                    const day = week.find((d) => d.dayOfWeek === dayOfWeek);
-                    if (!day) {
-                      return (
-                        <div
-                          key={dayOfWeek}
-                          className="w-3 h-3 rounded-sm bg-transparent"
-                        />
-                      );
-                    }
-                    return (
-                      <div
-                        key={dayOfWeek}
-                        className={`w-3 h-3 rounded-sm ${getColor(
-                          day.count
-                        )} hover:ring-1 hover:ring-white/50 cursor-pointer transition-all`}
-                        title={`${day.date}: ${day.count} contribution${
-                          day.count !== 1 ? "s" : ""
-                        }`}
-                      />
-                    );
-                  })}
+                {/* Weeks grid */}
+                <div className="flex gap-0.5">
+                  {weeks.map((week, weekIndex) => (
+                    <div key={weekIndex} className="flex flex-col gap-0.5">
+                      {[0, 1, 2, 3, 4, 5, 6].map((dayOfWeek) => {
+                        const day = week.find((d) => d.dayOfWeek === dayOfWeek);
+                        if (!day) {
+                          return (
+                            <div
+                              key={dayOfWeek}
+                              className="w-3 h-3 rounded-sm bg-transparent"
+                            />
+                          );
+                        }
+                        return (
+                          <div
+                            key={dayOfWeek}
+                            className={`w-3 h-3 rounded-sm ${getColor(
+                              day.count
+                            )} hover:ring-1 hover:ring-white/50 cursor-pointer transition-all`}
+                            title={`${day.date}: ${day.count} contribution${
+                              day.count !== 1 ? "s" : ""
+                            }`}
+                          />
+                        );
+                      })}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Legend */}
+              <div className="flex items-center justify-end gap-2 mt-4">
+                <span className="text-xs text-gray-500">Less</span>
+                <div className="flex gap-0.5">
+                  <div className="w-3 h-3 rounded-sm bg-slate-800" />
+                  <div className="w-3 h-3 rounded-sm bg-green-900" />
+                  <div className="w-3 h-3 rounded-sm bg-green-700" />
+                  <div className="w-3 h-3 rounded-sm bg-green-500" />
+                  <div className="w-3 h-3 rounded-sm bg-green-400" />
+                </div>
+                <span className="text-xs text-gray-500">More</span>
+              </div>
             </div>
           </div>
 
-          {/* Legend */}
-          <div className="flex items-center justify-end gap-2 mt-4">
-            <span className="text-xs text-gray-500">Less</span>
-            <div className="flex gap-0.5">
-              <div className="w-3 h-3 rounded-sm bg-slate-800" />
-              <div className="w-3 h-3 rounded-sm bg-green-900" />
-              <div className="w-3 h-3 rounded-sm bg-green-700" />
-              <div className="w-3 h-3 rounded-sm bg-green-500" />
-              <div className="w-3 h-3 rounded-sm bg-green-400" />
+          {/* Quick stats */}
+          <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-slate-700">
+            <div className="text-center">
+              <p className="text-lg font-bold text-white">
+                {totalContributions}
+              </p>
+              <p className="text-xs text-gray-400">Total</p>
             </div>
-            <span className="text-xs text-gray-500">More</span>
+            <div className="text-center">
+              <p className="text-lg font-bold text-white">{activeDays}</p>
+              <p className="text-xs text-gray-400">Active Days</p>
+            </div>
+            <div className="text-center">
+              <p className="text-lg font-bold text-white">{averagePerDay}</p>
+              <p className="text-xs text-gray-400">Avg/Day</p>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Quick stats */}
-      <div className="grid grid-cols-3 gap-4 mt-6 pt-4 border-t border-slate-700">
-        <div className="text-center">
-          <p className="text-lg font-bold text-white">{totalContributions}</p>
-          <p className="text-xs text-gray-400">Total</p>
-        </div>
-        <div className="text-center">
-          <p className="text-lg font-bold text-white">{activeDays}</p>
-          <p className="text-xs text-gray-400">Active Days</p>
-        </div>
-        <div className="text-center">
-          <p className="text-lg font-bold text-white">{averagePerDay}</p>
-          <p className="text-xs text-gray-400">Avg/Day</p>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

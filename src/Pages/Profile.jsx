@@ -92,25 +92,31 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Tab navigation */}
-            <div className="flex gap-2 bg-slate-800 rounded-xl p-1">
+            {/* Tab navigation - responsive */}
+            <div className="flex gap-1 sm:gap-2 bg-slate-800 rounded-2xl p-1 overflow-x-auto">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 return (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
+                    aria-label={`${tab.label} tab`}
+                    aria-selected={activeTab === tab.id}
+                    role="tab"
                     className={`
-                      flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors
+                      flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all
+                      min-w-[44px] justify-center
                       ${
                         activeTab === tab.id
-                          ? "bg-green-600 text-white"
+                          ? "bg-green-600 text-white shadow-lg shadow-green-500/20"
                           : "text-gray-400 hover:text-white hover:bg-slate-700"
                       }
                     `}
                   >
-                    <Icon className="text-sm" />
-                    <span className="hidden sm:inline">{tab.label}</span>
+                    <Icon className="text-sm flex-shrink-0" />
+                    <span className="hidden xs:inline sm:inline">
+                      {tab.label}
+                    </span>
                   </button>
                 );
               })}

@@ -9,7 +9,8 @@ import DailyChallenge from "../components/DailyChallenge";
 import LevelProgress from "../components/LevelProgress";
 import ConfettiCelebration from "../components/ConfettiCelebration";
 import MotivationalQuote from "../components/MotivationalQuote";
-import { FaExclamationTriangle } from "react-icons/fa";
+import { TopThreeSkeleton, LeaderboardSkeleton } from "../components/Skeleton";
+import { FaExclamationTriangle, FaThLarge, FaThList } from "react-icons/fa";
 
 const Home = () => {
   const { leaderboard, topThree, isLoading, error, refetch } =
@@ -22,6 +23,18 @@ const Home = () => {
     isSignedIn,
     refetch: refetchUser,
   } = useUserStats();
+
+  // Dashboard view mode: 'simple' or 'full'
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem("dashboard_view") || "full";
+  });
+
+  // Save view preference to localStorage
+  const toggleViewMode = () => {
+    const newMode = viewMode === "full" ? "simple" : "full";
+    setViewMode(newMode);
+    localStorage.setItem("dashboard_view", newMode);
+  };
 
   // Track previous streak for confetti celebration
   const [previousStreak, setPreviousStreak] = useState(0);
@@ -57,6 +70,31 @@ const Home = () => {
 
       {/* Personal Streak Dashboard */}
       <section className="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-16 py-8">
+        {/* View Toggle */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={toggleViewMode}
+            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 
+                       rounded-xl text-sm text-gray-300 transition-all duration-200
+                       border border-slate-700 hover:border-slate-600"
+            aria-label={`Switch to ${
+              viewMode === "full" ? "simple" : "full"
+            } view`}
+          >
+            {viewMode === "full" ? (
+              <>
+                <FaThList className="text-green-400" />
+                <span className="hidden sm:inline">Simple View</span>
+              </>
+            ) : (
+              <>
+                <FaThLarge className="text-green-400" />
+                <span className="hidden sm:inline">Full View</span>
+              </>
+            )}
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1 space-y-6">
             <PersonalStreakCard
@@ -67,15 +105,15 @@ const Home = () => {
               isSignedIn={isSignedIn}
               refetch={refetchUser}
             />
-            {/* Motivational Quote */}
-            <MotivationalQuote />
+            {/* Motivational Quote - Full view only */}
+            {viewMode === "full" && <MotivationalQuote />}
           </div>
           <div className="lg:col-span-2 space-y-6">
-            {/* Daily Challenge - Always visible */}
-            <DailyChallenge />
+            {/* Daily Challenge - Full view only */}
+            {viewMode === "full" && <DailyChallenge />}
 
-            {/* Level & XP Progress - Only when signed in */}
-            {isSignedIn && userStats && (
+            {/* Level & XP Progress - Only when signed in AND full view */}
+            {viewMode === "full" && isSignedIn && userStats && (
               <LevelProgress
                 totalContributions={totalContributions}
                 currentStreak={currentStreak}
@@ -86,8 +124,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Achievements Section - Only when signed in */}
-      {isSignedIn && userStats && (
+      {/* Achievements Section - Only when signed in AND full view */}
+      {viewMode === "full" && isSignedIn && userStats && (
         <section className="max-w-[1280px] mx-auto px-4 md:px-10 lg:px-16 pb-8">
           <AchievementBadges
             currentStreak={currentStreak}
@@ -111,9 +149,14 @@ const Home = () => {
           </div>
         </section>
       ) : isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <span className="text-center loading loading-spinner loading-md"></span>
-        </div>
+        <Fragment>
+          <section>
+            <TopThreeSkeleton />
+          </section>
+          <section>
+            <LeaderboardSkeleton />
+          </section>
+        </Fragment>
       ) : (
         <Fragment>
           <section>
