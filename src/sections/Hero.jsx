@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import background from "../assets/images/background.jpg";
 import summary from "../assets/images/summary.png";
 import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
@@ -7,6 +8,7 @@ import {
   FaTrophy,
   FaUsers,
   FaChartLine,
+  FaArrowRight,
 } from "react-icons/fa";
 
 const Hero = () => {
@@ -70,13 +72,14 @@ const Hero = () => {
               </SignInButton>
             </SignedOut>
             <SignedIn>
-              <a
-                href="#leaderboard"
+              <Link
+                to="/dashboard"
                 className="group flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl transition-all shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:scale-105"
               >
                 <FaTrophy size={20} />
-                <span>View Leaderboard</span>
-              </a>
+                <span>Go to Dashboard</span>
+                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </Link>
             </SignedIn>
             <a
               href="https://nas.io/githubstreak"

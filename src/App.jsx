@@ -5,6 +5,7 @@ import Footer from "./sections/Footer";
 import Project from "./Pages/Project";
 import Meme from "./Pages/Meme";
 import LandingPage from "./Pages/LandingPage";
+import Dashboard from "./Pages/Dashboard";
 import Profile from "./Pages/Profile";
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
       <div id="main-content">
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="meme" element={<Meme />} />
           <Route path="project" element={<Project />} />
           <Route path="profile" element={<Profile />} />
