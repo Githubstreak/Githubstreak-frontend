@@ -397,8 +397,8 @@ const Leaderboard = ({ leaderboard }) => {
           classNames={{
             wrapper: "bg-transparent shadow-none max-h-[600px]",
             table: "min-h-[200px]",
-            th: "bg-slate-800/80 text-gray-300 font-semibold uppercase text-xs tracking-wider",
-            td: "py-4",
+            th: "bg-slate-800/80 text-gray-300 font-semibold uppercase text-xs tracking-wider px-4 py-3",
+            td: "px-4 py-3 align-middle",
             tr: "hover:bg-slate-800/50 transition-colors border-b border-slate-700/50",
           }}
         >
