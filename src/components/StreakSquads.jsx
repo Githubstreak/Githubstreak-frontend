@@ -35,8 +35,13 @@ import {
 
 // Squad Card Component
 const SquadCard = ({ squad, isUserMember, onJoin }) => {
-  const teamStreak = squad.members.reduce((sum, m) => sum + m.streak, 0);
-  const avgStreak = Math.round(teamStreak / squad.members.length);
+  const teamStreak = Array.isArray(squad.members)
+    ? squad.members.reduce((sum, m) => sum + (m.streak || 0), 0)
+    : 0;
+  const avgStreak =
+    Array.isArray(squad.members) && squad.members.length > 0
+      ? Math.round(teamStreak / squad.members.length)
+      : 0;
 
   return (
     <div className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 rounded-xl border border-slate-700 p-4 hover:border-green-500/50 transition-all duration-300">
@@ -531,15 +536,19 @@ const StreakSquads = () => {
 
         {!loading && activeTab === "discover" && (
           <div className="space-y-3">
-            {publicSquads.map((squad) => (
-              <SquadCard
-                key={squad.id}
-                squad={squad}
-                isUserMember={mySquads.some((s) => s.id === squad.id)}
-                onJoin={handleJoinSquad}
-              />
-            ))}
-            {publicSquads.length === 0 && (
+            {Array.isArray(publicSquads) &&
+              publicSquads.map((squad) => (
+                <SquadCard
+                  key={squad.id}
+                  squad={squad}
+                  isUserMember={
+                    Array.isArray(mySquads) &&
+                    mySquads.some((s) => s.id === squad.id)
+                  }
+                  onJoin={handleJoinSquad}
+                />
+              ))}
+            {(!Array.isArray(publicSquads) || publicSquads.length === 0) && (
               <div className="text-center py-8">
                 <FaUsers className="text-3xl text-gray-600 mx-auto mb-2" />
                 <p className="text-gray-400">No public squads yet</p>
@@ -553,7 +562,7 @@ const StreakSquads = () => {
 
         {!loading && activeTab === "my-squads" && (
           <div className="space-y-3">
-            {mySquads.length > 0 ? (
+            {Array.isArray(mySquads) && mySquads.length > 0 ? (
               mySquads.map((squad) => (
                 <SquadCard
                   key={squad.id}
