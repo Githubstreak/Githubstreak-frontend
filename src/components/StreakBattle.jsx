@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  FaSwords,
   FaUserFriends,
   FaCopy,
   FaCheck,

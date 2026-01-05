@@ -10,14 +10,21 @@ import Profile from "./Pages/Profile";
 const App = () => {
   return (
     <>
+      {/* Skip link for keyboard navigation accessibility */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
       <Nav />
 
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="meme" element={<Meme />} />
-        <Route path="project" element={<Project />} />
-        <Route path="profile" element={<Profile />} />
-      </Routes>
+      <div id="main-content">
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="meme" element={<Meme />} />
+          <Route path="project" element={<Project />} />
+          <Route path="profile" element={<Profile />} />
+        </Routes>
+      </div>
 
       <Footer />
       <Analytics />
