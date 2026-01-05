@@ -13,6 +13,7 @@ import {
   FaCopy,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import html2canvas from "html2canvas";
 
 /**
  * ShareableProfileCard - Generate beautiful, shareable stats cards
@@ -206,9 +207,6 @@ const ShareableProfileCard = ({ userStats, username, avatar }) => {
     setIsGenerating(true);
 
     try {
-      // Dynamic import of html2canvas to reduce bundle size
-      const html2canvas = (await import("html2canvas")).default;
-
       const canvas = await html2canvas(cardRef.current, {
         scale: 2,
         backgroundColor: null,
@@ -221,10 +219,7 @@ const ShareableProfileCard = ({ userStats, username, avatar }) => {
       link.click();
     } catch (error) {
       console.error("Error generating image:", error);
-      // Fallback: show embed code
-      alert(
-        "Image generation requires html2canvas. Install it with: npm install html2canvas"
-      );
+      alert("Failed to generate image. Please try again.");
     } finally {
       setIsGenerating(false);
     }
