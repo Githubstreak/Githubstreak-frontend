@@ -144,7 +144,7 @@ const Features = () => {
                 icon: FaTrophy,
               },
             ].map((item, index) => {
-              const Icon = item.icon;
+              const StepIcon = item.icon;
               return (
                 <div key={index} className="relative text-center">
                   {/* Connector line */}
@@ -152,9 +152,10 @@ const Features = () => {
                     <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-green-500/50 to-transparent" />
                   )}
 
-                  {/* Step number */}
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 text-white text-2xl font-bold mb-4 shadow-lg shadow-green-500/25">
+                  {/* Step number with icon */}
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-600 text-white text-2xl font-bold mb-4 shadow-lg shadow-green-500/25 relative">
                     {item.step}
+                    <StepIcon className="absolute -bottom-1 -right-1 text-white bg-slate-800 rounded-full p-1 text-lg" />
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-2">

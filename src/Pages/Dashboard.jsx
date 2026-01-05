@@ -9,6 +9,10 @@ import LevelProgress from "../components/LevelProgress";
 import ConfettiCelebration from "../components/ConfettiCelebration";
 import MotivationalQuote from "../components/MotivationalQuote";
 import AIStreakCoach from "../components/AIStreakCoach";
+import StreakSquads from "../components/StreakSquads";
+import StreakPledge from "../components/StreakPledge";
+import ShareableProfileCard from "../components/ShareableProfileCard";
+import CodingPatternsAnalytics from "../components/CodingPatternsAnalytics";
 import Nav from "../components/Nav";
 import { TopThreeSkeleton, LeaderboardSkeleton } from "../components/Skeleton";
 import {
@@ -17,6 +21,7 @@ import {
   FaThList,
   FaFire,
 } from "react-icons/fa";
+import { useUser } from "@clerk/clerk-react";
 
 const Dashboard = () => {
   const { leaderboard, topThree, isLoading, error, refetch } =
@@ -29,6 +34,7 @@ const Dashboard = () => {
     isSignedIn,
     refetch: refetchUser,
   } = useUserStats();
+  const { user } = useUser();
 
   // Dashboard view mode: 'simple' or 'full'
   const [viewMode, setViewMode] = useState(() => {
@@ -151,6 +157,32 @@ const Dashboard = () => {
               currentStreak={currentStreak}
               totalContributions={totalContributions}
             />
+          </section>
+        )}
+
+        {/* New Features Section - Squads, Pledges, Analytics, Share */}
+        {viewMode === "full" && isSignedIn && (
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Streak Squads - Team challenges */}
+              <StreakSquads />
+
+              {/* Streak Pledge - Public commitments */}
+              <StreakPledge currentStreak={currentStreak} />
+
+              {/* Coding Patterns Analytics */}
+              <CodingPatternsAnalytics
+                contributionDays={userStats?.contributionDays}
+                currentStreak={currentStreak}
+              />
+
+              {/* Shareable Profile Card */}
+              <ShareableProfileCard
+                userStats={userStats}
+                username={user?.username || userStats?.username}
+                avatar={user?.imageUrl}
+              />
+            </div>
           </section>
         )}
 
