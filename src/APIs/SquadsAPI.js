@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_BASE = "https://api.ggithubstreak.com";
+import api from "./apiClient";
 
 /**
  * Squads API Service
@@ -10,7 +8,7 @@ const API_BASE = "https://api.ggithubstreak.com";
 // Create a new squad
 export const createSquad = async (squadData) => {
   try {
-    const response = await axios.post(`${API_BASE}/v1/squads`, squadData);
+    const response = await api.post("/v1/squads", squadData);
     return response.data;
   } catch (error) {
     console.error("Error creating squad:", error);
@@ -21,7 +19,7 @@ export const createSquad = async (squadData) => {
 // Get squads for the authenticated user
 export const getMySquads = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/squads/my`);
+    const response = await api.get("/v1/squads/my");
     return response.data;
   } catch (error) {
     console.error("Error fetching my squads:", error);
@@ -32,7 +30,7 @@ export const getMySquads = async () => {
 // Get public squads for discovery
 export const getPublicSquads = async (page = 1, limit = 20) => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/squads/public`, {
+    const response = await api.get("/v1/squads/public", {
       params: { page, limit },
     });
     return response.data;
@@ -45,7 +43,7 @@ export const getPublicSquads = async (page = 1, limit = 20) => {
 // Get a specific squad by ID
 export const getSquadById = async (squadId) => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/squads/${squadId}`);
+    const response = await api.get(`/v1/squads/${squadId}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching squad:", error);
@@ -56,7 +54,7 @@ export const getSquadById = async (squadId) => {
 // Join a squad with invite code
 export const joinSquad = async (inviteCode) => {
   try {
-    const response = await axios.post(`${API_BASE}/v1/squads/join`, {
+    const response = await api.post("/v1/squads/join", {
       inviteCode,
     });
     return response.data;
@@ -69,9 +67,7 @@ export const joinSquad = async (inviteCode) => {
 // Leave a squad
 export const leaveSquad = async (squadId) => {
   try {
-    const response = await axios.delete(
-      `${API_BASE}/v1/squads/${squadId}/leave`
-    );
+    const response = await api.delete(`/v1/squads/${squadId}/leave`);
     return response.data;
   } catch (error) {
     console.error("Error leaving squad:", error);
@@ -82,7 +78,7 @@ export const leaveSquad = async (squadId) => {
 // Get squad leaderboard
 export const getSquadLeaderboard = async (page = 1, limit = 20) => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/squads/leaderboard`, {
+    const response = await api.get("/v1/squads/leaderboard", {
       params: { page, limit },
     });
     return response.data;
@@ -95,10 +91,7 @@ export const getSquadLeaderboard = async (page = 1, limit = 20) => {
 // Update squad settings (for leaders only)
 export const updateSquad = async (squadId, updateData) => {
   try {
-    const response = await axios.patch(
-      `${API_BASE}/v1/squads/${squadId}`,
-      updateData
-    );
+    const response = await api.patch(`/v1/squads/${squadId}`, updateData);
     return response.data;
   } catch (error) {
     console.error("Error updating squad:", error);
@@ -109,9 +102,7 @@ export const updateSquad = async (squadId, updateData) => {
 // Generate new invite code (for leaders only)
 export const regenerateInviteCode = async (squadId) => {
   try {
-    const response = await axios.post(
-      `${API_BASE}/v1/squads/${squadId}/regenerate-code`
-    );
+    const response = await api.post(`/v1/squads/${squadId}/regenerate-code`);
     return response.data;
   } catch (error) {
     console.error("Error regenerating invite code:", error);

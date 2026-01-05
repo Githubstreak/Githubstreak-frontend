@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_BASE = "https://api.ggithubstreak.com";
+import api from "./apiClient";
 
 /**
  * Pledges API Service
@@ -10,7 +8,7 @@ const API_BASE = "https://api.ggithubstreak.com";
 // Create a new pledge
 export const createPledge = async (pledgeData) => {
   try {
-    const response = await axios.post(`${API_BASE}/v1/pledges`, pledgeData);
+    const response = await api.post("/v1/pledges", pledgeData);
     return response.data;
   } catch (error) {
     console.error("Error creating pledge:", error);
@@ -21,7 +19,7 @@ export const createPledge = async (pledgeData) => {
 // Get active pledge for the authenticated user
 export const getMyActivePledge = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/pledges/active`);
+    const response = await api.get("/v1/pledges/active");
     return response.data;
   } catch (error) {
     // 404 means no active pledge - not an error
@@ -36,7 +34,7 @@ export const getMyActivePledge = async () => {
 // Get completed pledges for the authenticated user
 export const getCompletedPledges = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/pledges/completed`);
+    const response = await api.get("/v1/pledges/completed");
     return response.data;
   } catch (error) {
     console.error("Error fetching completed pledges:", error);
@@ -47,7 +45,7 @@ export const getCompletedPledges = async () => {
 // Get all pledges for the authenticated user (active + completed)
 export const getAllMyPledges = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/pledges/my`);
+    const response = await api.get("/v1/pledges/my");
     return response.data;
   } catch (error) {
     console.error("Error fetching my pledges:", error);
@@ -58,9 +56,7 @@ export const getAllMyPledges = async () => {
 // Complete a pledge and claim rewards
 export const completePledge = async (pledgeId) => {
   try {
-    const response = await axios.post(
-      `${API_BASE}/v1/pledges/${pledgeId}/complete`
-    );
+    const response = await api.post(`/v1/pledges/${pledgeId}/complete`);
     return response.data;
   } catch (error) {
     console.error("Error completing pledge:", error);
@@ -71,7 +67,7 @@ export const completePledge = async (pledgeId) => {
 // Cancel an active pledge
 export const cancelPledge = async (pledgeId) => {
   try {
-    const response = await axios.delete(`${API_BASE}/v1/pledges/${pledgeId}`);
+    const response = await api.delete(`/v1/pledges/${pledgeId}`);
     return response.data;
   } catch (error) {
     console.error("Error canceling pledge:", error);
@@ -82,7 +78,7 @@ export const cancelPledge = async (pledgeId) => {
 // Get public pledges feed (community pledges)
 export const getPublicPledges = async (page = 1, limit = 20) => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/pledges/public`, {
+    const response = await api.get("/v1/pledges/public", {
       params: { page, limit },
     });
     return response.data;
@@ -95,7 +91,7 @@ export const getPublicPledges = async (page = 1, limit = 20) => {
 // Get pledge templates/presets
 export const getPledgeTemplates = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/v1/pledges/templates`);
+    const response = await api.get("/v1/pledges/templates");
     return response.data;
   } catch (error) {
     console.error("Error fetching pledge templates:", error);
@@ -106,7 +102,7 @@ export const getPledgeTemplates = async () => {
 // Use a streak freeze token
 export const useStreakFreeze = async () => {
   try {
-    const response = await axios.post(`${API_BASE}/v1/pledges/freeze`);
+    const response = await api.post("/v1/pledges/freeze");
     return response.data;
   } catch (error) {
     console.error("Error using streak freeze:", error);
