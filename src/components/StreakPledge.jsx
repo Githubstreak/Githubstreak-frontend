@@ -12,8 +12,17 @@ import {
   FaChevronRight,
   FaLock,
   FaUnlock,
+  FaSpinner,
+  FaExclamationCircle,
 } from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
+import {
+  getMyActivePledge,
+  getCompletedPledges,
+  createPledge,
+  completePledge as completePledgeAPI,
+  cancelPledge,
+} from "../APIs/PledgesAPI";
 
 /**
  * StreakPledge - Public commitment system for streak goals
@@ -229,51 +238,109 @@ const StreakPledge = ({ currentStreak = 0 }) => {
   const [activePledge, setActivePledge] = useState(null);
   const [showTemplates, setShowTemplates] = useState(false);
   const [completedPledges, setCompletedPledges] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Load saved pledge from localStorage
+  // Load pledges from backend
   useEffect(() => {
-    const saved = localStorage.getItem("streak_pledge");
-    if (saved) {
-      setActivePledge(JSON.parse(saved));
-    }
-    const completed = localStorage.getItem("completed_pledges");
-    if (completed) {
-      setCompletedPledges(JSON.parse(completed));
-    }
-  }, []);
+    const fetchPledges = async () => {
+      if (!isSignedIn) {
+        setLoading(false);
+        return;
+      }
 
-  const handleSelectPledge = (template) => {
-    const pledge = {
-      ...template,
-      startedAt: new Date().toISOString(),
-      startingStreak: currentStreak,
+      setLoading(true);
+      setError(null);
+
+      try {
+        const [activeData, completedData] = await Promise.all([
+          getMyActivePledge().catch(() => null),
+          getCompletedPledges().catch(() => ({ pledges: [] })),
+        ]);
+
+        setActivePledge(activeData);
+        setCompletedPledges(
+          completedData?.pledges?.map((p) => p.id || p.templateId) || []
+        );
+      } catch (err) {
+        console.error("Failed to fetch pledges:", err);
+        setError("Failed to load pledges. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     };
-    setActivePledge(pledge);
-    localStorage.setItem("streak_pledge", JSON.stringify(pledge));
-    setShowTemplates(false);
+
+    fetchPledges();
+  }, [isSignedIn]);
+
+  const handleSelectPledge = async (template) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const newPledge = await createPledge({
+        templateId: template.id,
+        targetDays: template.days,
+        startingStreak: currentStreak,
+      });
+
+      setActivePledge(newPledge);
+      setShowTemplates(false);
+    } catch (err) {
+      console.error("Failed to create pledge:", err);
+      setError("Failed to create pledge. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleCompletePledge = (pledge) => {
-    const completed = [...completedPledges, pledge.id];
-    setCompletedPledges(completed);
-    localStorage.setItem("completed_pledges", JSON.stringify(completed));
-    setActivePledge(null);
-    localStorage.removeItem("streak_pledge");
+  const handleCompletePledge = async (pledge) => {
+    try {
+      setLoading(true);
+      setError(null);
 
-    // In production, this would trigger a celebration and update backend
-    alert(
-      `🎉 Congratulations! You earned the ${pledge.name} badge and ${pledge.xpBonus} XP!`
-    );
+      const result = await completePledgeAPI(pledge.id);
+
+      setCompletedPledges([
+        ...completedPledges,
+        pledge.templateId || pledge.id,
+      ]);
+      setActivePledge(null);
+
+      // Show celebration
+      alert(
+        `🎉 Congratulations! You earned the ${pledge.name} badge and ${
+          result.xpEarned || pledge.xpBonus
+        } XP!`
+      );
+    } catch (err) {
+      console.error("Failed to complete pledge:", err);
+      setError("Failed to complete pledge. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleAbandonPledge = () => {
+  const handleAbandonPledge = async () => {
     if (
-      window.confirm(
+      !window.confirm(
         "Are you sure you want to abandon this pledge? Your progress will be lost."
       )
     ) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      await cancelPledge(activePledge.id);
       setActivePledge(null);
-      localStorage.removeItem("streak_pledge");
+    } catch (err) {
+      console.error("Failed to abandon pledge:", err);
+      setError("Failed to abandon pledge. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -321,9 +388,30 @@ const StreakPledge = ({ currentStreak = 0 }) => {
         </div>
       </div>
 
+      {/* Error Message */}
+      {error && (
+        <div className="mx-4 mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-2">
+          <FaExclamationCircle className="text-red-400" />
+          <p className="text-red-400 text-sm">{error}</p>
+          <button
+            onClick={() => setError(null)}
+            className="ml-auto text-red-400 hover:text-red-300"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
       {/* Content */}
       <div className="p-4">
-        {activePledge ? (
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-8">
+            <FaSpinner className="text-2xl text-purple-500 animate-spin" />
+          </div>
+        )}
+
+        {!loading && activePledge ? (
           <>
             <ActivePledgeCard
               pledge={activePledge}
@@ -340,7 +428,7 @@ const StreakPledge = ({ currentStreak = 0 }) => {
               Abandon Pledge
             </button>
           </>
-        ) : showTemplates ? (
+        ) : !loading && showTemplates ? (
           <div className="space-y-3">
             <div className="flex items-center justify-between mb-2">
               <h4 className="text-white font-medium">Choose Your Pledge</h4>
@@ -361,7 +449,7 @@ const StreakPledge = ({ currentStreak = 0 }) => {
               />
             ))}
           </div>
-        ) : (
+        ) : !loading ? (
           <div className="text-center py-6">
             <div className="w-16 h-16 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-4">
               <FaBullseye className="text-2xl text-purple-400" />
@@ -380,7 +468,7 @@ const StreakPledge = ({ currentStreak = 0 }) => {
               Start a Pledge
             </button>
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* Completed Pledges */}
