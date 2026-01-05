@@ -21,6 +21,8 @@ import {
 import { useUser } from "@clerk/clerk-react";
 import Nav from "../components/Nav";
 import { getProjects, submitProject } from "../APIs/ProjectsAPI";
+import MobileImpactWidget from "../components/MobileImpactWidget";
+import { getImpactfulProgress } from "../utils/impactfulProgress";
 
 /**
  * Projects Page - Community Project Showcase
@@ -585,9 +587,20 @@ const Project = () => {
     setProjects([newProject, ...projects]);
   };
 
+  // Compute impactful progress for mobile widget
+  const impactful = getImpactfulProgress(filteredProjects);
+
   return (
     <>
       <Nav />
+      {/* Mobile Widget: only show on small screens */}
+      <div className="block md:hidden">
+        <MobileImpactWidget
+          topContributor={impactful.topContributor}
+          topStreak={impactful.topStreak}
+          recentMilestone={impactful.recentMilestone}
+        />
+      </div>
       <main className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
