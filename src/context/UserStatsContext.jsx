@@ -24,6 +24,7 @@ export const UserStatsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lastFetched, setLastFetched] = useState(null);
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   // Set auth token for API requests when user is loaded
   useEffect(() => {
@@ -32,12 +33,15 @@ export const UserStatsProvider = ({ children }) => {
         try {
           const token = await getToken();
           setAuthToken(token, user.id);
+          setIsAuthReady(true);
         } catch (err) {
           console.error("Failed to get auth token:", err);
           setAuthToken(null, null);
+          setIsAuthReady(false);
         }
       } else {
         setAuthToken(null, null);
+        setIsAuthReady(false);
       }
     };
     setupAuth();
@@ -61,11 +65,12 @@ export const UserStatsProvider = ({ children }) => {
     }
   }, [user]);
 
+  // Only fetch stats after auth is ready to avoid race condition
   useEffect(() => {
-    if (isLoaded && user) {
+    if (isLoaded && user && isAuthReady) {
       fetchUserStats();
     }
-  }, [user, isLoaded, fetchUserStats]);
+  }, [user, isLoaded, isAuthReady, fetchUserStats]);
 
   // Transform raw backend data to stable frontend shape
   const userStats = useMemo(() => {
