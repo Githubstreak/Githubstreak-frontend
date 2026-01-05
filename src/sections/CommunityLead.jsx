@@ -1,5 +1,6 @@
 import { User, Link } from "@nextui-org/react";
-import { FaQuoteLeft, FaTwitter } from "react-icons/fa";
+import { FaQuoteLeft } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const CommunityLead = () => {
   return (
@@ -48,7 +49,7 @@ const CommunityLead = () => {
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-gray-300 hover:text-white transition-colors"
             >
-              <FaTwitter className="text-sky-400" />
+              <FaXTwitter className="text-white" />
               <span className="hidden sm:inline text-sm">Follow</span>
             </a>
           </div>
