@@ -93,7 +93,7 @@ const Leaderboard = ({ leaderboard }) => {
     if (rank === 1) return { emoji: "🥇", class: "text-yellow-500 font-bold" };
     if (rank === 2) return { emoji: "🥈", class: "text-gray-400 font-bold" };
     if (rank === 3) return { emoji: "🥉", class: "text-amber-600 font-bold" };
-    if (rank <= 10)
+    if (rank <= 50)
       return { emoji: "🔥", class: "text-orange-400 font-semibold" };
     return { emoji: "", class: "text-gray-400" };
   };
