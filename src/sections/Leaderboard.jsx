@@ -34,8 +34,33 @@ const Leaderboard = ({ leaderboard }) => {
   });
   const [page, setPage] = useState(1);
 
-  const { user: currentUser } = useUser();
-  const rankedUsers = leaderboard ?? [];
+  const { user: currentUser, isLoaded } = useUser();
+  const [rankedUsers, setRankedUsers] = useState(leaderboard ?? []);
+
+  // Fetch leaderboard with userId
+  useEffect(() => {
+    if (!isLoaded) return;
+    const fetchLeaderboard = async () => {
+      try {
+        const userId = currentUser?.id;
+        const res = await fetch(
+          "https://api.ggithubstreak.com/v1/users/leaderboard",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userId ? { userId } : {}),
+          }
+        );
+        const data = await res.json();
+        if (Array.isArray(data.leaderboard)) {
+          setRankedUsers(data.leaderboard);
+        }
+      } catch (err) {
+        // Optionally handle error
+      }
+    };
+    fetchLeaderboard();
+  }, [isLoaded, currentUser]);
 
   // Filter users
   const filteredUsers = useMemo(() => {
