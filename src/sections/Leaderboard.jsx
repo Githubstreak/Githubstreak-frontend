@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Table,
@@ -7,32 +7,17 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Input,
-  Button,
-  Pagination,
-  Chip,
-  Avatar,
-  Tooltip,
 } from "@nextui-org/react";
-import {
-  FaFire,
-  FaSearch,
-  FaTrophy,
-  FaGithub,
-  FaArrowUp,
-  FaArrowDown,
-  FaChartLine,
-} from "react-icons/fa";
 import { useUser } from "@clerk/clerk-react";
 
 const Leaderboard = ({ leaderboard }) => {
-  const [filterValue, setFilterValue] = useState("");
-  const [rowsPerPage, setRowsPerPage] = useState(50);
-  const [sortDescriptor, setSortDescriptor] = useState({
+  const [filterValue] = useState("");
+  const [rowsPerPage] = useState(50);
+  const [sortDescriptor] = useState({
     column: "rank",
     direction: "ascending",
   });
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
 
   const { user: currentUser, isLoaded } = useUser();
   const [rankedUsers, setRankedUsers] = useState(leaderboard ?? []);
@@ -97,12 +82,13 @@ const Leaderboard = ({ leaderboard }) => {
   }, [filteredUsers, sortDescriptor]);
 
   // Pagination
-  const pages = Math.ceil(sortedUsers.length / rowsPerPage);
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     return sortedUsers.slice(start, start + rowsPerPage);
   }, [page, sortedUsers, rowsPerPage]);
 
+  // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
+  /*
   // Get streak tier
   const getStreakTier = (streak) => {
     if (streak >= 100) return { label: "Legend", color: "warning", icon: "👑" };
@@ -122,218 +108,54 @@ const Leaderboard = ({ leaderboard }) => {
       return { emoji: "🔥", class: "text-orange-400 font-semibold" };
     return { emoji: "", class: "text-gray-400" };
   };
-
-  const onSearchChange = useCallback((value) => {
-    setFilterValue(value || "");
-    setPage(1);
-  }, []);
+  */
 
   // Check if current user
-  const isCurrentUser = (username) => currentUser?.username === username;
+  // const isCurrentUser = (username) => currentUser?.username === username;
 
   // Columns configuration
   const columns = [
     { key: "rank", label: "RANK", sortable: true },
     { key: "developer", label: "DEVELOPER" },
-    { key: "streak", label: "STREAK", sortable: true },
-    { key: "contributions", label: "CONTRIBUTIONS", sortable: true },
-    { key: "tier", label: "TIER" },
-    { key: "actions", label: "" },
+    // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
+    /*
+    const renderCell = useCallback(
+      (user, columnKey) => {
+        const streak = user.currentStreak?.count ?? 0;
+        const tier = getStreakTier(streak);
+        const rankDisplay = getRankDisplay(user.rank);
+        // ...existing advanced cell rendering code...
+      },
+      [currentUser]
+    );
+    */
   ];
 
-  const renderCell = useCallback(
-    (user, columnKey) => {
-      const streak = user.currentStreak?.count ?? 0;
-      const tier = getStreakTier(streak);
-      const rankDisplay = getRankDisplay(user.rank);
+  // Basic cell rendering for username and rank only
+  function renderCell(user, columnKey) {
+    switch (columnKey) {
+      case "rank":
+        return <span>#{user.rank}</span>;
+      case "developer":
+        return <span>{user.username}</span>;
+      case "streak":
+        return <span>{user.currentStreak?.count ?? 0}</span>;
+      case "contributions":
+        return <span>{user.contributions ?? 0}</span>;
+      case "tier":
+        return <span>-</span>;
+      case "actions":
+        return null;
+      default:
+        return null;
+    }
+  }
+  // (Removed duplicate/unreachable code from previous renderCell implementation)
 
-      switch (columnKey) {
-        case "rank":
-          return (
-            <div className={`flex items-center gap-2 ${rankDisplay.class}`}>
-              {rankDisplay.emoji && (
-                <span className="text-lg">{rankDisplay.emoji}</span>
-              )}
-              <span className="text-lg font-mono">#{user.rank}</span>
-            </div>
-          );
-
-        case "developer":
-          return (
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Avatar
-                  src={user.avatar + "&s=64"}
-                  size="md"
-                  className={`ring-2 ${
-                    user.rank <= 3 ? "ring-yellow-500" : "ring-green-500/50"
-                  }`}
-                />
-                {isCurrentUser(user.username) && (
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-[8px] text-white font-bold">YOU</span>
-                  </div>
-                )}
-              </div>
-              <div>
-                <p className="font-semibold text-white flex items-center gap-2">
-                  {user.username}
-                  {user.rank <= 10 && (
-                    <FaTrophy className="text-yellow-500 text-xs" />
-                  )}
-                </p>
-                <a
-                  href={`https://github.com/${user.username}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-green-400 text-xs hover:underline flex items-center gap-1"
-                >
-                  <FaGithub className="text-[10px]" />@{user.username}
-                </a>
-              </div>
-            </div>
-          );
-
-        case "streak":
-          return (
-            <div className="flex items-center gap-2">
-              <div
-                className={`
-                  flex items-center gap-1.5 px-3 py-1.5 rounded-full
-                  ${streak > 0 ? "bg-orange-500/20" : "bg-slate-700"}
-                `}
-              >
-                <FaFire
-                  className={`${
-                    streak >= 30
-                      ? "text-orange-400 animate-pulse"
-                      : streak > 0
-                      ? "text-orange-400"
-                      : "text-gray-500"
-                  }`}
-                />
-                <span className="font-bold text-white">{streak}</span>
-                <span className="text-gray-400 text-xs">days</span>
-              </div>
-            </div>
-          );
-
-        case "contributions":
-          return (
-            <div className="flex items-center gap-2">
-              <FaChartLine className="text-green-500 text-sm" />
-              <span className="font-semibold text-white">
-                {(user.contributions ?? 0).toLocaleString()}
-              </span>
-            </div>
-          );
-
-        case "tier":
-          return (
-            <Tooltip content={`${streak} day streak`}>
-              <Chip
-                startContent={<span className="pl-1">{tier.icon}</span>}
-                variant="flat"
-                color={tier.color}
-                size="sm"
-                className="capitalize"
-              >
-                {tier.label}
-              </Chip>
-            </Tooltip>
-          );
-
-        case "actions":
-          return (
-            <div className="flex items-center gap-2">
-              <Tooltip content="View GitHub Profile">
-                <a
-                  href={`https://github.com/${user.username}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
-                >
-                  <FaGithub className="text-gray-400 hover:text-white" />
-                </a>
-              </Tooltip>
-            </div>
-          );
-
-        default:
-          return null;
-      }
-    },
-    [currentUser]
-  );
-
-  // Top content with search and filters
+  // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
+  /*
   const topContent = useMemo(() => {
-    return (
-      <div className="flex flex-col gap-6 px-4 pt-6 pb-2">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-          <div className="mb-2 sm:mb-0">
-            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 mb-1">
-              <FaTrophy className="text-yellow-500" />
-              Global Leaderboard
-            </h2>
-            <p className="text-gray-400 text-sm">
-              {rankedUsers.length} developers competing
-            </p>
-          </div>
-
-          {/* Search */}
-          <Input
-            isClearable
-            className="w-full sm:max-w-xs"
-            placeholder="Search developers..."
-            startContent={<FaSearch className="text-gray-400" />}
-            value={filterValue}
-            onClear={() => setFilterValue("")}
-            onValueChange={onSearchChange}
-            classNames={{
-              input: "bg-transparent px-3 py-2",
-              inputWrapper:
-                "bg-slate-800 border border-slate-700 hover:bg-slate-700 rounded-lg px-1 py-1",
-            }}
-          />
-        </div>
-
-        {/* Stats Bar */}
-        <div className="flex flex-wrap items-center gap-3">
-          <Chip variant="flat" color="success" size="sm">
-            {filteredUsers.length} results
-          </Chip>
-          {filterValue && (
-            <Chip
-              variant="bordered"
-              onClose={() => setFilterValue("")}
-              size="sm"
-            >
-              Search: {filterValue}
-            </Chip>
-          )}
-
-          {/* Quick Filters */}
-          <div className="flex-1" />
-          <div className="flex items-center gap-2 text-sm text-gray-400">
-            <span>Show:</span>
-            <select
-              className="bg-slate-800 border border-slate-700 rounded-lg px-2 py-1 text-white text-sm focus:outline-none focus:border-green-500"
-              value={rowsPerPage}
-              onChange={(e) => {
-                setRowsPerPage(Number(e.target.value));
-                setPage(1);
-              }}
-            >
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    );
+    // ...existing advanced top content code...
   }, [
     filterValue,
     filteredUsers.length,
@@ -341,65 +163,20 @@ const Leaderboard = ({ leaderboard }) => {
     rowsPerPage,
     onSearchChange,
   ]);
+  */
 
-  // Bottom pagination
+  // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
+  /*
   const bottomContent = useMemo(() => {
-    const startItem =
-      sortedUsers.length === 0 ? 0 : (page - 1) * rowsPerPage + 1;
-    const endItem = Math.min(page * rowsPerPage, sortedUsers.length);
-
-    return (
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-2 py-4">
-        <span className="text-gray-400 text-sm">
-          {sortedUsers.length === 0
-            ? "No results"
-            : `Showing ${startItem}-${endItem} of ${sortedUsers.length}`}
-        </span>
-
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color="success"
-          page={page}
-          total={pages}
-          onChange={setPage}
-          classNames={{
-            cursor: "bg-green-500",
-          }}
-        />
-
-        <div className="hidden sm:flex gap-2">
-          <Button
-            isDisabled={page === 1}
-            size="sm"
-            variant="flat"
-            onPress={() => setPage(page - 1)}
-            startContent={<FaArrowUp className="rotate-[-90deg]" />}
-          >
-            Previous
-          </Button>
-          <Button
-            isDisabled={page === pages}
-            size="sm"
-            variant="flat"
-            color="success"
-            onPress={() => setPage(page + 1)}
-            endContent={<FaArrowDown className="rotate-[-90deg]" />}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    );
+    // ...existing advanced bottom content code...
   }, [page, pages, sortedUsers.length, rowsPerPage]);
+  */
 
   // Don't render if no data
-  if (!leaderboard || leaderboard.length === 0) {
+  if (!rankedUsers || rankedUsers.length === 0) {
     return (
       <section id="leaderboard" className="scroll-mt-20">
         <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-700 p-12 text-center">
-          <FaTrophy className="mx-auto text-4xl text-gray-600 mb-4" />
           <p className="text-gray-400 text-lg">No leaderboard data available</p>
           <p className="text-gray-500 text-sm mt-1">Check back soon!</p>
         </div>
@@ -410,23 +187,7 @@ const Leaderboard = ({ leaderboard }) => {
   return (
     <section id="leaderboard" className="scroll-mt-20">
       <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
-        <Table
-          aria-label="Leaderboard table showing developer rankings"
-          isHeaderSticky
-          bottomContent={bottomContent}
-          bottomContentPlacement="outside"
-          sortDescriptor={sortDescriptor}
-          topContent={topContent}
-          topContentPlacement="outside"
-          onSortChange={setSortDescriptor}
-          classNames={{
-            wrapper: "bg-transparent shadow-none max-h-[600px]",
-            table: "min-h-[200px]",
-            th: "bg-slate-800/80 text-gray-300 font-semibold uppercase text-xs tracking-wider px-4 py-3",
-            td: "px-4 py-3 align-middle",
-            tr: "hover:bg-slate-800/50 transition-colors border-b border-slate-700/50",
-          }}
-        >
+        <Table aria-label="Leaderboard table showing developer rankings">
           <TableHeader columns={columns}>
             {(column) => (
               <TableColumn
@@ -442,7 +203,6 @@ const Leaderboard = ({ leaderboard }) => {
             items={items}
             emptyContent={
               <div className="text-center py-12">
-                <FaSearch className="mx-auto text-4xl text-gray-600 mb-4" />
                 <p className="text-gray-400 text-lg">No developers found</p>
                 <p className="text-gray-500 text-sm mt-1">
                   {filterValue
@@ -453,14 +213,7 @@ const Leaderboard = ({ leaderboard }) => {
             }
           >
             {(item) => (
-              <TableRow
-                key={item.username}
-                className={
-                  isCurrentUser(item.username)
-                    ? "!bg-green-900/30 border-l-4 !border-l-green-500"
-                    : ""
-                }
-              >
+              <TableRow key={item.username}>
                 {(columnKey) => (
                   <TableCell>{renderCell(item, columnKey)}</TableCell>
                 )}
