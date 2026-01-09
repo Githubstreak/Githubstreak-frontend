@@ -117,39 +117,126 @@ const Leaderboard = ({ leaderboard }) => {
   const columns = [
     { key: "rank", label: "RANK", sortable: true },
     { key: "developer", label: "DEVELOPER" },
-    // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
-    /*
-    const renderCell = useCallback(
-      (user, columnKey) => {
-        const streak = user.currentStreak?.count ?? 0;
-        const tier = getStreakTier(streak);
-        const rankDisplay = getRankDisplay(user.rank);
-        // ...existing advanced cell rendering code...
-      },
-      [currentUser]
-    );
-    */
+    { key: "streak", label: "STREAK", sortable: true },
+    { key: "contributions", label: "CONTRIBUTIONS", sortable: true },
+    { key: "tier", label: "TIER" },
+    { key: "actions", label: "" },
   ];
 
-  // Basic cell rendering for username and rank only
-  function renderCell(user, columnKey) {
-    switch (columnKey) {
-      case "rank":
-        return <span>#{user.rank}</span>;
-      case "developer":
-        return <span>{user.username}</span>;
-      case "streak":
-        return <span>{user.currentStreak?.count ?? 0}</span>;
-      case "contributions":
-        return <span>{user.contributions ?? 0}</span>;
-      case "tier":
-        return <span>-</span>;
-      case "actions":
-        return null;
-      default:
-        return null;
-    }
-  }
+  // Advanced cell rendering
+  const renderCell = useCallback(
+    (user, columnKey) => {
+      const streak = user.currentStreak?.count ?? 0;
+      const tier = getStreakTier(streak);
+      const rankDisplay = getRankDisplay(user.rank);
+
+      switch (columnKey) {
+        case "rank":
+          return (
+            <div className={`flex items-center gap-2 ${rankDisplay.class}`}>
+              {rankDisplay.emoji && (
+                <span className="text-lg">{rankDisplay.emoji}</span>
+              )}
+              <span className="text-lg font-mono">#{user.rank}</span>
+            </div>
+          );
+
+        case "developer":
+          return (
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                {/* Avatar and highlight for current user */}
+                <img
+                  src={user.avatar + "&s=64"}
+                  alt={user.username}
+                  className={`w-10 h-10 rounded-full border-2 ${
+                    user.rank <= 3 ? "border-yellow-500" : "border-green-500/50"
+                  }`}
+                />
+                {/* Optionally highlight current user */}
+              </div>
+              <div>
+                <p className="font-semibold text-white flex items-center gap-2">
+                  {user.username}
+                  {user.rank <= 10 && (
+                    <span className="text-yellow-500 text-xs">🏆</span>
+                  )}
+                </p>
+                <a
+                  href={`https://github.com/${user.username}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-400 text-xs hover:underline flex items-center gap-1"
+                >
+                  @{user.username}
+                </a>
+              </div>
+            </div>
+          );
+
+        case "streak":
+          return (
+            <div className="flex items-center gap-2">
+              <div
+                className={`
+                  flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                  ${streak > 0 ? "bg-orange-500/20" : "bg-slate-700"}
+                `}
+              >
+                <span
+                  className={`font-bold ${
+                    streak >= 30
+                      ? "text-orange-400 animate-pulse"
+                      : streak > 0
+                      ? "text-orange-400"
+                      : "text-gray-500"
+                  }`}
+                >
+                  🔥
+                </span>
+                <span className="font-bold text-white">{streak}</span>
+                <span className="text-gray-400 text-xs">days</span>
+              </div>
+            </div>
+          );
+
+        case "contributions":
+          return (
+            <div className="flex items-center gap-2">
+              <span className="text-green-500 text-sm">📈</span>
+              <span className="font-semibold text-white">
+                {(user.contributions ?? 0).toLocaleString()}
+              </span>
+            </div>
+          );
+
+        case "tier":
+          return (
+            <span className="capitalize px-2 py-1 rounded bg-slate-700 text-white">
+              {tier.icon} {tier.label}
+            </span>
+          );
+
+        case "actions":
+          return (
+            <div className="flex items-center gap-2">
+              <a
+                href={`https://github.com/${user.username}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
+              >
+                <span className="text-gray-400 hover:text-white">🔗</span>
+              </a>
+            </div>
+          );
+
+        default:
+          return null;
+      }
+    },
+    [currentUser]
+  );
   // (Removed duplicate/unreachable code from previous renderCell implementation)
 
   // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
