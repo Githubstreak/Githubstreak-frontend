@@ -87,8 +87,6 @@ const Leaderboard = ({ leaderboard }) => {
     return sortedUsers.slice(start, start + rowsPerPage);
   }, [page, sortedUsers, rowsPerPage]);
 
-  // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
-  /*
   // Get streak tier
   const getStreakTier = (streak) => {
     if (streak >= 100) return { label: "Legend", color: "warning", icon: "👑" };
@@ -108,7 +106,6 @@ const Leaderboard = ({ leaderboard }) => {
       return { emoji: "🔥", class: "text-orange-400 font-semibold" };
     return { emoji: "", class: "text-gray-400" };
   };
-  */
 
   // Check if current user
   // const isCurrentUser = (username) => currentUser?.username === username;
