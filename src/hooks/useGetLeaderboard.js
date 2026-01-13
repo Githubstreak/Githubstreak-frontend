@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useUser } from "@clerk/clerk-react";
+import { transformLeaderboard } from "../utils/transforms";
 
 const useGetLeaderboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,8 +27,9 @@ const useGetLeaderboard = () => {
           }
         );
         const data = await res.json();
-        if (Array.isArray(data.leaderboard)) {
-          setLeaderboard(data.leaderboard);
+        if (data.leaderboard && Array.isArray(data.leaderboard)) {
+          const transformedData = transformLeaderboard(data.leaderboard);
+          setLeaderboard(transformedData);
         } else {
           throw new Error("Invalid leaderboard data");
         }
