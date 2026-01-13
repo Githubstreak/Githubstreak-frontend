@@ -1,12 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
-import axios from "axios";
-import { API_URL } from "../utils/constants";
-import { transformLeaderboard } from "../utils/transforms";
+import { useUser } from "@clerk/clerk-react";
 
 const useGetLeaderboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [leaderboard, setLeaderboard] = useState(null);
   const [error, setError] = useState(null);
+  const { user: currentUser, isLoaded } = useUser();
 
   const getLeaderboard = useCallback(
     async (forceRefresh = false) => {
@@ -17,12 +16,21 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
-        const response = await axios.get(`${API_URL}/v1/users/leaderboard`);
-
-        // Transform and sort using centralized transform layer
-        const transformedData = transformLeaderboard(response.data);
-
-        setLeaderboard(transformedData);
+        const userId = currentUser?.id;
+        const res = await fetch(
+          "https://api.ggithubstreak.com/v1/users/leaderboard",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userId ? { userId } : {}),
+          }
+        );
+        const data = await res.json();
+        if (Array.isArray(data.leaderboard)) {
+          setLeaderboard(data.leaderboard);
+        } else {
+          throw new Error("Invalid leaderboard data");
+        }
       } catch (e) {
         console.error("Error fetching leaderboard:", e);
         setError("Failed to load leaderboard. Please try again.");
@@ -30,12 +38,14 @@ const useGetLeaderboard = () => {
         setIsLoading(false);
       }
     },
-    [leaderboard]
+    [leaderboard, currentUser]
   );
 
   useEffect(() => {
-    getLeaderboard();
-  }, []);
+    if (isLoaded) {
+      getLeaderboard();
+    }
+  }, [isLoaded]);
 
   return {
     isLoading,
