@@ -18,33 +18,33 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
-        // Mock data for testing
-        const mockData = [
+        const token = await getToken();
+        const res = await fetch(
+          "https://api.ggithubstreak.com/v1/leaderboard",
           {
-            username: "testuser1",
-            avatar: "https://github.com/images/error/testuser1_happy.gif",
-            rank: 1,
-            contributions: 1500,
-            currentStreak: { count: 50 },
-          },
-          {
-            username: "testuser2",
-            avatar: "https://github.com/images/error/testuser2_happy.gif",
-            rank: 2,
-            contributions: 1200,
-            currentStreak: { count: 40 },
-          },
-          {
-            username: "testuser3",
-            avatar: "https://github.com/images/error/testuser3_happy.gif",
-            rank: 3,
-            contributions: 1000,
-            currentStreak: { count: 30 },
-          },
-        ];
-
-        const transformedData = transformLeaderboard(mockData);
-        setLeaderboard(transformedData);
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        console.log("Leaderboard API response:", data);
+        if (Array.isArray(data)) {
+          const transformedData = transformLeaderboard(data);
+          setLeaderboard(transformedData);
+        } else if (data && Array.isArray(data.data)) {
+          const transformedData = transformLeaderboard(data.data);
+          setLeaderboard(transformedData);
+        } else if (data && Array.isArray(data.leaderboard)) {
+          const transformedData = transformLeaderboard(data.leaderboard);
+          setLeaderboard(transformedData);
+        } else {
+          throw new Error("Invalid leaderboard data");
+        }
       } catch (e) {
         console.error("Error fetching leaderboard:", e);
         setError("Failed to load leaderboard. Please try again.");
