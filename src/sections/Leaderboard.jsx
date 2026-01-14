@@ -31,8 +31,8 @@ const Leaderboard = ({ leaderboard }) => {
           "https://api.ggithubstreak.com/v1/users/leaderboard"
         );
         const data = await res.json();
-        if (Array.isArray(data.leaderboard)) {
-          setRankedUsers(data.leaderboard);
+        if (Array.isArray(data)) {
+          setRankedUsers(data);
         }
       } catch (err) {
         // Optionally handle error

@@ -17,12 +17,9 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
-        const res = await fetch(
-          "https://api.ggithubstreak.com/v1/users/leaderboard"
-        );
         const data = await res.json();
-        if (data.leaderboard && Array.isArray(data.leaderboard)) {
-          const transformedData = transformLeaderboard(data.leaderboard);
+        if (Array.isArray(data)) {
+          const transformedData = transformLeaderboard(data);
           setLeaderboard(transformedData);
         } else {
           throw new Error("Invalid leaderboard data");
