@@ -17,14 +17,8 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
-        const userId = currentUser?.id;
         const res = await fetch(
-          "https://api.ggithubstreak.com/v1/users/leaderboard",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(userId ? { userId } : {}),
-          }
+          "https://api.ggithubstreak.com/v1/users/leaderboard"
         );
         const data = await res.json();
         if (data.leaderboard && Array.isArray(data.leaderboard)) {
