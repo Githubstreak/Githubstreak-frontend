@@ -17,7 +17,12 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
+        const res = await fetch("https://api.ggithubstreak.com/v1/leaderboard");
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         const data = await res.json();
+        console.log("Leaderboard API response:", data);
         if (Array.isArray(data)) {
           const transformedData = transformLeaderboard(data);
           setLeaderboard(transformedData);
