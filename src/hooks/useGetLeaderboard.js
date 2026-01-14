@@ -26,6 +26,12 @@ const useGetLeaderboard = () => {
         if (Array.isArray(data)) {
           const transformedData = transformLeaderboard(data);
           setLeaderboard(transformedData);
+        } else if (data && Array.isArray(data.data)) {
+          const transformedData = transformLeaderboard(data.data);
+          setLeaderboard(transformedData);
+        } else if (data && Array.isArray(data.leaderboard)) {
+          const transformedData = transformLeaderboard(data.leaderboard);
+          setLeaderboard(transformedData);
         } else {
           throw new Error("Invalid leaderboard data");
         }
