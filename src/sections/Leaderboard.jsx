@@ -8,7 +8,7 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 
 const Leaderboard = ({ leaderboard }) => {
   const [filterValue] = useState("");
@@ -20,6 +20,7 @@ const Leaderboard = ({ leaderboard }) => {
   const [page] = useState(1);
 
   const { user: currentUser, isLoaded } = useUser();
+  const { getToken } = useAuth();
   const [rankedUsers, setRankedUsers] = useState(leaderboard ?? []);
 
   // Fetch leaderboard with userId
@@ -27,11 +28,15 @@ const Leaderboard = ({ leaderboard }) => {
     if (!isLoaded) return;
     const fetchLeaderboard = async () => {
       try {
+        const token = await getToken();
         const res = await fetch(
           "https://api.ggithubstreak.com/v1/users/leaderboard",
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({}),
           }
         );
