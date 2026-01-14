@@ -17,7 +17,11 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
-        const res = await fetch("https://api.ggithubstreak.com/v1/leaderboard");
+        const res = await fetch("https://api.githubstreak.com/v1/leaderboard", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({}),
+        });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -25,6 +29,12 @@ const useGetLeaderboard = () => {
         console.log("Leaderboard API response:", data);
         if (Array.isArray(data)) {
           const transformedData = transformLeaderboard(data);
+          setLeaderboard(transformedData);
+        } else if (data && Array.isArray(data.data)) {
+          const transformedData = transformLeaderboard(data.data);
+          setLeaderboard(transformedData);
+        } else if (data && Array.isArray(data.leaderboard)) {
+          const transformedData = transformLeaderboard(data.leaderboard);
           setLeaderboard(transformedData);
         } else {
           throw new Error("Invalid leaderboard data");
