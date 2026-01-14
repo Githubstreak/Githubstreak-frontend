@@ -18,7 +18,12 @@ const useGetLeaderboard = () => {
         setError(null);
 
         const res = await fetch(
-          "https://api.ggithubstreak.com/v1/users/leaderboard"
+          "https://api.ggithubstreak.com/v1/leaderboard",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+          }
         );
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);

@@ -28,7 +28,12 @@ const Leaderboard = ({ leaderboard }) => {
     const fetchLeaderboard = async () => {
       try {
         const res = await fetch(
-          "https://api.ggithubstreak.com/v1/users/leaderboard"
+          "https://api.ggithubstreak.com/v1/leaderboard",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({}),
+          }
         );
         const data = await res.json();
         if (Array.isArray(data)) {
