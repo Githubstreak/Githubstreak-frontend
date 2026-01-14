@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import { transformLeaderboard } from "../utils/transforms";
 
 const useGetLeaderboard = () => {
@@ -7,6 +7,7 @@ const useGetLeaderboard = () => {
   const [leaderboard, setLeaderboard] = useState(null);
   const [error, setError] = useState(null);
   const { user: currentUser, isLoaded } = useUser();
+  const { getToken } = useAuth();
 
   const getLeaderboard = useCallback(
     async (forceRefresh = false) => {
@@ -17,11 +18,15 @@ const useGetLeaderboard = () => {
         setIsLoading(true);
         setError(null);
 
+        const token = await getToken();
         const res = await fetch(
           "https://api.ggithubstreak.com/v1/users/leaderboard",
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({}),
           }
         );
