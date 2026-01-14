@@ -45,15 +45,14 @@ const Leaderboard = ({ leaderboard }) => {
     const fetchLeaderboard = async () => {
       try {
         const token = await getToken();
+        const userIdParam = currentUser?.id ? `?userId=${currentUser.id}` : "";
         const res = await fetch(
-          "https://api.ggithubstreak.com/v1/leaderboard",
+          `https://api.ggithubstreak.com/v1/leaderboard${userIdParam}`,
           {
-            method: "POST",
+            method: "GET",
             headers: {
-              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ userId: currentUser?.id }),
           }
         );
         const data = await res.json();
