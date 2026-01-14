@@ -26,6 +26,10 @@ const Leaderboard = ({ leaderboard }) => {
   // Fetch leaderboard with userId
   useEffect(() => {
     if (!isLoaded) return;
+    if (leaderboard && leaderboard.length > 0) {
+      setRankedUsers(leaderboard);
+      return;
+    }
     const fetchLeaderboard = async () => {
       try {
         const token = await getToken();
@@ -47,7 +51,7 @@ const Leaderboard = ({ leaderboard }) => {
       }
     };
     fetchLeaderboard();
-  }, [isLoaded, currentUser]);
+  }, [isLoaded, currentUser, leaderboard]);
 
   // Filter users
   const filteredUsers = useMemo(() => {
