@@ -9,19 +9,31 @@ import {
   TableCell,
 } from "@nextui-org/react";
 import { useUser, useAuth } from "@clerk/clerk-react";
+import { Input } from "@nextui-org/react";
+import { Pagination } from "@nextui-org/react";
 
 const Leaderboard = ({ leaderboard }) => {
-  const [filterValue] = useState("");
-  const [rowsPerPage] = useState(50);
-  const [sortDescriptor] = useState({
+  const [filterValue, setFilterValue] = useState("");
+  const [rowsPerPage, setRowsPerPage] = useState(50);
+  const [sortDescriptor, setSortDescriptor] = useState({
     column: "rank",
     direction: "ascending",
   });
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
 
   const { user: currentUser, isLoaded } = useUser();
   const { getToken } = useAuth();
   const [rankedUsers, setRankedUsers] = useState(leaderboard ?? []);
+
+  const onSearchChange = useCallback((value) => {
+    setFilterValue(value);
+    setPage(1);
+  }, []);
+
+  const onRowsPerPageChange = useCallback((e) => {
+    setRowsPerPage(Number(e.target.value));
+    setPage(1);
+  }, []);
 
   // Fetch leaderboard with userId
   useEffect(() => {
@@ -92,6 +104,8 @@ const Leaderboard = ({ leaderboard }) => {
     const start = (page - 1) * rowsPerPage;
     return sortedUsers.slice(start, start + rowsPerPage);
   }, [page, sortedUsers, rowsPerPage]);
+
+  const pages = Math.ceil(sortedUsers.length / rowsPerPage);
 
   // Get streak tier
   const getStreakTier = (streak) => {
@@ -239,25 +253,66 @@ const Leaderboard = ({ leaderboard }) => {
   }, []);
   // (Removed duplicate/unreachable code from previous renderCell implementation)
 
-  // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
-  /*
   const topContent = useMemo(() => {
-    // ...existing advanced top content code...
-  }, [
-    filterValue,
-    filteredUsers.length,
-    rankedUsers.length,
-    rowsPerPage,
-    onSearchChange,
-  ]);
-  */
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between gap-3 items-end">
+          <Input
+            isClearable
+            className="w-full sm:max-w-[44%]"
+            placeholder="Search by username..."
+            value={filterValue}
+            onClear={() => setFilterValue("")}
+            onValueChange={onSearchChange}
+          />
+          <div className="flex gap-3">
+            <span className="text-default-400 text-small">
+              Total {rankedUsers.length} developers
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }, [filterValue, onSearchChange, rankedUsers.length]);
 
-  // --- ADVANCED FEATURES COMMENTED OUT FOR DEBUGGING ---
-  /*
   const bottomContent = useMemo(() => {
-    // ...existing advanced bottom content code...
-  }, [page, pages, sortedUsers.length, rowsPerPage]);
-  */
+    return (
+      <div className="py-2 px-2 flex justify-between items-center">
+        <span className="w-[30%] text-small text-default-400">
+          {sortedUsers.length === 0
+            ? "No developers found"
+            : `Showing ${Math.min(
+                (page - 1) * rowsPerPage + 1,
+                sortedUsers.length
+              )} to ${Math.min(page * rowsPerPage, sortedUsers.length)} of ${
+                sortedUsers.length
+              } developers`}
+        </span>
+        <Pagination
+          isCompact
+          showControls
+          showShadow
+          color="primary"
+          page={page}
+          total={pages}
+          onChange={setPage}
+        />
+        <div className="hidden sm:flex w-[30%] justify-end gap-2">
+          <span className="text-small text-default-400">Rows per page:</span>
+          <select
+            className="bg-transparent outline-none text-small text-default-400"
+            value={rowsPerPage}
+            onChange={onRowsPerPageChange}
+          >
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+    );
+  }, [page, pages, sortedUsers.length, rowsPerPage, onRowsPerPageChange]);
 
   // Don't render if no data
   if (!rankedUsers || rankedUsers.length === 0) {
@@ -274,7 +329,14 @@ const Leaderboard = ({ leaderboard }) => {
   return (
     <section id="leaderboard" className="scroll-mt-20">
       <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
-        <Table aria-label="Leaderboard table showing developer rankings">
+        <Table
+          aria-label="Leaderboard table showing developer rankings"
+          topContent={topContent}
+          bottomContent={bottomContent}
+          topContentPlacement="outside"
+          sortDescriptor={sortDescriptor}
+          onSortChange={setSortDescriptor}
+        >
           <TableHeader columns={columns}>
             {(column) => (
               <TableColumn
