@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useUser, useAuth } from "@clerk/clerk-react";
 import { transformLeaderboard } from "../utils/transforms";
+import { API_BASE } from "../APIs/apiClient";
 
 const useGetLeaderboard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,15 +21,12 @@ const useGetLeaderboard = () => {
 
         const token = await getToken();
         const userIdParam = currentUser?.id ? `?userId=${currentUser.id}` : "";
-        const res = await fetch(
-          `https://api.ggithubstreak.com/v1/leaderboard${userIdParam}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await fetch(`${API_BASE}/v1/leaderboard${userIdParam}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -53,7 +51,7 @@ const useGetLeaderboard = () => {
         setIsLoading(false);
       }
     },
-    [leaderboard, currentUser]
+    [leaderboard, currentUser],
   );
 
   useEffect(() => {
