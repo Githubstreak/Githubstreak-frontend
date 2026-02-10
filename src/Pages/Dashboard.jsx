@@ -13,6 +13,7 @@ import StreakSquads from "../components/StreakSquads";
 import StreakPledge from "../components/StreakPledge";
 import ShareableProfileCard from "../components/ShareableProfileCard";
 import CodingPatternsAnalytics from "../components/CodingPatternsAnalytics";
+import ErrorBoundary from "../components/ErrorBoundary";
 import Nav from "../components/Nav";
 import { TopThreeSkeleton, LeaderboardSkeleton } from "../components/Skeleton";
 import {
@@ -151,7 +152,11 @@ const Dashboard = () => {
                 refetch={refetchUser}
               />
               {/* Motivational Quote - Full view only */}
-              {viewMode === "full" && <MotivationalQuote />}
+              {viewMode === "full" && (
+                <ErrorBoundary>
+                  <MotivationalQuote />
+                </ErrorBoundary>
+              )}
             </div>
 
             {/* Right Column - Challenges & Level */}
@@ -160,15 +165,21 @@ const Dashboard = () => {
               <AIStreakCoach />
 
               {/* Daily Challenge - Full view only */}
-              {viewMode === "full" && <DailyChallenge />}
+              {viewMode === "full" && (
+                <ErrorBoundary>
+                  <DailyChallenge />
+                </ErrorBoundary>
+              )}
 
               {/* Level & XP Progress - Only when signed in AND full view */}
               {viewMode === "full" && isSignedIn && userStats && (
-                <LevelProgress
-                  totalContributions={totalContributions}
-                  currentStreak={currentStreak}
-                  longestStreak={longestStreak}
-                />
+                <ErrorBoundary>
+                  <LevelProgress
+                    totalContributions={totalContributions}
+                    currentStreak={currentStreak}
+                    longestStreak={longestStreak}
+                  />
+                </ErrorBoundary>
               )}
             </div>
           </div>
@@ -177,10 +188,12 @@ const Dashboard = () => {
         {/* Achievements Section - Only when signed in AND full view */}
         {viewMode === "full" && isSignedIn && userStats && (
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-            <AchievementBadges
-              currentStreak={currentStreak}
-              totalContributions={totalContributions}
-            />
+            <ErrorBoundary>
+              <AchievementBadges
+                currentStreak={currentStreak}
+                totalContributions={totalContributions}
+              />
+            </ErrorBoundary>
           </section>
         )}
 
@@ -189,23 +202,31 @@ const Dashboard = () => {
           <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Streak Squads - Team challenges */}
-              <StreakSquads />
+              <ErrorBoundary>
+                <StreakSquads />
+              </ErrorBoundary>
 
               {/* Streak Pledge - Public commitments */}
-              <StreakPledge currentStreak={currentStreak} />
+              <ErrorBoundary>
+                <StreakPledge currentStreak={currentStreak} />
+              </ErrorBoundary>
 
               {/* Coding Patterns Analytics */}
-              <CodingPatternsAnalytics
-                contributionDays={userStats?.contributionDays}
-                currentStreak={currentStreak}
-              />
+              <ErrorBoundary>
+                <CodingPatternsAnalytics
+                  contributionDays={userStats?.contributionDays}
+                  currentStreak={currentStreak}
+                />
+              </ErrorBoundary>
 
               {/* Shareable Profile Card */}
-              <ShareableProfileCard
-                userStats={userStats}
-                username={user?.username || userStats?.username}
-                avatar={user?.imageUrl}
-              />
+              <ErrorBoundary>
+                <ShareableProfileCard
+                  userStats={userStats}
+                  username={user?.username || userStats?.username}
+                  avatar={user?.imageUrl}
+                />
+              </ErrorBoundary>
             </div>
           </section>
         )}
