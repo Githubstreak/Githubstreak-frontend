@@ -39,4 +39,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
-GitHubStreak was inspired by the need to recognize and celebrate the hard work and dedication of developers. We would like to thank all the contributors who have made this project possible. 
+GitHubStreak was inspired by the need to recognize and celebrate the hard work and dedication of developers. We would like to thank all the contributors who have made this project possible. Looking forward to more contributions.
