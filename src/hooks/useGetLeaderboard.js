@@ -24,7 +24,7 @@ const useGetLeaderboard = () => {
         const res = await fetch(`${API_BASE}/v1/leaderboard${userIdParam}`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
+            ...(token && { Authorization: `Bearer ${token}` }),
           },
         });
         if (!res.ok) {
@@ -51,14 +51,14 @@ const useGetLeaderboard = () => {
         setIsLoading(false);
       }
     },
-    [leaderboard, currentUser],
+    [leaderboard, currentUser, getToken],
   );
 
   useEffect(() => {
     if (isLoaded) {
       getLeaderboard();
     }
-  }, [isLoaded]);
+  }, [isLoaded, getLeaderboard]);
 
   return {
     isLoading,

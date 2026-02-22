@@ -7,10 +7,9 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Input,
+  Pagination,
 } from "@nextui-org/react";
-import { useUser, useAuth } from "@clerk/clerk-react";
-import { Input } from "@nextui-org/react";
-import { Pagination } from "@nextui-org/react";
 
 const Leaderboard = ({ leaderboard }) => {
   const [filterValue, setFilterValue] = useState("");
@@ -21,8 +20,6 @@ const Leaderboard = ({ leaderboard }) => {
   });
   const [page, setPage] = useState(1);
 
-  const { user: currentUser, isLoaded } = useUser();
-  const { getToken } = useAuth();
   const [rankedUsers, setRankedUsers] = useState(leaderboard ?? []);
 
   const onSearchChange = useCallback((value) => {
@@ -35,36 +32,12 @@ const Leaderboard = ({ leaderboard }) => {
     setPage(1);
   }, []);
 
-  // Fetch leaderboard with userId
+  // Sync rankedUsers when leaderboard prop changes
   useEffect(() => {
-    if (!isLoaded) return;
-    if (leaderboard && leaderboard.length > 0) {
+    if (leaderboard) {
       setRankedUsers(leaderboard);
-      return;
     }
-    const fetchLeaderboard = async () => {
-      try {
-        const token = await getToken();
-        const userIdParam = currentUser?.id ? `?userId=${currentUser.id}` : "";
-        const res = await fetch(
-          `https://api.ggithubstreak.com/v1/leaderboard${userIdParam}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setRankedUsers(data);
-        }
-      } catch (err) {
-        // Optionally handle error
-      }
-    };
-    fetchLeaderboard();
-  }, [isLoaded, currentUser, leaderboard]);
+  }, [leaderboard]);
 
   // Filter users
   const filteredUsers = useMemo(() => {
@@ -289,15 +262,17 @@ const Leaderboard = ({ leaderboard }) => {
                 sortedUsers.length
               } developers`}
         </span>
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color="primary"
-          page={page}
-          total={pages}
-          onChange={setPage}
-        />
+        {pages > 0 && (
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color="primary"
+            page={page}
+            total={pages}
+            onChange={setPage}
+          />
+        )}
         <div className="hidden sm:flex w-[30%] justify-end gap-2">
           <span className="text-small text-default-400">Rows per page:</span>
           <select
